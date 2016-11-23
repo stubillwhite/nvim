@@ -15,6 +15,10 @@ let g:mapleader=","
 " Plugins                                                                   {{{1
 " ==============================================================================
 
+" Master list of all plugins        {{{2
+" ======================================
+
+nnoremap <Leader>u :MundoToggle<CR>
 call plug#begin('~/.config/vim-plug')
 
 " OceanicNext theme
@@ -34,23 +38,37 @@ Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
 Plug 'tpope/vim-endwise'            " Smart closing of data strutures 
 Plug 'Valloric/YouCompleteMe'       " Smarter completion
 Plug 'davidhalter/jedi-vim'         " Smarter Python integration
+Plug 'terryma/vim-expand-region'    " Incremental selection widening
+Plug 'tmux-plugins/vim-tmux'        " Syntax for tmux configuration
+Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
+Plug 'ElmCast/elm-vim'              " Elm plugin for Vim
+
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+"let g:airline_theme='kalisi'
+
 
 call plug#end()
 
-" vim-mundo                         {{{2
+" Config for vim-mundo              {{{2
 " ======================================
 nnoremap <Leader>u :MundoToggle<CR>
 
-" delimitMate                       {{{2
+" Config for delimitMate            {{{2
 " ======================================
 let delimitMate_expand_cr = 1
 
-" nerdtree                          {{{2
+" Config for nerdtree               {{{2
 " ======================================
 let NERDTreeQuitOnOpen=1
 let NERDTreeShowHidden=0
 nmap <Leader>e :NERDTreeToggle<CR>
 nmap <Leader>E :NERDTreeFind<CR>
+
+" Config for vim-easy-align         {{{2
+" ======================================
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)<Paste>
 
 " Functions                                                                 {{{1
 " ==============================================================================
@@ -271,6 +289,7 @@ augroup VimrcFileTypeAutocommands
     au BufRead,BufNewFile *.md                          setlocal filetype=markdown
     au BufRead,BufNewFile *.log                         setlocal filetype=log
     au BufRead,BufNewFile *.applescript                 setlocal filetype=applescript
+    au BufRead,BufNewFile *.boot                        setlocal filetype=clojure
 augroup END
 
 " Key mappings                                                              {{{1
@@ -340,3 +359,4 @@ vnoremap <silent> # :<C-U>
 " BufExplorer
 nmap <Leader>b :BufExplorer<CR>
 let g:bufExplorerSortBy='name'      " Default sort by the name
+
