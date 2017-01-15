@@ -24,24 +24,27 @@ call plug#begin('~/.config/vim-plug')
 " OceanicNext theme
 Plug 'mhartington/oceanic-next'
 
-Plug 'vim-scripts/applescript.vim'  " Applescript syntax highlighting
-Plug 'junegunn/vim-easy-align'      " Align data in columns
+Plug 'ElmCast/elm-vim'              " Elm plugin for Vim
 Plug 'Raimondi/delimitMate'         " Automatically close quotes, brackets, etc
-Plug 'flazz/vim-colorschemes'       " Colorschemes
-Plug 'simnalamburt/vim-mundo'       " Visualise the undo graph
-Plug 'tpope/vim-repeat'             " Smarter repeat functionality
-Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting 
-Plug 'scrooloose/nerdtree'          " Easy file browsing
-Plug 'tpope/vim-unimpaired'         " Incredibly useful text navigation and manipulation shortcuts
-Plug 'derekwyatt/vim-scala'         " Scala
-Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
-Plug 'tpope/vim-endwise'            " Smart closing of data strutures 
 Plug 'Valloric/YouCompleteMe'       " Smarter completion
 Plug 'davidhalter/jedi-vim'         " Smarter Python integration
+Plug 'derekwyatt/vim-scala'         " Scala
+Plug 'flazz/vim-colorschemes'       " Colorschemes
+Plug 'godlygeek/csapprox'           " Use GUI color schemes in terminals
+Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
+Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
+Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting 
+Plug 'scrooloose/nerdtree'          " Easy file browsing
+Plug 'simnalamburt/vim-mundo'       " Visualise the undo graph
 Plug 'terryma/vim-expand-region'    " Incremental selection widening
 Plug 'tmux-plugins/vim-tmux'        " Syntax for tmux configuration
-Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
-Plug 'ElmCast/elm-vim'              " Elm plugin for Vim
+Plug 'tpope/vim-endwise'            " Smart closing of data strutures 
+Plug 'tpope/vim-repeat'             " Smarter repeat functionality
+Plug 'tpope/vim-surround'           " quoting/parenthesizing made simple
+Plug 'tpope/vim-unimpaired'         " Incredibly useful text navigation and manipulation shortcuts
+Plug 'vim-scripts/applescript.vim'  " Applescript syntax highlighting
+
+Plug 'dikiaap/minimalist'  " Applescript syntax highlighting
 
 "Plug 'vim-airline/vim-airline'
 "Plug 'vim-airline/vim-airline-themes'
@@ -50,25 +53,25 @@ Plug 'ElmCast/elm-vim'              " Elm plugin for Vim
 
 call plug#end()
 
-" Config for vim-mundo              {{{2
+" junegunn/vim-easy-align           {{{2
 " ======================================
-nnoremap <Leader>u :MundoToggle<CR>
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)<Paste>
 
-" Config for delimitMate            {{{2
+" Raimondi/delimitMate              {{{2
 " ======================================
 let delimitMate_expand_cr = 1
 
-" Config for nerdtree               {{{2
+" scrooloose/nerdtree               {{{2
 " ======================================
 let NERDTreeQuitOnOpen=1
 let NERDTreeShowHidden=0
 nmap <Leader>e :NERDTreeToggle<CR>
 nmap <Leader>E :NERDTreeFind<CR>
 
-" Config for vim-easy-align         {{{2
+" simnalamburt/vim-mundo            {{{2
 " ======================================
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)<Paste>
+nnoremap <Leader>u :MundoToggle<CR>
 
 " Functions                                                                 {{{1
 " ==============================================================================
