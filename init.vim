@@ -33,6 +33,7 @@ Plug 'flazz/vim-colorschemes'       " Colorschemes
 Plug 'godlygeek/csapprox'           " Use GUI color schemes in terminals
 Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
 Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
+Plug 'mileszs/ack.vim'              " Vim plugin for the Perl module / CLI script 'ack'
 Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting 
 Plug 'scrooloose/nerdtree'          " Easy file browsing
 Plug 'simnalamburt/vim-mundo'       " Visualise the undo graph
@@ -72,6 +73,12 @@ nmap <Leader>E :NERDTreeFind<CR>
 " simnalamburt/vim-mundo            {{{2
 " ======================================
 nnoremap <Leader>u :MundoToggle<CR>
+
+" mileszs/ack.vim                   {{{2
+" ======================================
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 " Functions                                                                 {{{1
 " ==============================================================================
@@ -269,17 +276,14 @@ autocmd GUIEnter * call ConfigureGui()
 " Search                                                                    {{{1
 " ==============================================================================
 
-" set grepprg=grep\ -n\ $*\ /dev/null
-" set grepformat=%f:%l:%m
-
 function s:SearchInteractive()
-    let SearchCmd=':vimgrep //j **/*.'.expand("%:e")
+    let SearchCmd=':Ack '.a:wrd
     call feedkeys(SearchCmd."\<HOME>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>")
 endfunction
 command -nargs=0 SearchInteractive call s:SearchInteractive(<f-args>)
 
 function s:SearchImmediate(wrd)
-    let SearchCmd=':vimgrep /'.a:wrd.'/j **/*.'.expand("%:e")
+    let SearchCmd=':Ack '.a:wrd
     call feedkeys(SearchCmd)
     call feedkeys("\<CR>")
 endfunction
