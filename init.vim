@@ -18,39 +18,42 @@ let g:mapleader=","
 " Master list of all plugins        {{{2
 " ======================================
 
-nnoremap <Leader>u :MundoToggle<CR>
 call plug#begin('~/.config/vim-plug')
 
-" OceanicNext theme
-Plug 'mhartington/oceanic-next'
+" Appearance
+Plug 'romainl/Apprentice'           " A dark, low-contrast, Vim colorscheme
+Plug 'noah/vim256-color'            " A collection of 256-color colorschemes for vim
+Plug 'godlygeek/csapprox'           " Use GUI color schemes in terminals
 
+" Syntax and static checking
+Plug 'w0rp/ale'                     " Asynchronous Lint Engine
+
+" Languages
 Plug 'ElmCast/elm-vim'              " Elm plugin for Vim
+Plug 'derekwyatt/vim-scala'         " Scala
+Plug 'davidhalter/jedi-vim'         " Smarter Python integration
+Plug 'vim-scripts/applescript.vim'  " Applescript syntax highlighting
+Plug 'tmux-plugins/vim-tmux'        " Syntax for tmux configuration
+
+" Interface
+Plug 'jaxbot/browserlink.vim'       " Live browser editing for Vim
 Plug 'Raimondi/delimitMate'         " Automatically close quotes, brackets, etc
 Plug 'Valloric/YouCompleteMe'       " Smarter completion
-Plug 'davidhalter/jedi-vim'         " Smarter Python integration
-Plug 'derekwyatt/vim-scala'         " Scala
-Plug 'flazz/vim-colorschemes'       " Colorschemes
-Plug 'godlygeek/csapprox'           " Use GUI color schemes in terminals
 Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
-Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
 Plug 'mileszs/ack.vim'              " Vim plugin for the Perl module / CLI script 'ack'
 Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting 
+Plug 'Olical/vim-enmasse'           " Edit every line in a quickfix list at the same time
 Plug 'scrooloose/nerdtree'          " Easy file browsing
 Plug 'simnalamburt/vim-mundo'       " Visualise the undo graph
 Plug 'terryma/vim-expand-region'    " Incremental selection widening
-Plug 'tmux-plugins/vim-tmux'        " Syntax for tmux configuration
 Plug 'tpope/vim-endwise'            " Smart closing of data strutures 
+Plug 'tpope/vim-fugitive'           " Git integration
 Plug 'tpope/vim-repeat'             " Smarter repeat functionality
 Plug 'tpope/vim-surround'           " quoting/parenthesizing made simple
 Plug 'tpope/vim-unimpaired'         " Incredibly useful text navigation and manipulation shortcuts
-Plug 'vim-scripts/applescript.vim'  " Applescript syntax highlighting
 
-Plug 'dikiaap/minimalist'  " Applescript syntax highlighting
-
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
-"let g:airline_theme='kalisi'
-
+Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
+Plug 'godlygeek/tabular'            " Vim script for text filtering and alignment 
 
 call plug#end()
 
@@ -79,6 +82,13 @@ nnoremap <Leader>u :MundoToggle<CR>
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+
+" w0rp/ale                          {{{2
+" ======================================
+
+" Use quickfix instead of loclist
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
 
 " Functions                                                                 {{{1
 " ==============================================================================
