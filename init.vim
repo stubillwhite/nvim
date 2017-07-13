@@ -9,8 +9,8 @@ let g:TmpDir='~/.config/nvim-tmp'
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " Set <Leader> to something easier to reach
-let mapleader=","               
-let g:mapleader="," 
+let mapleader=","
+let g:mapleader=","
 
 " Plugins                                                                   {{{1
 " ==============================================================================
@@ -41,19 +41,19 @@ Plug 'Raimondi/delimitMate'         " Automatically close quotes, brackets, etc
 Plug 'Valloric/YouCompleteMe'       " Smarter completion
 Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
 Plug 'mileszs/ack.vim'              " Vim plugin for the Perl module / CLI script 'ack'
-Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting 
+Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting
 Plug 'Olical/vim-enmasse'           " Edit every line in a quickfix list at the same time
 Plug 'scrooloose/nerdtree'          " Easy file browsing
 Plug 'simnalamburt/vim-mundo'       " Visualise the undo graph
 Plug 'terryma/vim-expand-region'    " Incremental selection widening
-Plug 'tpope/vim-endwise'            " Smart closing of data strutures 
+Plug 'tpope/vim-endwise'            " Smart closing of data strutures
 Plug 'tpope/vim-fugitive'           " Git integration
 Plug 'tpope/vim-repeat'             " Smarter repeat functionality
 Plug 'tpope/vim-surround'           " quoting/parenthesizing made simple
 Plug 'tpope/vim-unimpaired'         " Incredibly useful text navigation and manipulation shortcuts
 
 Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
-Plug 'godlygeek/tabular'            " Vim script for text filtering and alignment 
+Plug 'godlygeek/tabular'            " Vim script for text filtering and alignment
 
 call plug#end()
 
@@ -377,3 +377,4 @@ vnoremap <silent> # :<C-U>
 nmap <Leader>b :BufExplorer<CR>
 let g:bufExplorerSortBy='name'      " Default sort by the name
 
+" Align commas in paragraph: gaip*,
