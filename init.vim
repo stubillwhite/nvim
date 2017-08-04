@@ -36,13 +36,14 @@ Plug 'vim-scripts/applescript.vim'  " Applescript syntax highlighting
 Plug 'tmux-plugins/vim-tmux'        " Syntax for tmux configuration
 
 " Interface
-Plug 'jaxbot/browserlink.vim'       " Live browser editing for Vim
+Plug 'Olical/vim-enmasse'           " Edit every line in a quickfix list at the same time
 Plug 'Raimondi/delimitMate'         " Automatically close quotes, brackets, etc
 Plug 'Valloric/YouCompleteMe'       " Smarter completion
+Plug 'ap/vim-css-color'             " Preview CSS colors in source code when editing
+Plug 'jaxbot/browserlink.vim'       " Live browser editing for Vim
 Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
 Plug 'mileszs/ack.vim'              " Vim plugin for the Perl module / CLI script 'ack'
 Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting
-Plug 'Olical/vim-enmasse'           " Edit every line in a quickfix list at the same time
 Plug 'scrooloose/nerdtree'          " Easy file browsing
 Plug 'simnalamburt/vim-mundo'       " Visualise the undo graph
 Plug 'terryma/vim-expand-region'    " Incremental selection widening
