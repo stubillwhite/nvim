@@ -200,6 +200,7 @@ set scrolloff=2                             " Keep some context when scrolling v
 set sidescrolloff=2                         " Keep some context when scrolling horizontally
 set nostartofline                           " Keep horizontal cursor position when scrolling
 set formatoptions+=n                        " Format respects numbered/bulleted lists
+set iskeyword+=-                            " Dash is part of a word for movement purposes
 set virtualedit=                            " No virtual edit
 set timeoutlen=500                          " Timeout to press a key combination
 set report=0                                " Always report changes
