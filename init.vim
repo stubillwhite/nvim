@@ -34,6 +34,7 @@ Plug 'derekwyatt/vim-scala'         " Scala
 Plug 'davidhalter/jedi-vim'         " Smarter Python integration
 Plug 'vim-scripts/applescript.vim'  " Applescript syntax highlighting
 Plug 'tmux-plugins/vim-tmux'        " Syntax for tmux configuration
+Plug 'othree/xml.vim'               " Helps editing XML files
 
 " Interface
 Plug 'Olical/vim-enmasse'           " Edit every line in a quickfix list at the same time
