@@ -22,8 +22,10 @@ call plug#begin('~/.config/vim-plug')
 
 " Appearance
 Plug 'romainl/Apprentice'           " A dark, low-contrast, Vim colorscheme
-Plug 'noah/vim256-color'            " A collection of 256-color colorschemes for vim
+Plug 'noah/vim256-color'            " A collection of 256-color colorschemes for Vim
 Plug 'godlygeek/csapprox'           " Use GUI color schemes in terminals
+Plug 'itchyny/lightline.vim'        " A light and configurable statusline plugin for Vim
+Plug 'junegunn/seoul256.vim'
 
 " Syntax and static checking
 Plug 'w0rp/ale'                     " Asynchronous Lint Engine
@@ -40,9 +42,10 @@ Plug 'othree/xml.vim'               " Helps editing XML files
 Plug 'Olical/vim-enmasse'           " Edit every line in a quickfix list at the same time
 Plug 'Raimondi/delimitMate'         " Automatically close quotes, brackets, etc
 Plug 'Valloric/YouCompleteMe'       " Smarter completion
-Plug 'ap/vim-css-color'             " Preview CSS colors in source code when editing
 Plug 'jaxbot/browserlink.vim'       " Live browser editing for Vim
 Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
+Plug '/usr/local/opt/fzf'           " FZF installation
+Plug 'junegunn/fzf.vim'             " FZF fuzzy finder for Vim
 Plug 'mileszs/ack.vim'              " Vim plugin for the Perl module / CLI script 'ack'
 Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting
 Plug 'scrooloose/nerdtree'          " Easy file browsing
@@ -75,6 +78,63 @@ let NERDTreeQuitOnOpen=1
 let NERDTreeShowHidden=0
 nmap <Leader>e :NERDTreeToggle<CR>
 nmap <Leader>E :NERDTreeFind<CR>
+
+" junegunn/fzf                      {{{2
+" ======================================
+
+set rtp+=/usr/local/opt/fzf
+
+" itchny/lightline                  {{{2
+" ======================================
+
+" Lightline
+let g:lightline = {
+\ 'colorscheme': 'seoul256',
+\ 'active': {
+\   'left': [['mode', 'paste'], ['filename', 'modified']],
+\   'right': [['percent'], ['lineinfo'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
+\ },
+\ 'component_expand': {
+\   'linter_warnings': 'LightlineLinterWarnings',
+\   'linter_errors': 'LightlineLinterErrors',
+\   'linter_ok': 'LightlineLinterOK'
+\ },
+\ 'component_type': {
+\   'readonly': 'error',
+\   'linter_warnings': 'warning',
+\   'linter_errors': 'error'
+\ },
+\ }
+
+function LightlineLinterWarnings()
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d ✱', all_non_errors)
+endfunction
+
+function LightlineLinterErrors()
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d ✘', all_errors)
+endfunction
+
+function LightlineLinterOK()
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '✔ ' : ''
+endfunction
+
+autocmd User ALELint call s:MaybeUpdateLightline()
+
+" Update and show lightline but only if it's visible (e.g., not in Goyo)
+function! s:MaybeUpdateLightline()
+  if exists('#lightline')
+    call lightline#update()
+  end
+endfunction
 
 " simnalamburt/vim-mundo            {{{2
 " ======================================
@@ -187,7 +247,7 @@ set hidden                                  " Keep buffers open when not display
 set ruler                                   " Show the file position
 set copyindent                              " Copy indentation characters
 set showcmd                                 " Show incomplete commands
-set showmode                                " Show the active mode
+set noshowmode                              " Don't show the active mode, mirrored in lightline
 set incsearch                               " Search incrementally
 set hlsearch                                " Search highlighting
 set history=1000                            " Keep more history
@@ -287,6 +347,7 @@ function ConfigureGui()
 endfunction
 autocmd GUIEnter * call ConfigureGui()
 
+
 " Search                                                                    {{{1
 " ==============================================================================
 
@@ -364,6 +425,11 @@ vnoremap <silent> <Leader>W :StripTrailingWhitespace<CR>
 " Map insert mode and command-line mode CTRL-Backspace to delete the previous word
 imap <C-BS> <C-W>
 cmap <C-BS> <C-W>
+
+
+"let g:seoul256_background = 235
+"colo seoul256
+
 
 " VimTip #171 -- Search for visually selected text
 vnoremap <silent> * :<C-U>
