@@ -422,14 +422,15 @@ nmap <Leader>w :set list!<CR>
 nnoremap <silent> <Leader>W :StripTrailingWhitespace<CR>
 vnoremap <silent> <Leader>W :StripTrailingWhitespace<CR>
 
+" Fugitive
+nnoremap <silent> <Leader>g :Gstatus<CR>:only<CR>
+
 " Map insert mode and command-line mode CTRL-Backspace to delete the previous word
 imap <C-BS> <C-W>
 cmap <C-BS> <C-W>
 
-
 "let g:seoul256_background = 235
 "colo seoul256
-
 
 " VimTip #171 -- Search for visually selected text
 vnoremap <silent> * :<C-U>
