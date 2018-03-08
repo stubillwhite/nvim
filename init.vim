@@ -141,6 +141,10 @@ endfunction
 " ======================================
 nnoremap <Leader>u :MundoToggle<CR>
 
+" davidhalter/jedi-vim              {{{2
+" ======================================
+let g:jedi#force_py_version = 3
+
 " mileszs/ack.vim                   {{{2
 " ======================================
 if executable('ag')
