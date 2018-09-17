@@ -5,9 +5,6 @@
 
 let g:TmpDir='~/.config/nvim-tmp'
 
-" Enable cursor shapes
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
-
 " Set <Leader> to something easier to reach
 let mapleader=","
 let g:mapleader=","
@@ -62,7 +59,11 @@ Plug 'vimlab/split-term.vim'        " Utilities around neovim's terminal
 Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
 Plug 'godlygeek/tabular'            " Vim script for text filtering and alignment
 
+Plug 'SyntaxAttr.vim'            
+
 call plug#end()
+
+map -a	:call SyntaxAttr()<CR>
 
 " junegunn/vim-easy-align           {{{2
 " ======================================
@@ -150,6 +151,15 @@ let g:jedi#force_py_version = 3
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
+
+" terryma/vim-expand-region         {{{2
+" ======================================
+
+" Alt up/down for expand and shrink
+map <A-UP> <Plug>(expand_region_expand)
+map <A-DOWN> <Plug>(expand_region_shrink)
+vmap <A-UP> <Plug>(expand_region_expand)
+vmap <A-DOWN> <Plug>(expand_region_shrink)
 
 " w0rp/ale                          {{{2
 " ======================================
@@ -242,6 +252,7 @@ command -range=% StripTrailingWhitespace <line1>,<line2> call s:StripTrailingWhi
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 colorscheme apprentice
+"colorscheme sbw
 set background=dark
 
 " Settings                                                                  {{{1
@@ -377,6 +388,8 @@ augroup VimrcFileTypeAutocommands
     au BufRead,BufNewFile *.log                         setlocal filetype=log
     au BufRead,BufNewFile *.applescript                 setlocal filetype=applescript
     au BufRead,BufNewFile *.boot                        setlocal filetype=clojure
+    au BufRead,BufNewFile .zshrc                        setlocal filetype=sh
+    au BufRead,BufNewFile .bashrc                       setlocal filetype=sh
 augroup END
 
 " Key mappings                                                              {{{1
