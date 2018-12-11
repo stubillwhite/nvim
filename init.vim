@@ -368,8 +368,8 @@ autocmd GUIEnter * call ConfigureGui()
 " ==============================================================================
 
 function s:SearchInteractive()
-    let SearchCmd=':Ack '.a:wrd
-    call feedkeys(SearchCmd."\<HOME>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>")
+    let SearchCmd=':Ack '
+    call feedkeys(SearchCmd."\<HOME>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>")
 endfunction
 command -nargs=0 SearchInteractive call s:SearchInteractive(<f-args>)
 
@@ -429,9 +429,9 @@ nnoremap / /\v
 vnoremap / /\v
 
 " Grep for the word currently under the cursor
-" CTRL-G immediate, ALT-G interactive
+" CTRL-G immediate, CTRL-I interactive
 nnoremap <C-G> :SearchImmediate <C-R><C-W><CR>
-nnoremap ç     :SearchInteractive <CR>
+nnoremap <C-I> :SearchInteractive <CR>
 
 " Show unprintable characters
 nmap <Leader>w :set list!<CR>
