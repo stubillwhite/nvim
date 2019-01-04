@@ -340,6 +340,9 @@ augroup VimrcEditingAutocommands
 
 augroup END
 
+" Use tabs in makefiles
+autocmd FileType make set noexpandtab
+
 " File comparison options
 set diffopt=filler,iwhite
 if has('unix')
