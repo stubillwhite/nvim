@@ -393,6 +393,7 @@ augroup VimrcFileTypeAutocommands
     au BufRead,BufNewFile *.boot                        setlocal filetype=clojure
     au BufRead,BufNewFile .zshrc                        setlocal filetype=sh
     au BufRead,BufNewFile .bashrc                       setlocal filetype=sh
+    au BufRead,BufNewFile *.jsw                         setlocal filetype=javascript
 augroup END
 
 " Key mappings                                                              {{{1
@@ -416,6 +417,9 @@ nnoremap k gk
 
 " Quick way to edit .vimrc
 nmap <Leader>v :e ~/.config/nvim/init.vim<CR><CR>
+
+" Quick way to edit .zshrc
+nmap <Leader>z :e ~/.zshrc<CR><CR>
 
 " Copy-all to clipboard and paste-all from clipboard
 nnoremap <Leader>ac :%y+<CR>
