@@ -55,6 +55,7 @@ Plug 'tpope/vim-repeat'             " Smarter repeat functionality
 Plug 'tpope/vim-surround'           " quoting/parenthesizing made simple
 Plug 'tpope/vim-unimpaired'         " Incredibly useful text navigation and manipulation shortcuts
 Plug 'vimlab/split-term.vim'        " Utilities around neovim's terminal
+Plug 'JikkuJose/vim-visincr'        " Increment lists of numbers
 
 Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
 Plug 'godlygeek/tabular'            " Vim script for text filtering and alignment
