@@ -60,8 +60,6 @@ Plug 'JikkuJose/vim-visincr'        " Increment lists of numbers
 Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
 Plug 'godlygeek/tabular'            " Vim script for text filtering and alignment
 
-Plug 'SyntaxAttr.vim'            
-
 call plug#end()
 
 map -a	:call SyntaxAttr()<CR>
