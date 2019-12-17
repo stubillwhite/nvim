@@ -4,6 +4,7 @@ setopt EXTENDED_GLOB
 
 FILES=(
     "init.vim"
+    "colors"
 )
 
 INSTALLATION_DIR=$HOME/.config/nvim
