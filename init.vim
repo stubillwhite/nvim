@@ -34,7 +34,7 @@ Plug 'davidhalter/jedi-vim'         " Smarter Python integration
 Plug 'vim-scripts/applescript.vim'  " Applescript syntax highlighting
 Plug 'tmux-plugins/vim-tmux'        " Syntax for tmux configuration
 Plug 'othree/xml.vim'               " Helps editing XML files
-"Plug 'pearofducks/ansible-vim'      " Ansible YAML files
+Plug 'pearofducks/ansible-vim'      " Ansible YAML files
 
 " Interface
 Plug 'Olical/vim-enmasse'           " Edit every line in a quickfix list at the same time
@@ -301,7 +301,7 @@ set guifontwide=NSimsun:h10
 " Command / file completion
 set noshellslash                            " Backslashes for filenames for ZIP plugin
 set wildmenu                                " Display options when tab completing
-set wildmode=list:longest,full              " List options but complete to full
+set wildmode=list:full,full                 " List options but complete to full
 set wildignore=
 set wildignore+=*.class,*.obj,*.pyc
 set wildignore+=*/.hg/*,*/.git/*,*/.svn/*
@@ -394,6 +394,8 @@ augroup VimrcFileTypeAutocommands
     au BufRead,BufNewFile .zshrc                        setlocal filetype=sh
     au BufRead,BufNewFile .bashrc                       setlocal filetype=sh
     au BufRead,BufNewFile *.jsw                         setlocal filetype=javascript
+    au BufRead,BufNewFile Brewfile                      setlocal filetype=ruby
+    au BufRead,BufNewFile *.yml                         setlocal filetype=yaml.ansible
 augroup END
 
 " Key mappings                                                              {{{1
@@ -449,6 +451,8 @@ vnoremap <silent> <Leader>W :StripTrailingWhitespace<CR>
 
 " Fugitive
 nnoremap <silent> <Leader>g :Gstatus<CR>:only<CR>
+nnoremap <silent> <Leader>1 :diffget //2<CR>
+nnoremap <silent> <Leader>3 :diffget //3<CR>
 
 " Map insert mode and command-line mode CTRL-Backspace to delete the previous word
 imap <C-BS> <C-W>
