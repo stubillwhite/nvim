@@ -1,7 +1,3 @@
-" TODO: THIS LOOKS RELEVANT
-" https://github.com/nlknguyen/papercolor-theme/blob/master/colors/papercolor.vim
-" https://raw.githubusercontent.com/NLKNguyen/papercolor-theme/master/colors/PaperColor.vim
-
 set bg=dark
 hi clear
 if exists("syntax_on")
@@ -36,6 +32,8 @@ call s:create_color_alias('error',                '#af5f5f')
 call s:create_color_alias('type',                 '#8787af')
 call s:create_color_alias('selection_foreground', '#ffffff')
 call s:create_color_alias('selection_background', '#585858')
+call s:create_color_alias('ui_foreground',        '#bcbcbc')
+call s:create_color_alias('ui_background',        '#262626')
 
 exec 'hi Title'      . s:fg_title                . s:bg_background
 exec 'hi Normal'     . s:fg_foreground           . s:bg_background
@@ -48,16 +46,9 @@ exec 'hi PreProc'    . s:fg_preproc              . s:bg_background
 exec 'hi Error'      . s:fg_error                . s:bg_background
 exec 'hi Type'       . s:fg_type                 . s:bg_background
 exec 'hi Search'     . s:fg_selection_foreground . s:bg_selection_background
-
-" :syn list
-
-" Pallette 
-" Dark     #262626
-" medium grey     #585858    rgb(88, 88, 88)       240    8
-" lighter grey    #bcbcbc    rgb(188, 188, 188)    250    foreground color
-" green           #5f875f    rgb(95, 135, 95)      65     2
-" blue            #5f87af    rgb(95, 135, 175)     67     4
-" red             #af5f5f    rgb(175, 95, 95)      131    1
+exec 'hi VertSplit'  . s:fg_ui_foreground        . s:bg_ui_background
+exec 'hi FoldColumn' . s:fg_ui_foreground        . s:bg_ui_background
+exec 'hi SignColumn' . s:fg_ui_foreground        . s:bg_ui_background
 
 let colors_name = "sbw"
 
@@ -66,12 +57,12 @@ let colors_name = "sbw"
 "---- hi Error        guifg=#af5f5f           guibg=bg                gui=NONE
 
 " Links
-hi! link Special   Constant
-hi! link Todo      WarningMsg
-hi! link IncSearch Search
+hi! link Special    Constant
+hi! link Todo       WarningMsg
+hi! link IncSearch  Search
+hi! link MatchParen Search
 
 "---- hi! link CursorIM       Cursor
-"---- hi! link VertSplit      StatusLineNC
 "---- hi! link Pmenu          StatusLineNC
 "---- hi! link LineNr         ErrorMsg
 "---- hi! link ModeMsg        ErrorMsg
