@@ -35,6 +35,8 @@ Plug 'vim-scripts/applescript.vim'  " Applescript syntax highlighting
 Plug 'tmux-plugins/vim-tmux'        " Syntax for tmux configuration
 Plug 'othree/xml.vim'               " Helps editing XML files
 Plug 'pearofducks/ansible-vim'      " Ansible YAML files
+Plug 'jvirtanen/vim-hcl'            " HashiCorp Configuration Language syntax highlighting
+Plug 'aliou/bats.vim'               " BATS script testing language
 
 " Interface
 Plug 'Olical/vim-enmasse'           " Edit every line in a quickfix list at the same time
@@ -197,12 +199,12 @@ command -nargs=0 NoDiffThis call s:NoDiffThis(<f-args>)
 
 " Format JSON
 function s:FormatJson()
-    silent execute '%! jq .'
+    silent execute '%! jq --indent 4 .'
 endfunction
 command -nargs=0 FormatJson call s:FormatJson(<f-args>)
 
 function s:FormatJsonAndSort()
-    silent execute '%! jq -S .'
+    silent execute '%! jq --indent 4 -S .'
 endfunction
 command -nargs=0 FormatJsonAndSort call s:FormatJsonAndSort(<f-args>)
 
@@ -231,11 +233,11 @@ function s:FixSmartPunctuation()
 endfunction
 command -nargs=0 FixSmartPunctuation call s:FixSmartPunctuation(<f-args>)
 
-" Remove ASCII color codes
-function s:FixAsciiColorCodes()
+" Remove ANSI codes
+function s:FixAnsiCodes()
     silent! %s/\e\[[0-9;]\+[mK]//g
 endfunction
-command -nargs=0 FixAsciiColorCodes call s:FixAsciiColorCodes(<f-args>)
+command -nargs=0 FixAnsiCodes call s:FixAnsiCodes(<f-args>)
 
 " Strip trailing whitespace characters from the entire file or a range
 function s:StripTrailingWhitespace() range
@@ -246,6 +248,12 @@ function s:StripTrailingWhitespace() range
     silent call setpos('.', l:save_cursor)
 endfunction
 command -range=% StripTrailingWhitespace <line1>,<line2> call s:StripTrailingWhitespace()
+
+" Wrap numbers which are at the end of a line with square brackets
+function s:WrapTrailingDigits()
+    silent execute '%s/\(\d\+\)$/[\1]/g'
+endfunction
+command -nargs=0 WrapTrailingDigits call s:WrapTrailingDigits(<f-args>)
 
 " Key bindings                                                              {{{1
 " ==============================================================================
@@ -371,13 +379,13 @@ autocmd GUIEnter * call ConfigureGui()
 " ==============================================================================
 
 function s:SearchInteractive()
-    let SearchCmd=':Ack '
+    let SearchCmd=':Ack! '
     call feedkeys(SearchCmd."\<HOME>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>")
 endfunction
 command -nargs=0 SearchInteractive call s:SearchInteractive(<f-args>)
 
 function s:SearchImmediate(wrd)
-    let SearchCmd=':Ack '.a:wrd
+    let SearchCmd=':Ack! '.a:wrd
     call feedkeys(SearchCmd)
     call feedkeys("\<CR>")
 endfunction
