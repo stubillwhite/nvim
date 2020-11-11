@@ -14,9 +14,10 @@ function! DisplaySynStack ()
 endfunction
 map gm :call DisplaySynStack()<CR>
 
-function! s:create_color_alias(name, color)
-  let {'s:fg_' . a:name} = ' guifg=' . a:color . ' gui=NONE'
-  let {'s:bg_' . a:name} = ' guibg=' . a:color . ' gui=NONE'
+function! s:create_color_alias(name, color, ...)
+    let additionalOptions = get(a:, 1, ' gui=NONE')
+    let {'s:fg_' . a:name} = ' guifg=' . a:color . l:additionalOptions
+    let {'s:bg_' . a:name} = ' guibg=' . a:color . l:additionalOptions
 endfun
 
 call s:create_color_alias('title',                '#ffffff')
@@ -35,20 +36,22 @@ call s:create_color_alias('selection_background', '#585858')
 call s:create_color_alias('ui_foreground',        '#bcbcbc')
 call s:create_color_alias('ui_background',        '#262626')
 
-exec 'hi Title'      . s:fg_title                . s:bg_background
-exec 'hi Normal'     . s:fg_foreground           . s:bg_background
-exec 'hi Comment'    . s:fg_comment              . s:bg_background
-exec 'hi Identifier' . s:fg_identifier           . s:bg_background
-exec 'hi Function'   . s:fg_function             . s:bg_background
-exec 'hi Statement'  . s:fg_statement            . s:bg_background
-exec 'hi Constant'   . s:fg_constant             . s:bg_background
-exec 'hi PreProc'    . s:fg_preproc              . s:bg_background
-exec 'hi Error'      . s:fg_error                . s:bg_background
-exec 'hi Type'       . s:fg_type                 . s:bg_background
-exec 'hi Search'     . s:fg_selection_foreground . s:bg_selection_background
-exec 'hi VertSplit'  . s:fg_ui_foreground        . s:bg_ui_background
-exec 'hi FoldColumn' . s:fg_ui_foreground        . s:bg_ui_background
-exec 'hi SignColumn' . s:fg_ui_foreground        . s:bg_ui_background
+exec 'hi Title'       . s:fg_title                . s:bg_background
+exec 'hi Normal'      . s:fg_foreground           . s:bg_background
+exec 'hi Comment'     . s:fg_comment              . s:bg_background
+exec 'hi Identifier'  . s:fg_identifier           . s:bg_background
+exec 'hi Function'    . s:fg_function             . s:bg_background
+exec 'hi Statement'   . s:fg_statement            . s:bg_background
+exec 'hi Constant'    . s:fg_constant             . s:bg_background
+exec 'hi PreProc'     . s:fg_preproc              . s:bg_background
+exec 'hi Error'       . s:fg_error                . s:bg_background
+exec 'hi Type'        . s:fg_type                 . s:bg_background
+exec 'hi Search'      . s:fg_selection_foreground . s:bg_selection_background
+exec 'hi VertSplit'   . s:fg_ui_foreground        . s:bg_ui_background
+exec 'hi FoldColumn'  . s:fg_ui_foreground        . s:bg_ui_background
+exec 'hi SignColumn'  . s:fg_ui_foreground        . s:bg_ui_background
+exec 'hi EndOfBuffer' . s:fg_ui_background        . s:bg_ui_background
+exec 'hi Folded'      . s:fg_ui_foreground        . s:bg_ui_background
 
 let colors_name = "sbw"
 
@@ -84,7 +87,6 @@ hi! link MatchParen Search
 "---- hi DiffText     guifg=fg                guibg=royalblue3        gui=NONE
 "---- 
 "---- hi ErrorMsg     guifg=#bcbcbc           guibg=bg                gui=bold,undercurl  guisp=#af5f5f
-"---- hi Folded       guifg=gray60            guibg=gray15            gui=italic
 "---- hi FoldColumn   guifg=gray60            guibg=bg                gui=italic
 "---- hi NonText      guifg=gray50            guibg=bg                gui=NONE
 "---- hi SpecialKey   guifg=gray50            guibg=bg                gui=NONE
