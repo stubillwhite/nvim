@@ -166,9 +166,8 @@ vmap <A-DOWN> <Plug>(expand_region_shrink)
 " w0rp/ale                          {{{2
 " ======================================
 
-" Use quickfix instead of loclist
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 0
 
 " Functions                                                                 {{{1
 " ==============================================================================
@@ -213,6 +212,16 @@ function! s:FormatXML()
     silent execute '%! xmllint --format %'
 endfunction
 command -nargs=0 FormatXML call s:FormatXML(<f-args>)
+
+function s:BrewfileAppendBrewDescription()
+    execute 'read! brew info '.expand('<cword>').' | head -n 2 | tail -n 1'
+endfunction
+command -nargs=0 BrewfileAppendBrewDescription call s:BrewfileAppendBrewDescription(<f-args>)
+
+function s:BrewfileAppendCaskDescription()
+    execute 'read! brew cask info '.expand('<cword>').' | tail -n 5 | head -n 1'
+endfunction
+command -nargs=0 BrewfileAppendCaskDescription call s:BrewfileAppendCaskDescription(<f-args>)
 
 " Text functions                    {{{2
 " ======================================
@@ -380,7 +389,7 @@ autocmd GUIEnter * call ConfigureGui()
 
 function s:SearchInteractive()
     let SearchCmd=':Ack! '
-    call feedkeys(SearchCmd."\<HOME>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>")
+    call feedkeys(SearchCmd."\<HOME>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>\<RIGHT>")
 endfunction
 command -nargs=0 SearchInteractive call s:SearchInteractive(<f-args>)
 
