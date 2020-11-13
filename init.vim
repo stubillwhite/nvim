@@ -400,6 +400,23 @@ function s:SearchImmediate(wrd)
 endfunction
 command -nargs=1 SearchImmediate call s:SearchImmediate(<f-args>)
 
+" Horrific SBT dependency trees                                             {{{1
+" ==============================================================================
+
+function DependencyTreeFoldLevel(lnum)
+    let line=substitute(getline(a:lnum), "\\[info\\] ", "", "")
+    let cleanLine=substitute(line, "\\(|\\|+\\|-\\)", " ", "g")
+    let index=match(cleanLine, "\\S") / 2 - 1 
+    return (index == -1 ? 0 : index)
+endfunction
+
+function s:FoldDependencyTree()
+    %g/|\s\+$/delete
+    set foldmethod=expr
+	set foldexpr=DependencyTreeFoldLevel(v:lnum)
+endfunction
+command -nargs=0 FoldDependencyTree call s:FoldDependencyTree(<f-args>)
+
 " File types                                                                {{{1
 " ==============================================================================
 
