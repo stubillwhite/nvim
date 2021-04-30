@@ -425,7 +425,6 @@ augroup VimrcFileTypeAutocommands
     au BufRead,BufNewFile *.log                         setlocal filetype=log
     au BufRead,BufNewFile *.applescript                 setlocal filetype=applescript
     au BufRead,BufNewFile *.boot                        setlocal filetype=clojure
-    au BufRead,BufNewFile .zshrc                        setlocal filetype=sh
     au BufRead,BufNewFile .bashrc                       setlocal filetype=sh
     au BufRead,BufNewFile *.jsw                         setlocal filetype=javascript
     au BufRead,BufNewFile Brewfile                      setlocal filetype=ruby
