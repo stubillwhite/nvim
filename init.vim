@@ -133,6 +133,9 @@ endfunction
 
 autocmd User ALELint call s:MaybeUpdateLightline()
 
+" No vertical char
+" set fillchars+=vert:\
+
 " Update and show lightline but only if it's visible (e.g., not in Goyo)
 function! s:MaybeUpdateLightline()
   if exists('#lightline')
@@ -264,7 +267,7 @@ function s:WrapTrailingDigits()
 endfunction
 command -nargs=0 WrapTrailingDigits call s:WrapTrailingDigits(<f-args>)
 
-" Key bindings                                                              {{{1
+" Color scheme                                                              {{{1
 " ==============================================================================
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -434,6 +437,9 @@ augroup END
 " Key mappings                                                              {{{1
 " ==============================================================================
 
+" Easier way to exit terminal mode
+tnoremap <leader><Esc> <C-\><C-n>           
+
 " <Space> in normal mode removes highlighted search
 nnoremap <Space> :nohlsearch<Return>:echo "Search highlight off"<Return>
 
@@ -450,8 +456,9 @@ nnoremap ` '
 nnoremap j gj
 nnoremap k gk
 
-" Quick way to edit .vimrc
+" Quick way to edit .vimrc and colors
 nmap <Leader>v :e ~/.config/nvim/init.vim<CR><CR>
+nmap <Leader>c :e ~/.config/nvim/colors/sbw.vim<CR><CR>
 
 " Quick way to edit .zshrc
 nmap <Leader>z :e ~/.zshrc<CR><CR>
