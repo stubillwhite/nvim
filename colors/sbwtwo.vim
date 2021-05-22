@@ -5,13 +5,13 @@
 " Theme setup                                                               {{{1
 " ==============================================================================
 
-let colors_name = "sbw-two"
-
 set bg=dark
 hi clear
 if exists("syntax_on")
     syntax reset
 endif
+
+let colors_name = "sbwtwo"
 
 " Functions                                                                 {{{1
 " ==============================================================================
@@ -74,39 +74,30 @@ hi! link IncSearch  Search
 hi! link MatchParen Search
 
 " Gutter
-hi! link LineNr     Comment
-hi! link SignColumn Comment
-hi! link Folded     Comment
-hi! link FoldColumn Comment
+hi! link LineNr      Comment
+hi! link SignColumn  Comment
+hi! link Folded      Comment
+hi! link FoldColumn  Comment
+hi! link EndOfBuffer Comment
+
+" General messages
+call s:create_highlight('ErrorMsg', s:PaletteRed)
+call s:create_highlight('MoreMsg', s:PaletteLightBlue)
+call s:create_highlight('ModeMsg', s:PaletteLightBlue)
+hi! link Question Normal
+call s:create_highlight('WarningMsg', s:PaletteYellow)
 
 " UI                                {{{2
 " ======================================
 
 
 
-"               " Correct background (see issue #7):
-"               " --- Problem with changing between dark and light on 256 color terminal
-"               " --- https://github.com/morhetz/gruvbox/issues/7
-"               if s:is_dark
-"                 set background=dark
-"               else
-"                 set background=light
-"               endif
-"               
-"               if version >= 700
-"                 " Screen line that the cursor is
-"                 call s:HL('CursorLine',   s:none, s:bg1)
-"                 " Screen column that the cursor is
-"                 hi! link CursorColumn CursorLine
-"               
 "                 " Tab pages line filler
 "                 call s:HL('TabLineFill', s:bg4, s:bg1, s:invert_tabline)
 "                 " Active tab page label
 "                 call s:HL('TabLineSel', s:green, s:bg1, s:invert_tabline)
 "                 " Not active tab page label
 "                 hi! link TabLine TabLineFill
-"               
-"               endif
 "               
 "               if version >= 703
 "                 " Highlighted screen columns
@@ -139,16 +130,6 @@ hi! link FoldColumn Comment
 "               " Titles for output from :set all, :autocmd, etc.
 "               hi! link Title GruvboxGreenBold
 "               
-"               " Error messages on the command line
-"               call s:HL('ErrorMsg',   s:bg0, s:red, s:bold)
-"               " More prompt: -- More --
-"               hi! link MoreMsg GruvboxYellowBold
-"               " Current mode message: -- INSERT --
-"               hi! link ModeMsg GruvboxYellowBold
-"               " 'Press enter' prompt and yes/no questions
-"               hi! link Question GruvboxOrangeBold
-"               " Warning messages
-"               hi! link WarningMsg GruvboxRedBold
 "               
 "               " }}}
 "               
@@ -174,8 +155,8 @@ hi! link PmenuSel Selection
 " ======================================
 
 " Basic statements and keywords
-call s:create_highlight('Statement',  s:PaletteLightBlue)
-call s:create_highlight('Keyword',    s:PaletteLightBlue)
+call s:create_highlight('Statement', s:PaletteLightBlue)
+call s:create_highlight('Keyword',   s:PaletteLightBlue)
 hi! link Conditional Keyword
 hi! link Repeat      Keyword
 hi! link Label       Keyword
@@ -183,7 +164,9 @@ hi! link Exception   Keyword
 hi! link Operator    Keyword
 hi! link Type        Keyword
 hi! link Special     Normal
-call s:create_highlight('Comment',    s:PaletteDarkGrey)
+call s:create_highlight('Comment',   s:PaletteDarkGrey)
+call s:create_highlight('Todo',      s:PaletteYellow)
+call s:create_highlight('Error',     s:PaletteRed)
 
 " Identifiers
 call s:create_highlight('Function',   s:PaletteYellow)
@@ -198,7 +181,7 @@ hi! link Macro     PreProc
 hi! link PreCondit PreProc
 
 " Generic constant
-call s:create_highlight('Constant',   s:PaletteBlue)
+call s:create_highlight('Constant',   s:PaletteBlueGreen)
 hi! link Character Constant
 hi! link Boolean   Constant
 hi! link Number    Constant
@@ -211,3 +194,5 @@ call s:create_highlight('DiffDelete', s:PaletteWhite, s:PaletteRed)
 call s:create_highlight('DiffAdd',    s:PaletteWhite, s:PaletteGreen)
 call s:create_highlight('DiffChange', s:PaletteWhite, s:PaletteBlue)
 call s:create_highlight('DiffText',   s:PaletteWhite, s:PaletteBlueGreen)
+
+

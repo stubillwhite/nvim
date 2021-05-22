@@ -267,14 +267,6 @@ function s:WrapTrailingDigits()
 endfunction
 command -nargs=0 WrapTrailingDigits call s:WrapTrailingDigits(<f-args>)
 
-" Color scheme                                                              {{{1
-" ==============================================================================
-
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-colorscheme apprentice
-"colorscheme sbw
-set background=dark
-
 " Settings                                                                  {{{1
 " ==============================================================================
 
@@ -458,7 +450,7 @@ nnoremap k gk
 
 " Quick way to edit .vimrc and colors
 nmap <Leader>v :e ~/.config/nvim/init.vim<CR><CR>
-nmap <Leader>c :e ~/.config/nvim/colors/sbw-two.vim<CR><CR>
+nmap <Leader>c :e ~/.config/nvim/colors/sbwtwo.vim<CR><CR>
 
 " Quick way to edit .zshrc
 nmap <Leader>z :e ~/.zshrc<CR><CR>
@@ -518,3 +510,13 @@ nmap <Leader>b :BufExplorer<CR>
 let g:bufExplorerSortBy='name'      " Default sort by the name
 
 " Align commas in paragraph: gaip*,
+
+" Color scheme                                                              {{{1
+" ==============================================================================
+
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1 
+set termguicolors
+
+"colorscheme apprentice
+colorscheme sbwtwo
+
