@@ -458,7 +458,7 @@ nnoremap k gk
 
 " Quick way to edit .vimrc and colors
 nmap <Leader>v :e ~/.config/nvim/init.vim<CR><CR>
-nmap <Leader>c :e ~/.config/nvim/colors/sbw.vim<CR><CR>
+nmap <Leader>c :e ~/.config/nvim/colors/sbw-two.vim<CR><CR>
 
 " Quick way to edit .zshrc
 nmap <Leader>z :e ~/.zshrc<CR><CR>
