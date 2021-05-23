@@ -314,6 +314,7 @@ set guifontwide=NSimsun:h10
 set noshellslash                            " Backslashes for filenames for ZIP plugin
 set wildmenu                                " Display options when tab completing
 set wildmode=list:full,full                 " List options but complete to full
+set wildignorecase                          " Be case insensitive
 set wildignore=
 set wildignore+=*.class,*.obj,*.pyc
 set wildignore+=*/.hg/*,*/.git/*,*/.svn/*
