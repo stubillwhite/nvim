@@ -1,6 +1,6 @@
 " vim:fdm=marker
 
-"TODO: See https://github.com/morhetz/gruvbox/blob/master/colors/gruvbox.vim
+" TODO: See https://github.com/morhetz/gruvbox/blob/master/colors/gruvbox.vim
 
 " Theme setup                                                               {{{1
 " ==============================================================================
@@ -66,12 +66,14 @@ call s:create_palette_alias('Purple',       '#8787af')
 call s:create_highlight('Normal', s:PaletteLightGrey, s:PaletteLightBlack)
 
 " Selection
-call s:create_highlight('Selection', s:PaletteWhite, s:PaletteDarkGrey)
-hi! link Visual     Selection
-hi! link VisualNOS  Visual
-hi! link Search     Selection
-hi! link IncSearch  Search
-hi! link MatchParen Search
+call s:create_highlight('Selection', s:PaletteWhite, s:PaletteVeryDarkGrey)
+hi! link Visual      Selection
+hi! link VisualNOS   Visual
+hi! link Search      Selection
+hi! link IncSearch   Search
+hi! link MatchParen  Search
+hi! link CursorLine  Search
+hi! link ColorColumn Search
 
 " Gutter
 hi! link LineNr      Comment
@@ -79,6 +81,9 @@ hi! link SignColumn  Comment
 hi! link Folded      Comment
 hi! link FoldColumn  Comment
 hi! link EndOfBuffer Comment
+
+" Splitter
+hi! link VertSplit   Comment
 
 " General messages
 call s:create_highlight('ErrorMsg', s:PaletteRed)
@@ -90,8 +95,6 @@ call s:create_highlight('WarningMsg', s:PaletteYellow)
 " UI                                {{{2
 " ======================================
 
-
-
 "                 " Tab pages line filler
 "                 call s:HL('TabLineFill', s:bg4, s:bg1, s:invert_tabline)
 "                 " Active tab page label
@@ -99,17 +102,12 @@ call s:create_highlight('WarningMsg', s:PaletteYellow)
 "                 " Not active tab page label
 "                 hi! link TabLine TabLineFill
 "               
-"               if version >= 703
-"                 " Highlighted screen columns
-"                 call s:HL('ColorColumn',  s:none, s:color_column)
-"               
 "                 " Concealed element: \lambda → λ
 "                 call s:HL('Conceal', s:blue, s:none)
 "               
 "                 " Line number of CursorLine
 "                 call s:HL('CursorLineNr', s:yellow, s:bg1)
-"               endif
-"               
+"              
 "               hi! link NonText GruvboxBg2
 "               hi! link SpecialKey GruvboxBg2
 "               
@@ -117,9 +115,6 @@ call s:create_highlight('WarningMsg', s:PaletteYellow)
 "               
 "               call s:HL('StatusLine',   s:bg2, s:fg1, s:inverse)
 "               call s:HL('StatusLineNC', s:bg1, s:fg4, s:inverse)
-"               
-"               " The column separating vertically split windows
-"               call s:HL('VertSplit', s:bg3, s:vert_split)
 "               
 "               " Current match in wildmenu completion
 "               call s:HL('WildMenu', s:blue, s:bg2, s:bold)
@@ -195,4 +190,22 @@ call s:create_highlight('DiffAdd',    s:PaletteWhite, s:PaletteGreen)
 call s:create_highlight('DiffChange', s:PaletteWhite, s:PaletteBlue)
 call s:create_highlight('DiffText',   s:PaletteWhite, s:PaletteBlueGreen)
 
+" Plugins                                                                   {{{1
+" ==============================================================================
 
+" NERDTree                          {{{2
+" ======================================
+
+hi! link NERDTreeDir       Keyword
+hi! link NERDTreeDirSlash  NERDTreeDir
+hi! link NERDTreeOpenable  NERDTreeDir
+hi! link NERDTreeClosable  NERDTreeDir
+
+hi! link NERDTreeFile      Normal
+hi! link NERDTreeExecFile  ErrorMsg 
+
+hi! link NERDTreeUp        NERDTreeDir
+hi! link NERDTreeCWD       NERDTreeDir
+hi! link NERDTreeHelp      Normal
+hi! link NERDTreeToggleOn  Normal
+hi! link NERDTreeToggleOff Normal
