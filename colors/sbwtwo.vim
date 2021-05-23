@@ -26,35 +26,42 @@ function! DisplaySynStack ()
 endfunction
 map gm :call DisplaySynStack()<CR>
 
+map <F5> :w<CR>:colo sbwtwo<CR>:echo "Reloaded"<CR>
+
 function! s:create_palette_alias(name, color)
     let {'s:Palette' . a:name} = a:color
     " exec 'echo "Created s:Palette' . a:name . ' as ' . {'s:Palette' . a:name} . '"'
 endfun
 
 function! s:create_highlight(group, fg, ...)
-    " Argument order: group, fg, bg, gui
+    " Argument order: group, fg, bg, opts
     let bg = get(a:, 1, 'NONE')
-    let gui = get(a:, 2, 'NONE')
+    let opts = get(a:, 2, 'NONE')
 
     exec join(['hi', 'clear', a:group], ' ')
-    exec join(['hi', a:group, 'guifg=' . a:fg, 'guibg=' . l:bg, 'gui=' . l:gui], ' ')
+    exec join(['hi', a:group, 
+                \ 'guifg='   . a:fg, 'guibg='   . l:bg, 'gui='   . l:opts],  ' ')
 endfun
 
 " Palette                                                                   {{{1
 " ==============================================================================
 
-call s:create_palette_alias('White',        '#ffffff')
-call s:create_palette_alias('LightGrey',    '#bcbcbc')
-call s:create_palette_alias('DarkGrey',     '#585858')
-call s:create_palette_alias('VeryDarkGrey', '#464646')
-call s:create_palette_alias('LightBlack',   '#262626')
-call s:create_palette_alias('Blue',         '#5f87af')
-call s:create_palette_alias('Green',        '#87af87')
-call s:create_palette_alias('Yellow',       '#ffffaf')
-call s:create_palette_alias('LightBlue',    '#8fafd7')
-call s:create_palette_alias('BlueGreen',    '#5f8787')
-call s:create_palette_alias('Red',          '#af5f5f')
-call s:create_palette_alias('Purple',       '#8787af')
+call s:create_palette_alias('White',                '#ffffff')
+call s:create_palette_alias('LightGrey',            '#bcbcbc')
+call s:create_palette_alias('DarkGrey',             '#585858')
+call s:create_palette_alias('VeryDarkGrey',         '#464646')
+call s:create_palette_alias('LightBlack',           '#262626')
+call s:create_palette_alias('Blue',                 '#5f87af')
+call s:create_palette_alias('Green',                '#87af87')
+call s:create_palette_alias('Yellow',               '#ffffaf')
+call s:create_palette_alias('LightBlue',            '#8fafd7')
+call s:create_palette_alias('BlueGreen',            '#5f8787')
+call s:create_palette_alias('Red',                  '#af5f5f')
+call s:create_palette_alias('Purple',               '#8787af')
+call s:create_palette_alias('HighlighterRed',       '#954b4b')
+call s:create_palette_alias('HighlighterGreen',     '#5a875a')
+call s:create_palette_alias('HighlighterBlue',      '#4b7095')
+call s:create_palette_alias('HighlighterPurple',    '#8787af')
 
 " Highlight groups                                                          {{{1
 " ==============================================================================
@@ -185,10 +192,10 @@ hi! link Float     Constant
 " Diff                              {{{2
 " ======================================
 
-call s:create_highlight('DiffDelete', s:PaletteWhite, s:PaletteRed)
-call s:create_highlight('DiffAdd',    s:PaletteWhite, s:PaletteGreen)
-call s:create_highlight('DiffChange', s:PaletteWhite, s:PaletteBlue)
-call s:create_highlight('DiffText',   s:PaletteWhite, s:PaletteBlueGreen)
+call s:create_highlight('DiffDelete', s:PaletteWhite, s:PaletteHighlighterRed)
+call s:create_highlight('DiffAdd',    s:PaletteWhite, s:PaletteHighlighterGreen)
+call s:create_highlight('DiffChange', s:PaletteWhite, s:PaletteHighlighterBlue)
+call s:create_highlight('DiffText',   s:PaletteWhite, s:PaletteHighlighterPurple)
 
 " Plugins                                                                   {{{1
 " ==============================================================================
