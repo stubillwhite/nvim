@@ -99,8 +99,23 @@ call s:create_highlight('ModeMsg', s:PaletteLightBlue)
 hi! link Question Normal
 call s:create_highlight('WarningMsg', s:PaletteYellow)
 
-" UI                                {{{2
-" ======================================
+" General UI highlights
+hi! link Directory Keyword
+hi! link Title     Keyword
+hi! link SpecialKey Keyword
+
+" Menu
+call s:create_highlight('Pmenu',     s:PaletteLightGrey, s:PaletteVeryDarkGrey)
+call s:create_highlight('PmenuSbar', s:PaletteLightGrey, s:PaletteVeryDarkGrey)
+hi! link PmenuSel Selection
+"call s:create_highlight('PmenuThumb', s:none, s:bg4)
+
+" Status line
+"call s:create_highlight('StatusLine',   s:PaletteVeryDarkGrey, s:PaletteVeryDarkGrey)
+"call s:create_highlight('StatusLineNC', s:PaletteLightGrey, s:PaletteVeryDarkGrey)
+
+" hi! link WildMenu Pmenu
+
 
 "                 " Tab pages line filler
 "                 call s:HL('TabLineFill', s:bg4, s:bg1, s:invert_tabline)
@@ -116,26 +131,12 @@ call s:create_highlight('WarningMsg', s:PaletteYellow)
 "                 call s:HL('CursorLineNr', s:yellow, s:bg1)
 "              
 "               hi! link NonText GruvboxBg2
-"               hi! link SpecialKey GruvboxBg2
 "               
 "               call s:HL('Underlined', s:blue, s:none, s:underline)
 "               
 "               call s:HL('StatusLine',   s:bg2, s:fg1, s:inverse)
 "               call s:HL('StatusLineNC', s:bg1, s:fg4, s:inverse)
 "               
-"               " Current match in wildmenu completion
-"               call s:HL('WildMenu', s:blue, s:bg2, s:bold)
-"               
-"               " Directory names, special names in listing
-"               hi! link Directory GruvboxGreenBold
-"               
-"               " Titles for output from :set all, :autocmd, etc.
-"               hi! link Title GruvboxGreenBold
-"               
-"               
-"               " }}}
-"               
-"               " }}}
 "               " Cursor: {{{
 "               
 "               " Character under cursor
@@ -147,11 +148,6 @@ call s:create_highlight('WarningMsg', s:PaletteYellow)
 "               " Language mapping cursor
 "               hi! link lCursor Cursor
 
-" Menu
-call s:create_highlight('Pmenu',     s:PaletteLightGrey, s:PaletteVeryDarkGrey)
-call s:create_highlight('PmenuSbar', s:PaletteLightGrey, s:PaletteVeryDarkGrey)
-hi! link PmenuSel Selection
-"call s:create_highlight('PmenuThumb', s:none, s:bg4)
 
 " Basic syntax                      {{{2
 " ======================================
