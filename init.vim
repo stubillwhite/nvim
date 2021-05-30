@@ -432,7 +432,7 @@ augroup END
 " ==============================================================================
 
 " Quick way to open a terminal
-nmap <Leader>t :vsplit term://zsh<CR>A
+nmap <Leader>t :vsplit term://zsh<CR>:file zsh<CR>A
 
 " Easier way to exit terminal mode
 tnoremap <leader><Esc> <C-\><C-n>           
