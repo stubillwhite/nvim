@@ -57,7 +57,6 @@ Plug 'tpope/vim-fugitive'           " Git integration
 Plug 'tpope/vim-repeat'             " Smarter repeat functionality
 Plug 'tpope/vim-surround'           " quoting/parenthesizing made simple
 Plug 'tpope/vim-unimpaired'         " Incredibly useful text navigation and manipulation shortcuts
-Plug 'vimlab/split-term.vim'        " Utilities around neovim's terminal
 Plug 'JikkuJose/vim-visincr'        " Increment lists of numbers
 
 Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
@@ -300,6 +299,8 @@ set path=.,,.\dependencies\**               " Search path
 set tags=./tags,../../tags                  " Default tags files
 set listchars=tab:>-,eol:$                  " Unprintable characters to display
 set laststatus=2                            " Always have a statusline
+set splitright                              " New vertical splits put the cursor on the right
+set splitbelow                              " New horizontal splits put the cursor on the bottom
 TabStop 4                                   " Default to 4 spaces per tabstop
 
 syntax on                                   " Syntax highlighting
@@ -430,6 +431,9 @@ augroup END
 " Key mappings                                                              {{{1
 " ==============================================================================
 
+" Quick way to open a terminal
+nmap <Leader>t :vsplit term://zsh<CR>A
+
 " Easier way to exit terminal mode
 tnoremap <leader><Esc> <C-\><C-n>           
 
@@ -450,8 +454,8 @@ nnoremap j gj
 nnoremap k gk
 
 " Quick way to edit .vimrc and colors
-nmap <Leader>v :e ~/.config/nvim/init.vim<CR><CR>
-nmap <Leader>c :e ~/.config/nvim/colors/sbwtwo.vim<CR><CR>
+nmap <Leader>v :e ~/Dev/my-stuff/nvim/init.vim<CR><CR>
+nmap <Leader>c :e ~/Dev/my-stuff/nvim/colors/sbwtwo.vim<CR><CR>
 
 " Quick way to edit .zshrc
 nmap <Leader>z :e ~/.zshrc<CR><CR>
