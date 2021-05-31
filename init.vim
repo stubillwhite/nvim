@@ -40,6 +40,7 @@ Plug 'aliou/bats.vim'               " BATS script testing language
 
 " Interface
 Plug 'Olical/vim-enmasse'           " Edit every line in a quickfix list at the same time
+Plug 'mg979/vim-visual-multi'       " Multiple cursor mode
 Plug 'Raimondi/delimitMate'         " Automatically close quotes, brackets, etc
 Plug 'Valloric/YouCompleteMe'       " Smarter completion
 "Plug 'neoclide/coc.nvim', {'branch': 'release'} " TODO: CHECK THIS OUT
