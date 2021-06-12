@@ -185,6 +185,13 @@ hi! link Boolean   Constant
 hi! link Number    Constant
 hi! link Float     Constant
 
+" ALE
+hi! link ALEError        ErrorMsg
+hi! link ALEWarning      WarningMsg
+hi! link ALEInfo         MoreMsg
+hi! link ALEStyleError   ALEError
+hi! link ALEStyleWarning ALEWarning
+
 " Diff                              {{{2
 " ======================================
 
