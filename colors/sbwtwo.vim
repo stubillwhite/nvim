@@ -192,6 +192,12 @@ hi! link ALEInfo         MoreMsg
 hi! link ALEStyleError   ALEError
 hi! link ALEStyleWarning ALEWarning
 
+" Spelling
+hi! link SpellBad	ErrorMsg
+hi! link SpellCap	WarningMsg
+hi! link SpellRare	WarningMsg
+hi! link SpellLocal	ErrorMsg
+
 " Diff                              {{{2
 " ======================================
 
