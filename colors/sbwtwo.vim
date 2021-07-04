@@ -92,6 +92,9 @@ hi! link EndOfBuffer Comment
 " Splitter
 hi! link VertSplit   Comment
 
+" Whitespace
+hi! link NonText     Comment
+
 " General messages
 call s:create_highlight('ErrorMsg', s:PaletteRed)
 call s:create_highlight('MoreMsg', s:PaletteLightBlue)
