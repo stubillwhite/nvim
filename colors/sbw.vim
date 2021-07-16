@@ -1,8 +1,20 @@
+" vim:fdm=marker
+
+" TODO: See https://github.com/morhetz/gruvbox/blob/master/colors/gruvbox.vim
+
+" Theme setup                                                               {{{1
+" ==============================================================================
+
 set bg=dark
 hi clear
 if exists("syntax_on")
     syntax reset
 endif
+
+let colors_name = "sbwtwo"
+
+" Functions                                                                 {{{1
+" ==============================================================================
 
 function! DisplaySynStack ()
     for i1 in synstack(line("."), col("."))
@@ -14,168 +26,205 @@ function! DisplaySynStack ()
 endfunction
 map gm :call DisplaySynStack()<CR>
 
-function! s:create_color_alias(name, color, ...)
-    let additionalOptions = get(a:, 1, 'gui=NONE')
-    let {'s:fg_' . a:name} = ' guifg=' . a:color . ' ' . l:additionalOptions
-    let {'s:bg_' . a:name} = ' guibg=' . a:color . ' ' . l:additionalOptions
-    " exec 'echo "Created s:fg_' . a:name . ' as' . {'s:fg_' . a:name} . '"'
-    " exec 'echo "Created s:bg_' . a:name . ' as' . {'s:bg_' . a:name} . '"'
+map <F5> :w<CR>:colo sbwtwo<CR>:echo "Reloaded"<CR>
+
+function! s:create_palette_alias(name, color)
+    let {'s:Palette' . a:name} = a:color
+    " exec 'echo "Created s:Palette' . a:name . ' as ' . {'s:Palette' . a:name} . '"'
 endfun
 
-call s:create_color_alias('title',                '#ffffff')
-call s:create_color_alias('foreground',           '#bcbcbc')
-call s:create_color_alias('background',           '#262626')
-call s:create_color_alias('comment',              '#585858')
-call s:create_color_alias('folded_foreground',    '#585858', 'gui=bold')
-call s:create_color_alias('folded_background',    '#262626', 'gui=bold')
-call s:create_color_alias('identifier',           '#5f87af')
-call s:create_color_alias('function',             '#ffffaf')
-call s:create_color_alias('statement',            '#8fafd7')
-call s:create_color_alias('constant',             '#87af87')
-call s:create_color_alias('preproc',              '#5f8787')
-call s:create_color_alias('error',                '#af5f5f')
-call s:create_color_alias('type',                 '#8787af')
-call s:create_color_alias('selection_foreground', '#ffffff')
-call s:create_color_alias('selection_background', '#585858')
+function! s:create_highlight(group, fg, ...)
+    " Argument order: group, fg, bg, opts
+    let bg = get(a:, 1, 'NONE')
+    let opts = get(a:, 2, 'NONE')
 
-call s:create_color_alias('diff_added',           '#87af87')
-call s:create_color_alias('diff_removed',         '#af5f5f')
-call s:create_color_alias('diff_changed',         '#8fafd7')
+    exec join(['hi', 'clear', a:group], ' ')
+    exec join(['hi', a:group, 
+                \ 'guifg='   . a:fg, 'guibg='   . l:bg, 'gui='   . l:opts],  ' ')
+endfun
 
-call s:create_color_alias('ui_marker_foreground', '#bcbcbc')
-call s:create_color_alias('ui_marker_background', '#262626')
-call s:create_color_alias('ui_menu_foreground',   '#bcbcbc')
-call s:create_color_alias('ui_menu_background',   '#464646')
-call s:create_color_alias('ui_border_foreground', '#bcbcbc')
-call s:create_color_alias('ui_border_background', '#464646')
+" Palette                                                                   {{{1
+" ==============================================================================
 
-" ColorColumn   used for the columns set with 'colorcolumn'
-" Conceal       placeholder characters substituted for concealed
-" Cursor        character under the cursor
-" CursorColumn  Screen-column at the cursor, when 'cursorcolumn' is set.
-" CursorIM  like Cursor, but used when in IME mode |CursorIM|
-" CursorLine    Screen-line at the cursor, when 'cursorline' is set.
-" CursorLineNr  Like LineNr when 'cursorline' or 'relativenumber' is set for
-" Directory directory names (and other special names in listings)
-" EndOfBuffer   filler lines (~) after the end of the buffer.
-" ErrorMsg  error messages on the command line
-" FoldColumn    'foldcolumn'
-" Folded        line used for closed folds
-" IncSearch 'incsearch' highlighting; also used for the text replaced with
-" LineNr        Line number for ":number" and ":#" commands, and when 'number'
-" MatchParen    The character under the cursor or just before it, if it
-" ModeMsg       'showmode' message (e.g., "-- INSERT --")
-" MoreMsg       |more-prompt|
-" MsgArea       Area for messages and cmdline
-" MsgSeparator  Separator for scrolled messages, `msgsep` flag of 'display'
-" NonText       '@' at the end of the window, characters from 'showbreak' 
-" Normal        normal text
-" NormalFloat   Normal text in floating windows.
-" NormalNC  normal text in non-current windows
-" Pmenu     Popup menu: normal item.
-" PmenuSbar Popup menu: scrollbar.
-" PmenuSel  Popup menu: selected item.
-" PmenuThumb    Popup menu: Thumb of the scrollbar.
-" Question  |hit-enter| prompt and yes/no questions
-" QuickFixLine  Current |quickfix| item in the quickfix window. Combined with
-" Search        Last search pattern highlighting (see 'hlsearch').
-" SignColumn    column where |signs| are displayed
-" SpecialKey    Unprintable characters: text displayed differently from what
-" SpellBad  Word that is not recognized by the spellchecker. |spell|
-" SpellCap  Word that should start with a capital. |spell|
-" SpellLocal    Word that is recognized by the spellchecker as one that is
-" SpellRare Word that is recognized by the spellchecker as one that is
-" StatusLine    status line of current window
-" StatusLineNC  status lines of not-current windows
-" Substitute    |:substitute| replacement text highlighting
-" TabLine       tab pages line, not active tab page label
-" TabLineFill   tab pages line, where there are no labels
-" TabLineSel    tab pages line, active tab page label
-" TermCursor    cursor in a focused terminal
-" TermCursorNC  cursor in an unfocused terminal
-" Title     titles for output from ":set all", ":autocmd" etc.
-" VertSplit the column separating vertically split windows
-" Visual        Visual mode selection
-" VisualNOS Visual mode selection when vim is "Not Owning the Selection".
-" WarningMsg    warning messages
-" Whitespace    "nbsp", "space", "tab" and "trail" in 'listchars'
-" WildMenu  current match in 'wildmenu' completion
+call s:create_palette_alias('White',                '#ffffff')
+call s:create_palette_alias('LightGrey',            '#bcbcbc')
+call s:create_palette_alias('DarkGrey',             '#585858')
+call s:create_palette_alias('VeryDarkGrey',         '#464646')
+call s:create_palette_alias('LightBlack',           '#262626')
+call s:create_palette_alias('Blue',                 '#5f87af')
+call s:create_palette_alias('Green',                '#87af87')
+call s:create_palette_alias('Yellow',               '#ffffaf')
+call s:create_palette_alias('LightBlue',            '#8fafd7')
+call s:create_palette_alias('BlueGreen',            '#5f8787')
+call s:create_palette_alias('Red',                  '#af5f5f')
+call s:create_palette_alias('Purple',               '#8787af')
+call s:create_palette_alias('HighlighterRed',       '#954b4b')
+call s:create_palette_alias('HighlighterGreen',     '#5a875a')
+call s:create_palette_alias('HighlighterBlue',      '#4b7095')
+call s:create_palette_alias('HighlighterPurple',    '#8787af')
 
+" Highlight groups                                                          {{{1
+" ==============================================================================
 
-exec 'hi Comment'     . s:fg_comment              . s:bg_background
-exec 'hi Constant'    . s:fg_constant             . s:bg_background
-exec 'hi EndOfBuffer' . s:fg_comment              . s:bg_background
-exec 'hi Error'       . s:fg_error                . s:bg_background
-exec 'hi FoldColumn'  . s:fg_folded_foreground    . s:bg_folded_background
-exec 'hi Folded'      . s:fg_folded_foreground    . s:bg_folded_background
-exec 'hi Function'    . s:fg_function             . s:bg_background
-exec 'hi Identifier'  . s:fg_identifier           . s:bg_background
-exec 'hi Normal'      . s:fg_foreground           . s:bg_background
-exec 'hi PreProc'     . s:fg_preproc              . s:bg_background
-exec 'hi Search'      . s:fg_selection_foreground . s:bg_selection_background
-exec 'hi Statement'   . s:fg_statement            . s:bg_background
-exec 'hi Title'       . s:fg_title                . s:bg_background
-exec 'hi Type'        . s:fg_type                 . s:bg_background
+" Global                            {{{2
+" ======================================
 
-"exec 'hi VertSplit'    . s:fg_ui_menu_foreground   . s:bg_ui_menu_background
-"exec 'hi StatusLine'   . s:fg_ui_border_foreground . s:bg_ui_border_background
-"exec 'hi StatusLineNC' . s:fg_ui_border_foreground . s:bg_ui_border_background
-"exec 'hi SignColumn'   . s:fg_ui_marker_foreground . s:bg_ui_marker_background
-exec 'hi Pmenu'       . s:fg_ui_menu_foreground      . s:bg_ui_menu_background
-exec 'hi PmenuSbar'   . s:fg_ui_menu_foreground      . s:bg_ui_menu_background
-exec 'hi PmenuSel'    . s:fg_selection_foreground . s:bg_selection_background
+" Normal text
+call s:create_highlight('Normal', s:PaletteLightGrey, s:PaletteLightBlack)
 
-exec 'hi DiffAdd'     . s:fg_selection_foreground . s:bg_diff_added
-exec 'hi DiffChange'  . s:fg_selection_foreground . s:bg_diff_changed
-exec 'hi DiffDelete'  . s:fg_selection_foreground . s:bg_diff_removed
-exec 'hi DiffText'    . s:fg_selection_foreground . s:bg_diff_added
+" Selection
+call s:create_highlight('Selection', s:PaletteWhite, s:PaletteVeryDarkGrey)
+hi! link Visual      Selection
+hi! link VisualNOS   Visual
+hi! link Search      Selection
+hi! link IncSearch   Search
+hi! link MatchParen  Search
+hi! link CursorLine  Search
+hi! link ColorColumn Search
 
-let colors_name = "sbw"
+" Gutter
+hi! link LineNr      Comment
+hi! link SignColumn  Comment
+hi! link Folded      Comment
+hi! link FoldColumn  Comment
+hi! link EndOfBuffer Comment
 
-"https://github.com/morhetz/gruvbox/blob/master/colors/gruvbox.vim
+" Splitter
+hi! link VertSplit   Comment
 
-"---- hi Special      guifg=#5f875f           guibg=bg                gui=NONE
-"---- hi MatchParen   guifg=#5f875f           guibg=darkslategray     gui=bold
-"---- hi Error        guifg=#af5f5f           guibg=bg                gui=NONE
+" Whitespace
+hi! link NonText     Comment
 
-" Links
-hi! link Special    Constant
-hi! link Todo       WarningMsg
-hi! link IncSearch  Search
-hi! link MatchParen Search
-hi! link Visual     Search
+" General messages
+call s:create_highlight('ErrorMsg', s:PaletteRed)
+call s:create_highlight('MoreMsg', s:PaletteLightBlue)
+call s:create_highlight('ModeMsg', s:PaletteLightBlue)
+hi! link Question Normal
+call s:create_highlight('WarningMsg', s:PaletteYellow)
 
-" File explorer
-hi! link Directory  Keyword
+" General UI highlights
+hi! link Directory Keyword
+hi! link Title     Keyword
+hi! link SpecialKey Keyword
+
+" Menu
+call s:create_highlight('Pmenu',     s:PaletteLightGrey, s:PaletteVeryDarkGrey)
+call s:create_highlight('PmenuSbar', s:PaletteLightGrey, s:PaletteVeryDarkGrey)
+hi! link PmenuSel Selection
+"call s:create_highlight('PmenuThumb', s:none, s:bg4)
+
+" Status line
+"call s:create_highlight('StatusLine',   s:PaletteVeryDarkGrey, s:PaletteVeryDarkGrey)
+"call s:create_highlight('StatusLineNC', s:PaletteLightGrey, s:PaletteVeryDarkGrey)
+
+" hi! link WildMenu Pmenu
 
 
+"                 " Tab pages line filler
+"                 call s:HL('TabLineFill', s:bg4, s:bg1, s:invert_tabline)
+"                 " Active tab page label
+"                 call s:HL('TabLineSel', s:green, s:bg1, s:invert_tabline)
+"                 " Not active tab page label
+"                 hi! link TabLine TabLineFill
+"               
+"                 " Concealed element: \lambda → λ
+"                 call s:HL('Conceal', s:blue, s:none)
+"               
+"                 " Line number of CursorLine
+"                 call s:HL('CursorLineNr', s:yellow, s:bg1)
+"              
+"               hi! link NonText GruvboxBg2
+"               
+"               call s:HL('Underlined', s:blue, s:none, s:underline)
+"               
+"               call s:HL('StatusLine',   s:bg2, s:fg1, s:inverse)
+"               call s:HL('StatusLineNC', s:bg1, s:fg4, s:inverse)
+"               
+"               " Cursor: {{{
+"               
+"               " Character under cursor
+"               call s:HL('Cursor', s:none, s:none, s:inverse)
+"               " Visual mode cursor, selection
+"               hi! link vCursor Cursor
+"               " Input moder cursor
+"               hi! link iCursor Cursor
+"               " Language mapping cursor
+"               hi! link lCursor Cursor
 
 
+" Basic syntax                      {{{2
+" ======================================
 
-"---- hi! link CursorIM       Cursor
-"---- hi! link Pmenu          StatusLineNC
-"---- hi! link LineNr         ErrorMsg
-"---- hi! link ModeMsg        ErrorMsg
-"---- hi! link MoreMsg        ErrorMsg
-"---- hi! link Question       ErrorMsg
-"---- hi! link WarningMsg     ErrorMsg
-"---- hi! link shDerefSimple  Keyword
-"---- hi! link Title          ErrorMsg
-"---- hi! link SpellCap       ErrorMsg
-"---- hi! link WildMenu       Visual
-"---- 
-"---- " highlight-groups
-"---- hi Cursor       guifg=bg                guibg=fg                gui=NONE
-"---- 
-"---- hi DiffAdd      guifg=fg                guibg=aquamarine4       gui=NONE
-"---- hi DiffChange   guifg=fg                guibg=royalblue4        gui=NONE
-"---- hi DiffDelete   guifg=fg                guibg=indianred4        gui=NONE
-"---- hi DiffText     guifg=fg                guibg=royalblue3        gui=NONE
-"---- 
-"---- hi ErrorMsg     guifg=#bcbcbc           guibg=bg                gui=bold,undercurl  guisp=#af5f5f
-"---- hi FoldColumn   guifg=gray60            guibg=bg                gui=italic
-"---- hi NonText      guifg=gray50            guibg=bg                gui=NONE
-"---- hi SpecialKey   guifg=gray50            guibg=bg                gui=NONE
-"---- hi StatusLine   guifg=gray100           guibg=PaleTurquoise4    gui=bold
-"---- hi StatusLineNC guifg=fg                guibg=gray30            gui=NONE
-"---- hi VisualNOS    guifg=fg                guibg=gray40            gui=NONE
+" Basic statements and keywords
+call s:create_highlight('Statement', s:PaletteLightBlue)
+call s:create_highlight('Keyword',   s:PaletteLightBlue)
+hi! link Conditional Keyword
+hi! link Repeat      Keyword
+hi! link Label       Keyword
+hi! link Exception   Keyword
+hi! link Operator    Keyword
+hi! link Type        Keyword
+hi! link Special     Normal
+call s:create_highlight('Comment',   s:PaletteDarkGrey)
+call s:create_highlight('Todo',      s:PaletteYellow)
+call s:create_highlight('Error',     s:PaletteRed)
+
+" Identifiers
+call s:create_highlight('Function',   s:PaletteYellow)
+call s:create_highlight('Identifier', s:PaletteBlue)
+hi! link Variable Identifier
+
+" Preprocessor and macro
+call s:create_highlight('PreProc',   s:PaletteBlueGreen)
+hi! link Include   PreProc
+hi! link Define    PreProc
+hi! link Macro     PreProc
+hi! link PreCondit PreProc
+
+" Generic constant
+call s:create_highlight('Constant',   s:PaletteBlueGreen)
+hi! link Character Constant
+hi! link Boolean   Constant
+hi! link Number    Constant
+hi! link Float     Constant
+
+" ALE
+hi! link ALEError        ErrorMsg
+hi! link ALEWarning      WarningMsg
+hi! link ALEInfo         MoreMsg
+hi! link ALEStyleError   ALEError
+hi! link ALEStyleWarning ALEWarning
+
+" Spelling
+hi! link SpellBad	ErrorMsg
+hi! link SpellCap	WarningMsg
+hi! link SpellRare	WarningMsg
+hi! link SpellLocal	ErrorMsg
+
+" Diff                              {{{2
+" ======================================
+
+call s:create_highlight('DiffDelete', s:PaletteWhite, s:PaletteHighlighterRed)
+call s:create_highlight('DiffAdd',    s:PaletteWhite, s:PaletteHighlighterGreen)
+call s:create_highlight('DiffChange', s:PaletteWhite, s:PaletteHighlighterBlue)
+call s:create_highlight('DiffText',   s:PaletteWhite, s:PaletteHighlighterPurple)
+
+" Plugins                                                                   {{{1
+" ==============================================================================
+
+" NERDTree                          {{{2
+" ======================================
+
+hi! link NERDTreeDir       Keyword
+hi! link NERDTreeDirSlash  NERDTreeDir
+hi! link NERDTreeOpenable  NERDTreeDir
+hi! link NERDTreeClosable  NERDTreeDir
+
+hi! link NERDTreeFile      Normal
+hi! link NERDTreeExecFile  ErrorMsg 
+
+hi! link NERDTreeUp        NERDTreeDir
+hi! link NERDTreeCWD       NERDTreeDir
+hi! link NERDTreeHelp      Normal
+hi! link NERDTreeToggleOn  Normal
+hi! link NERDTreeToggleOff Normal

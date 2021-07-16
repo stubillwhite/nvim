@@ -456,7 +456,7 @@ nnoremap k gk
 
 " Quick way to edit .vimrc and colors
 nmap <Leader>v :e ~/Dev/my-stuff/nvim/init.vim<CR><CR>
-nmap <Leader>c :e ~/Dev/my-stuff/nvim/colors/sbwtwo.vim<CR><CR>
+nmap <Leader>c :e ~/Dev/my-stuff/nvim/colors/sbw.vim<CR><CR>
 
 " Quick way to edit .zshrc
 nmap <Leader>z :e ~/.zshrc<CR><CR>
@@ -524,5 +524,5 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 "set termguicolors " TODO: Seems to break colors in :term
 
 "colorscheme apprentice
-colorscheme sbwtwo
+colorscheme sbw
 
