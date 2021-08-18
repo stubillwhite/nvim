@@ -153,8 +153,8 @@ let g:jedi#force_py_version = 3
 
 " mileszs/ack.vim                   {{{2
 " ======================================
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
+if executable('rg')
+  let g:ackprg = 'rg --vimgrep --type-not sql --smart-case'
 endif
 
 " terryma/vim-expand-region         {{{2
