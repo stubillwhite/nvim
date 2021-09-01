@@ -391,12 +391,35 @@ function s:SearchInteractive()
 endfunction
 command -nargs=0 SearchInteractive call s:SearchInteractive(<f-args>)
 
-function s:SearchImmediate(wrd)
-    let SearchCmd=':Ack! '.a:wrd
-    call feedkeys(SearchCmd)
+function! s:VisualSelection()
+    if mode()=="v"
+        let [line_start, column_start] = getpos("v")[1:2]
+        let [line_end, column_end] = getpos(".")[1:2]
+    else
+        let [line_start, column_start] = getpos("'<")[1:2]
+        let [line_end, column_end] = getpos("'>")[1:2]
+    end
+    if (line2byte(line_start)+column_start) > (line2byte(line_end)+column_end)
+        let [line_start, column_start, line_end, column_end] =
+        \   [line_end, column_end, line_start, column_start]
+    end
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+            return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - 1]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "\n")
+endfunction
+
+function! s:SearchImmediate()
+    let wordUnderCursor = expand("<cword>")
+    let visualSelection = s:VisualSelection()
+    let searchCmd=':Ack! '.l:wordUnderCursor
+    call feedkeys(searchCmd)
     call feedkeys("\<CR>")
 endfunction
-command -nargs=1 SearchImmediate call s:SearchImmediate(<f-args>)
+command -nargs=0 SearchImmediate call s:SearchImmediate(<f-args>)
 
 " Horrific SBT dependency trees                                             {{{1
 " ==============================================================================
@@ -475,9 +498,9 @@ map <S-RIGHT> <C-w>l
 nnoremap / /\v
 vnoremap / /\v
 
-" Grep for the word currently under the cursor
+" Grep
 " CTRL-G immediate, CTRL-I interactive
-nnoremap <C-G> :SearchImmediate <C-R><C-W><CR>
+nnoremap <C-G> :SearchImmediate <CR>
 nnoremap <C-I> :SearchInteractive <CR>
 
 " Show unprintable characters
@@ -495,9 +518,6 @@ nnoremap <silent> <Leader>3 :diffget //3<CR>
 " Map insert mode and command-line mode CTRL-Backspace to delete the previous word
 imap <C-BS> <C-W>
 cmap <C-BS> <C-W>
-
-"let g:seoul256_background = 235
-"colo seoul256
 
 " VimTip #171 -- Search for visually selected text
 vnoremap <silent> * :<C-U>
