@@ -302,6 +302,7 @@ set listchars=tab:>-,eol:$                  " Unprintable characters to display
 set laststatus=2                            " Always have a statusline
 set splitright                              " New vertical splits put the cursor on the right
 set splitbelow                              " New horizontal splits put the cursor on the bottom
+set shell=/usr/local/bin/zsh                " Use Zsh
 TabStop 4                                   " Default to 4 spaces per tabstop
 
 syntax on                                   " Syntax highlighting
