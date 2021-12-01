@@ -512,7 +512,7 @@ nnoremap <silent> <Leader>W :StripTrailingWhitespace<CR>
 vnoremap <silent> <Leader>W :StripTrailingWhitespace<CR>
 
 " Fugitive
-nnoremap <silent> <Leader>g :Gstatus<CR>:only<CR>
+nnoremap <silent> <Leader>g :Git<CR>:only<CR>
 nnoremap <silent> <Leader>1 :diffget //2<CR>
 nnoremap <silent> <Leader>3 :diffget //3<CR>
 
@@ -535,6 +535,8 @@ vnoremap <silent> # :<C-U>
 " BufExplorer
 nmap <Leader>b :BufExplorer<CR>
 let g:bufExplorerSortBy='name'      " Default sort by the name
+
+" vmap <Leader>e ':!echo <C-R><C-W> | with-zsh epoch-to-date<CR>'
 
 " Align commas in paragraph: gaip*,
 
