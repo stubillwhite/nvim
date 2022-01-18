@@ -67,6 +67,12 @@ call plug#end()
 
 map -a	:call SyntaxAttr()<CR>
 
+" w0rp/ale                          {{{2
+" ======================================
+
+let g:ale_set_loclist = 1
+let g:ale_set_quickfix = 0
+
 " junegunn/vim-easy-align           {{{2
 " ======================================
 xmap ga <Plug>(EasyAlign)
@@ -166,11 +172,14 @@ map <A-DOWN> <Plug>(expand_region_shrink)
 vmap <A-UP> <Plug>(expand_region_expand)
 vmap <A-DOWN> <Plug>(expand_region_shrink)
 
-" w0rp/ale                          {{{2
+" tpope/vim-fugitive                {{{2
 " ======================================
 
-let g:ale_set_loclist = 1
-let g:ale_set_quickfix = 0
+nnoremap <silent> <Leader>g :Git<CR>:only<CR>
+nnoremap <silent> <Leader>1 :diffget //2<CR>
+nnoremap <silent> <Leader>3 :diffget //3<CR>
+
+command -nargs=* Glogv Git! logv <args>
 
 " Functions                                                                 {{{1
 " ==============================================================================
@@ -510,11 +519,6 @@ nmap <Leader>w :set list!<CR>
 " Strip trailing whitespace characters
 nnoremap <silent> <Leader>W :StripTrailingWhitespace<CR>
 vnoremap <silent> <Leader>W :StripTrailingWhitespace<CR>
-
-" Fugitive
-nnoremap <silent> <Leader>g :Git<CR>:only<CR>
-nnoremap <silent> <Leader>1 :diffget //2<CR>
-nnoremap <silent> <Leader>3 :diffget //3<CR>
 
 " Map insert mode and command-line mode CTRL-Backspace to delete the previous word
 imap <C-BS> <C-W>
