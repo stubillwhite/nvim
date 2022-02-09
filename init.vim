@@ -48,7 +48,6 @@ Plug 'Valloric/YouCompleteMe'       " Smarter completion
 Plug 'jaxbot/browserlink.vim'       " Live browser editing for Vim
 Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
 Plug '/usr/local/opt/fzf'           " FZF installation
-"Plug 'junegunn/fzf.vim'             " FZF fuzzy finder for Vim
 Plug 'mileszs/ack.vim'              " Vim plugin for the Perl module / CLI script 'ack'
 Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting
 Plug 'scrooloose/nerdtree'          " Easy file browsing
