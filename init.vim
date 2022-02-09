@@ -48,7 +48,7 @@ Plug 'Valloric/YouCompleteMe'       " Smarter completion
 Plug 'jaxbot/browserlink.vim'       " Live browser editing for Vim
 Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
 Plug '/usr/local/opt/fzf'           " FZF installation
-Plug 'junegunn/fzf.vim'             " FZF fuzzy finder for Vim
+"Plug 'junegunn/fzf.vim'             " FZF fuzzy finder for Vim
 Plug 'mileszs/ack.vim'              " Vim plugin for the Perl module / CLI script 'ack'
 Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting
 Plug 'scrooloose/nerdtree'          " Easy file browsing
@@ -60,6 +60,7 @@ Plug 'tpope/vim-repeat'             " Smarter repeat functionality
 Plug 'tpope/vim-surround'           " quoting/parenthesizing made simple
 Plug 'tpope/vim-unimpaired'         " Incredibly useful text navigation and manipulation shortcuts
 Plug 'JikkuJose/vim-visincr'        " Increment lists of numbers
+Plug 'vim-scripts/taglist.vim'      " Source code browser for Vim
 
 Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
 Plug 'godlygeek/tabular'            " Vim script for text filtering and alignment
@@ -90,10 +91,11 @@ let NERDTreeShowHidden=0
 nmap <Leader>e :NERDTreeToggle<CR>
 nmap <Leader>E :NERDTreeFind<CR>
 
-" junegunn/fzf                      {{{2
+" fzf                               {{{2
 " ======================================
 
-set rtp+=/usr/local/opt/fzf
+set runtimepath+=/usr/local/opt/fzf
+nmap <C-P> :FZF<CR>
 
 " itchny/lightline                  {{{2
 " ======================================
@@ -181,6 +183,12 @@ nnoremap <silent> <Leader>1 :diffget //2<CR>
 nnoremap <silent> <Leader>3 :diffget //3<CR>
 
 command -nargs=* Glogv Git! logv <args>
+
+" vim-scripts/taglist.vim           {{{2
+" ======================================
+
+let g:tlist_scala_settings = 'scala;t:trait;c:class;T:type;' .
+            \ 'm:method;C:constant;l:local;p:package;o:object'
 
 " Functions                                                                 {{{1
 " ==============================================================================
@@ -307,7 +315,7 @@ set timeoutlen=500                          " Timeout to press a key combination
 set report=0                                " Always report changes
 set undofile                                " Allow undo history to persist between sessions
 set path=.,,.\dependencies\**               " Search path
-set tags=./tags,../../tags                  " Default tags files
+set tags=.tags                              " Default tags files
 set listchars=tab:>-,eol:$                  " Unprintable characters to display
 set laststatus=2                            " Always have a statusline
 set splitright                              " New vertical splits put the cursor on the right
