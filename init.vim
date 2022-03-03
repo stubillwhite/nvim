@@ -60,6 +60,7 @@ Plug 'tpope/vim-surround'           " quoting/parenthesizing made simple
 Plug 'tpope/vim-unimpaired'         " Incredibly useful text navigation and manipulation shortcuts
 Plug 'JikkuJose/vim-visincr'        " Increment lists of numbers
 Plug 'vim-scripts/taglist.vim'      " Source code browser for Vim
+Plug 'sheerun/vim-polyglot'
 
 Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
 Plug 'godlygeek/tabular'            " Vim script for text filtering and alignment
@@ -78,6 +79,10 @@ let g:ale_set_quickfix = 0
 " ======================================
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)<Paste>
+
+let g:easy_align_delimiters = {
+\ 't': { 'pattern': '\t' },
+\ }
 
 " Raimondi/delimitMate              {{{2
 " ======================================
@@ -532,6 +537,9 @@ vnoremap <silent> <Leader>W :StripTrailingWhitespace<CR>
 imap <C-BS> <C-W>
 cmap <C-BS> <C-W>
 
+" Copy-all to clipboard and paste-all from clipboard
+nnoremap <Leader>G :!with-zsh git-open %<CR>
+
 " VimTip #171 -- Search for visually selected text
 vnoremap <silent> * :<C-U>
   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
@@ -558,13 +566,22 @@ let g:bufExplorerSortBy='name'      " Default sort by the name
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1 
 "set termguicolors " TODO: Seems to break colors in :term
 
-"colorscheme apprentice
 colorscheme sbw
-
-command! DiffHistory call s:view_git_history()
 
 " Experimental                                                              {{{1
 " ==============================================================================
+
+function! s:git_diff_branch()
+  let l:base_commit = substitute(system('Git merge-base --fork-point main'), '\n\+$', '', '')
+  exec 'Git difftool --name-only @ ' . l:base_commit
+  call s:diff_current_quickfix_entry()
+  " Bind <CR> for current quickfix window to properly set up diff split layout after selecting an item
+  " There's probably a better way to map this without changing the window
+  copen
+  nnoremap <buffer> <CR> <CR><BAR>:call <sid>diff_current_quickfix_entry()<CR>
+  wincmd p
+endfunction
+command! GitDiffBranch call s:git_diff_branch()
 
 function! s:view_git_history() abort
   Git difftool --name-only ! !^@
@@ -575,12 +592,13 @@ function! s:view_git_history() abort
   nnoremap <buffer> <CR> <CR><BAR>:call <sid>diff_current_quickfix_entry()<CR>
   wincmd p
 endfunction
+command! DiffHistory call s:view_git_history()
 
 function s:diff_current_quickfix_entry() abort
   " Cleanup windows
   for window in getwininfo()
     if window.winnr !=? winnr() && bufname(window.bufnr) =~? '^fugitive:'
-      exe 'bdelete' window.bufnr
+      silent exe 'bdelete' window.bufnr
     endif
   endfor
   cc
