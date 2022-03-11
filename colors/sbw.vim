@@ -113,12 +113,10 @@ call s:create_highlight('PmenuSbar', s:PaletteLightGrey, s:PaletteVeryDarkGrey)
 hi! link PmenuSel Selection
 "call s:create_highlight('PmenuThumb', s:none, s:bg4)
 
-" Status line
-"call s:create_highlight('StatusLine',   s:PaletteVeryDarkGrey, s:PaletteVeryDarkGrey)
-"call s:create_highlight('StatusLineNC', s:PaletteLightGrey, s:PaletteVeryDarkGrey)
-
-" hi! link WildMenu Pmenu
-
+" Status line and wild menu
+hi! link StatusLine   PMenu
+hi! link StatusLineNC PMenu
+hi! link WildMenu PmenuSel
 
 "                 " Tab pages line filler
 "                 call s:HL('TabLineFill', s:bg4, s:bg1, s:invert_tabline)
