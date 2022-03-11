@@ -376,6 +376,9 @@ augroup VimrcEditingAutocommands
     " Syntax highlight from the start for better accuracy
     au BufEnter * :syntax sync fromstart
 
+    " Default to insert mode when opening a new terminal
+    au TermOpen * startinsert
+
 augroup END
 
 " Use tabs in makefiles
@@ -482,7 +485,7 @@ augroup END
 nmap <Leader>t :vsplit term://zsh<CR>:file zsh<CR>A
 
 " Easier way to exit terminal mode
-tnoremap <leader><Esc> <C-\><C-n>           
+tnoremap <leader><Esc> <C-\><C-n>
 
 " <Space> in normal mode removes highlighted search
 nnoremap <Space> :nohlsearch<Return>:echo "Search highlight off"<Return>
