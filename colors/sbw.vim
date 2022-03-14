@@ -115,7 +115,6 @@ hi! link PmenuSel Selection
 
 " Status line and wild menu
 hi! link StatusLine   PMenu
-hi! link StatusLineNC PMenu
 hi! link WildMenu PmenuSel
 
 "                 " Tab pages line filler
