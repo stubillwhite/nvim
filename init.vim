@@ -24,6 +24,8 @@ Plug 'godlygeek/csapprox'           " Use GUI color schemes in terminals
 Plug 'itchyny/lightline.vim'        " A light and configurable statusline plugin for Vim
 Plug 'junegunn/seoul256.vim'
 
+Plug 'rebelot/kanagawa.nvim'        " TODO: Testing theme
+
 " Syntax and static checking
 Plug 'w0rp/ale'                     " Asynchronous Lint Engine
 
@@ -100,6 +102,7 @@ nmap <Leader>E :NERDTreeFind<CR>
 
 set runtimepath+=/usr/local/opt/fzf
 nmap <C-P> :FZF<CR>
+" nmap <C-[> :call fzf#run({'source': 'fd --exclude={.git,.idea,.vscode,target,node_modules,build} --type f --hidden'})<CR>
 
 " itchny/lightline                  {{{2
 " ======================================
@@ -220,6 +223,12 @@ function s:NoDiffThis()
     silent execute 'diffoff | set nowrap'
 endfunction
 command -nargs=0 NoDiffThis call s:NoDiffThis(<f-args>)
+
+" Switch off diff mode for all windows
+function s:NoDiffAll()
+    silent execute 'windo NoDiffThis'
+endfunction
+command -nargs=0 NoDiffAll call s:NoDiffAll(<f-args>)
 
 " Format JSON
 function s:FormatJson()
