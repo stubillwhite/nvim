@@ -149,7 +149,6 @@ def create_color_mapping(group, props):
         props_str = ' '.join([f'{k}={deref_color(v)}' for k,v in props.items()])
         cmd = f'hi {group} {props_str}'
 
-    print(cmd)
     vim.command(cmd)
 
 def create_theme():

@@ -1,4 +1,7 @@
 " vim:fdm=marker
+"
+" Python module                                                             {{{1
+" ==============================================================================
 
 " Get the current plugin path
 let s:plugin_path = expand('<sfile>:p:h')
