@@ -18,9 +18,9 @@ PALETTE = {
         'HighlighterBlue':   '#223243',
         'HighlighterPurple': '#383855',
         'DiffGreen':         "#2B3328",
-        'DiffYellow':        "#49443C",
         'DiffRed':           "#43242B",
         'DiffBlue':          "#252535",
+        'DiffLightBlue':     "#353545",
         }
 
 MAPPINGS = {
@@ -73,10 +73,10 @@ MAPPINGS = {
         'WildMenu':          { 'link':  'PmenuSel'    },
 
         # Diff
-        'DiffDelete':        { 'guifg': 'NONE', 'guibg': 'DiffRed'      },
-        'DiffAdd':           { 'guifg': 'NONE', 'guibg': 'DiffGreen'    },
-        'DiffChange':        { 'guifg': 'NONE', 'guibg': 'DiffBlue'     },
-        'DiffText':          { 'guifg': 'NONE', 'guibg': 'DiffYellow'   },
+        'DiffDelete':        { 'guifg': 'NONE', 'guibg': 'DiffRed'       },
+        'DiffAdd':           { 'guifg': 'NONE', 'guibg': 'DiffGreen'     },
+        'DiffChange':        { 'guifg': 'NONE', 'guibg': 'DiffBlue'      },
+        'DiffText':          { 'guifg': 'NONE', 'guibg': 'DiffLightBlue' },
 
         # Basic statements and keywords
         'Statement':         { 'guifg': 'LightBlue'   },
