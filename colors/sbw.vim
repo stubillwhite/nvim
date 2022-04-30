@@ -30,7 +30,7 @@ map <F5> :w<CR>:colo sbwtwo<CR>:echo "Reloaded"<CR>
 
 function! s:create_palette_alias(name, color)
     let {'s:Palette' . a:name} = a:color
-    " exec 'echo "Created s:Palette' . a:name . ' as ' . {'s:Palette' . a:name} . '"'
+    "exec 'echo "Created s:Palette' . a:name . ' as ' . {'s:Palette' . a:name} . '"'
 endfun
 
 function! s:create_highlight(group, fg, ...)
@@ -46,22 +46,27 @@ endfun
 " Palette                                                                   {{{1
 " ==============================================================================
 
-call s:create_palette_alias('White',                '#ffffff')
-call s:create_palette_alias('LightGrey',            '#bcbcbc')
-call s:create_palette_alias('DarkGrey',             '#585858')
-call s:create_palette_alias('VeryDarkGrey',         '#464646')
-call s:create_palette_alias('LightBlack',           '#262626')
-call s:create_palette_alias('Blue',                 '#5f87af')
-call s:create_palette_alias('Green',                '#87af87')
-call s:create_palette_alias('Yellow',               '#ffffaf')
-call s:create_palette_alias('LightBlue',            '#8fafd7')
-call s:create_palette_alias('BlueGreen',            '#5f8787')
-call s:create_palette_alias('Red',                  '#af5f5f')
-call s:create_palette_alias('Purple',               '#8787af')
-call s:create_palette_alias('HighlighterRed',       '#954b4b')
-call s:create_palette_alias('HighlighterGreen',     '#5a875a')
-call s:create_palette_alias('HighlighterBlue',      '#4b7095')
-call s:create_palette_alias('HighlighterPurple',    '#8787af')
+call s:create_palette_alias('White',             '#ffffff')
+call s:create_palette_alias('LightGrey',         '#bcbcbc')
+call s:create_palette_alias('DarkGrey',          '#585858')
+call s:create_palette_alias('VeryDarkGrey',      '#464646')
+call s:create_palette_alias('LightBlack',        '#262626')
+call s:create_palette_alias('Blue',              '#5f87af')
+call s:create_palette_alias('Green',             '#87af87')
+call s:create_palette_alias('Yellow',            '#ffffaf')
+call s:create_palette_alias('LightBlue',         '#8fafd7')
+call s:create_palette_alias('BlueGreen',         '#5f8787')
+call s:create_palette_alias('Red',               '#af5f5f')
+call s:create_palette_alias('Purple',            '#8787af')
+call s:create_palette_alias('HighlighterRed',    '#432222')
+call s:create_palette_alias('HighlighterGreen',  '#283C28')
+call s:create_palette_alias('HighlighterBlue',   '#223243')
+call s:create_palette_alias('HighlighterPurple', '#383855')
+
+call s:create_palette_alias('DiffGreen',         "#2B3328")
+call s:create_palette_alias('DiffYellow',        "#49443C")
+call s:create_palette_alias('DiffRed',           "#43242B")
+call s:create_palette_alias('DiffBlue',          "#252535")
 
 " Highlight groups                                                          {{{1
 " ==============================================================================
@@ -201,10 +206,22 @@ hi! link SpellLocal	ErrorMsg
 " Diff                              {{{2
 " ======================================
 
-call s:create_highlight('DiffDelete', s:PaletteWhite, s:PaletteHighlighterRed)
-call s:create_highlight('DiffAdd',    s:PaletteWhite, s:PaletteHighlighterGreen)
-call s:create_highlight('DiffChange', s:PaletteWhite, s:PaletteHighlighterBlue)
-call s:create_highlight('DiffText',   s:PaletteWhite, s:PaletteHighlighterPurple)
+"call s:create_highlight('DiffDelete', 'NONE', s:PaletteDiffRed)
+"call s:create_highlight('DiffAdd',    'NONE', s:PaletteDiffGreen)
+"call s:create_highlight('DiffChange', 'NONE', s:PaletteDiffBlue)
+"call s:create_highlight('DiffText',   'NONE', s:PaletteDiffYellow)
+call s:create_highlight('DiffDelete', 'NONE', s:PaletteDiffRed)
+call s:create_highlight('DiffAdd',    'NONE', s:PaletteDiffGreen)
+call s:create_highlight('DiffChange', 'NONE', s:PaletteDiffBlue)
+call s:create_highlight('DiffText',   'NONE', s:PaletteDiffYellow)
+"call s:create_highlight('DiffDelete', s:PaletteWhite, s:PaletteHighlighterRed)
+"call s:create_highlight('DiffAdd',    s:PaletteWhite, s:PaletteHighlighterGreen)
+"call s:create_highlight('DiffChange', s:PaletteWhite, s:PaletteHighlighterBlue)
+"call s:create_highlight('DiffText',   s:PaletteWhite, s:PaletteHighlighterPurple)
+
+" hi! clear DiffDelete
+" "hi DiffDelete guifg='NONE' guibg=s:PaletteDiffRed 
+" exec 'hi! DiffDelete guibg='.s:PaletteDiffRed
 
 " Plugins                                                                   {{{1
 " ==============================================================================

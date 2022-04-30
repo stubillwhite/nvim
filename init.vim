@@ -62,7 +62,6 @@ Plug 'tpope/vim-surround'           " quoting/parenthesizing made simple
 Plug 'tpope/vim-unimpaired'         " Incredibly useful text navigation and manipulation shortcuts
 Plug 'JikkuJose/vim-visincr'        " Increment lists of numbers
 Plug 'vim-scripts/taglist.vim'      " Source code browser for Vim
-Plug 'sheerun/vim-polyglot'
 
 Plug 'junegunn/vim-easy-align'      " A simple, easy-to-use Vim alignment plugin
 Plug 'godlygeek/tabular'            " Vim script for text filtering and alignment
@@ -338,6 +337,9 @@ TabStop 4                                   " Default to 4 spaces per tabstop
 
 syntax on                                   " Syntax highlighting
 
+" Use the system clipboard for everything
+set clipboard=unnamedplus
+
 " Enable extended character sets
 set encoding=utf-8
 set fileencoding=utf-8
@@ -534,9 +536,9 @@ nnoremap / /\v
 vnoremap / /\v
 
 " Grep
-" CTRL-G immediate, CTRL-I interactive
-nnoremap <C-G> :SearchImmediate <CR>
-nnoremap <C-I> :SearchInteractive <CR>
+" CTRL-G interactive, CTRL-S immediate
+nnoremap <C-G> :SearchInteractive <CR>
+nnoremap <C-S> :SearchImmediate <CR>
 
 " Show unprintable characters
 nmap <Leader>w :set list!<CR>
@@ -549,7 +551,7 @@ vnoremap <silent> <Leader>W :StripTrailingWhitespace<CR>
 imap <C-BS> <C-W>
 cmap <C-BS> <C-W>
 
-" Copy-all to clipboard and paste-all from clipboard
+" Open the current file in the browser with git-open
 nnoremap <Leader>G :!with-zsh git-open %<CR>
 
 " VimTip #171 -- Search for visually selected text
@@ -578,7 +580,7 @@ let g:bufExplorerSortBy='name'      " Default sort by the name
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1 
 "set termguicolors " TODO: Seems to break colors in :term
 
-colorscheme sbw
+colorscheme sbw-two
 
 " Experimental                                                              {{{1
 " ==============================================================================
