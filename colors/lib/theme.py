@@ -72,6 +72,12 @@ MAPPINGS = {
         'StatusLine':        { 'link':  'PMenu'       },
         'WildMenu':          { 'link':  'PmenuSel'    },
 
+        # Diff
+        'DiffDelete':        { 'guifg': 'NONE', 'guibg': 'DiffRed'      },
+        'DiffAdd':           { 'guifg': 'NONE', 'guibg': 'DiffGreen'    },
+        'DiffChange':        { 'guifg': 'NONE', 'guibg': 'DiffBlue'     },
+        'DiffText':          { 'guifg': 'NONE', 'guibg': 'DiffYellow'   },
+
         # Basic statements and keywords
         'Statement':         { 'guifg': 'LightBlue'   },
         'Keyword':           { 'guifg': 'LightBlue'   },
@@ -118,6 +124,7 @@ MAPPINGS = {
         'SpellRare':         { 'link':  'WarningMsg'  },
         'SpellLocal':        { 'link':  'ErrorMsg'    },
 
+        # NERDTree
         'NERDTreeDir':       { 'link':  'Keyword'     },
         'NERDTreeDirSlash':  { 'link':  'NERDTreeDir' },
         'NERDTreeOpenable':  { 'link':  'NERDTreeDir' },
@@ -131,11 +138,6 @@ MAPPINGS = {
         'NERDTreeToggleOff': { 'link':  'Normal'      },
         }
 
-#call s:create_highlight('DiffDelete', 'NONE', s:PaletteDiffRed)
-#call s:create_highlight('DiffAdd',    'NONE', s:PaletteDiffGreen)
-#call s:create_highlight('DiffChange', 'NONE', s:PaletteDiffBlue)
-#call s:create_highlight('DiffText',   'NONE', s:PaletteDiffYellow)
-
 def create_color_mapping(group, props):
     deref_color = lambda x: PALETTE.get(x, x)
 
@@ -147,8 +149,10 @@ def create_color_mapping(group, props):
         props_str = ' '.join([f'{k}={deref_color(v)}' for k,v in props.items()])
         cmd = f'hi {group} {props_str}'
 
+    print(cmd)
     vim.command(cmd)
 
 def create_theme():
+    vim.options['termguicolors'] = True
     for group, props in MAPPINGS.items():
         create_color_mapping(group, props)
