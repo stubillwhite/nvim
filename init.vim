@@ -17,6 +17,15 @@ let g:mapleader=","
 
 call plug#begin('~/.config/vim-plug')
 
+" Libraries
+Plug 'nvim-lua/plenary.nvim'        " Async library required by other plugins
+
+" Experimental
+Plug 'sindrets/diffview.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+
 " Appearance
 Plug 'romainl/Apprentice'           " A dark, low-contrast, Vim colorscheme
 Plug 'noah/vim256-color'            " A collection of 256-color colorschemes for Vim
@@ -69,6 +78,38 @@ Plug 'godlygeek/tabular'            " Vim script for text filtering and alignmen
 call plug#end()
 
 map -a	:call SyntaxAttr()<CR>
+
+" nvim-treesitter/nvim-treesitter   {{{2
+" ======================================
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "scala" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- List of parsers to ignore installing (for "all")
+  ignore_install = { "javascript" },
+
+  highlight = {
+    -- `false` will disable the whole extension
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    disable = { "c", "rust" },
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
 
 " w0rp/ale                          {{{2
 " ======================================
@@ -188,7 +229,8 @@ nnoremap <silent> <Leader>g :Git<CR>:only<CR>
 nnoremap <silent> <Leader>1 :diffget //2<CR>
 nnoremap <silent> <Leader>3 :diffget //3<CR>
 
-command -nargs=* Glogv Git! logv <args>
+command -nargs=* Glogv Git!  logv <args>
+command -nargs=* Glogvv Git! logvv <args>
 
 " vim-scripts/taglist.vim           {{{2
 " ======================================
