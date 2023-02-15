@@ -12,6 +12,11 @@ let g:mapleader=","
 " Plugins                                                                   {{{1
 " ==============================================================================
 
+" Built-in plugins                  {{{2
+" ======================================
+
+packadd cfilter                     " Filter quickfix or location list
+
 " Master list of all plugins        {{{2
 " ======================================
 
@@ -289,12 +294,12 @@ endfunction
 command -nargs=0 FormatXML call s:FormatXML(<f-args>)
 
 function s:BrewfileAppendBrewDescription()
-    execute 'read! brew info '.expand('<cword>').' | head -n 2 | tail -n 1'
+    execute 'read! brew info '.expand('<cword>').' | grep Description --context=1 | tail -n 1'
 endfunction
 command -nargs=0 BrewfileAppendBrewDescription call s:BrewfileAppendBrewDescription(<f-args>)
 
 function s:BrewfileAppendCaskDescription()
-    execute 'read! brew cask info '.expand('<cword>').' | tail -n 5 | head -n 1'
+    execute 'read! brew info --cask '.expand('<cword>').' | grep Description --context=1 | tail -n 1'
 endfunction
 command -nargs=0 BrewfileAppendCaskDescription call s:BrewfileAppendCaskDescription(<f-args>)
 
