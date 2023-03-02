@@ -25,117 +25,126 @@ PALETTE = {
 
 MAPPINGS = {
         # Normal text
-        'Normal':            { 'guifg': 'LightGrey',  'guibg': 'LightBlack'   },
+        'Normal':               { 'guifg': 'LightGrey',  'guibg': 'LightBlack'   },
 
         # Selection
-        'Selection':         { 'guifg': 'White',      'guibg': 'VeryDarkGrey' },
-        'Visual':            { 'link':  'Selection'   },
-        'VisualNOS':         { 'link':  'Visual'      },
-        'Search':            { 'link':  'Selection'   },
-        'IncSearch':         { 'link':  'Search'      },
-        'MatchParen':        { 'link':  'Search'      },
-        'CursorLine':        { 'link':  'Search'      },
-        'ColorColumn':       { 'link':  'Search'      },
+        'Selection':            { 'guifg': 'White',      'guibg': 'VeryDarkGrey' },
+        'Visual':               { 'link':  'Selection'   },
+        'VisualNOS':            { 'link':  'Visual'      },
+        'Search':               { 'link':  'Selection'   },
+        'IncSearch':            { 'link':  'Search'      },
+        'MatchParen':           { 'link':  'Search'      },
+        'CursorLine':           { 'link':  'Search'      },
+        'ColorColumn':          { 'link':  'Search'      },
 
         # Gutter
-        'LineNr':            { 'link':  'Comment'     },
-        'SignColumn':        { 'link':  'Comment'     },
-        'Folded':            { 'link':  'Comment'     },
-        'FoldColumn':        { 'link':  'Comment'     },
-        'EndOfBuffer':       { 'link':  'Comment'     },
+        'LineNr':               { 'link':  'Comment'     },
+        'SignColumn':           { 'link':  'Comment'     },
+        'Folded':               { 'link':  'Comment'     },
+        'FoldColumn':           { 'link':  'Comment'     },
+        'EndOfBuffer':          { 'link':  'Comment'     },
 
         # Splitter
-        'VertSplit':         { 'link':  'Comment'     },
+        'VertSplit':            { 'link':  'Comment'     },
 
         # Whitespace
-        'NonText':           { 'link':  'Comment'     },
+        'NonText':              { 'link':  'Comment'     },
 
         # General messages
-        'ErrorMsg':          { 'guifg': 'Red'         },
-        'MoreMsg':           { 'guifg': 'LightBlue'   },
-        'ModeMsg':           { 'guifg': 'LightBlue'   },
-        'Question':          { 'link':  'Normal'      },
-        'WarningMsg':        { 'guifg': 'Yellow'      },
+        'ErrorMsg':             { 'guifg': 'Red'         },
+        'MoreMsg':              { 'guifg': 'LightBlue'   },
+        'ModeMsg':              { 'guifg': 'LightBlue'   },
+        'Question':             { 'link':  'Normal'      },
+        'WarningMsg':           { 'guifg': 'Yellow'      },
 
         # General UI highlights
-        'Directory':         { 'link':  'Keyword'     },
-        'Title':             { 'link':  'Keyword'     },
-        'SpecialKey':        { 'link':  'Keyword'     },
+        'Directory':            { 'link':  'Keyword'     },
+        'Title':                { 'link':  'Keyword'     },
+        'SpecialKey':           { 'link':  'Keyword'     },
 
         # Menu
-        'Pmenu':             { 'guifg': 'LightGrey',  'guibg': 'VeryDarkGrey' },
-        'PmenuSbar':         { 'guifg': 'LightGrey',  'guibg': 'VeryDarkGrey' },
-        'PmenuSel':          { 'link':  'Selection'   },
+        'Pmenu':                { 'guifg': 'LightGrey',  'guibg': 'VeryDarkGrey' },
+        'PmenuSbar':            { 'guifg': 'LightGrey',  'guibg': 'VeryDarkGrey' },
+        'PmenuSel':             { 'link':  'Selection'   },
         #call s:create_highlight('PmenuThumb', s:none, s:bg4)
 
         # Status line and wild menu
-        'StatusLine':        { 'link':  'PMenu'       },
-        'WildMenu':          { 'link':  'PmenuSel'    },
+        'StatusLine':           { 'link':  'PMenu'       },
+        'WildMenu':             { 'link':  'PmenuSel'    },
 
         # Diff
-        'DiffDelete':        { 'guifg': 'NONE', 'guibg': 'DiffRed'       },
-        'DiffAdd':           { 'guifg': 'NONE', 'guibg': 'DiffGreen'     },
-        'DiffChange':        { 'guifg': 'NONE', 'guibg': 'DiffBlue'      },
-        'DiffText':          { 'guifg': 'NONE', 'guibg': 'DiffLightBlue' },
+        'DiffDelete':           { 'guifg': 'NONE', 'guibg': 'DiffRed'       },
+        'DiffAdd':              { 'guifg': 'NONE', 'guibg': 'DiffGreen'     },
+        'DiffChange':           { 'guifg': 'NONE', 'guibg': 'DiffBlue'      },
+        'DiffText':             { 'guifg': 'NONE', 'guibg': 'DiffLightBlue' },
 
         # Basic statements and keywords
-        'Statement':         { 'guifg': 'LightBlue'   },
-        'Keyword':           { 'guifg': 'LightBlue'   },
-        'Conditional':       { 'link':  'Keyword'     },
-        'Repeat':            { 'link':  'Keyword'     },
-        'Label':             { 'link':  'Keyword'     },
-        'Exception':         { 'link':  'Keyword'     },
-        'Operator':          { 'link':  'Keyword'     },
-        'Type':              { 'link':  'Keyword'     },
-        'Special':           { 'link':  'Normal'      },
-        'Comment':           { 'guifg': 'DarkGrey'    },
-        'Todo':              { 'guifg': 'Yellow'      },
-        'Error':             { 'guifg': 'Red'         },
+        'Statement':            { 'guifg': 'LightBlue'   },
+        'Keyword':              { 'guifg': 'LightBlue'   },
+        'Conditional':          { 'link':  'Keyword'     },
+        'Repeat':               { 'link':  'Keyword'     },
+        'Label':                { 'link':  'Keyword'     },
+        'Exception':            { 'link':  'Keyword'     },
+        'Operator':             { 'link':  'Keyword'     },
+        'Type':                 { 'link':  'Keyword'     },
+        'Special':              { 'link':  'Normal'      },
+        'Comment':              { 'guifg': 'DarkGrey'    },
+        'Todo':                 { 'guifg': 'Yellow'      },
+        'Error':                { 'guifg': 'Red'         },
 
         # Identifiers
-        'Function':          { 'guifg': 'Yellow'},
-        'Identifier':        { 'guifg': 'Blue'},
-        'Variable':          { 'link':  'Identifier'  },
+        'Function':             { 'guifg': 'Yellow'},
+        'Identifier':           { 'guifg': 'Blue'},
+        'Variable':             { 'link':  'Identifier'  },
 
         # Preprocessor and macro
-        'PreProc':           { 'guifg': 'BlueGreen'},
-        'Include':           { 'link':  'PreProc'     },
-        'Define':            { 'link':  'PreProc'     },
-        'Macro':             { 'link':  'PreProc'     },
-        'PreCondit':         { 'link':  'PreProc'     },
+        'PreProc':              { 'guifg': 'BlueGreen'},
+        'Include':              { 'link':  'PreProc'     },
+        'Define':               { 'link':  'PreProc'     },
+        'Macro':                { 'link':  'PreProc'     },
+        'PreCondit':            { 'link':  'PreProc'     },
 
         # Generic constant
-        'Constant':          { 'guifg': 'BlueGreen'},
-        'Character':         { 'link':  'Constant'    },
-        'Boolean':           { 'link':  'Constant'    },
-        'Number':            { 'link':  'Constant'    },
-        'Float':             { 'link':  'Constant'    },
+        'Constant':             { 'guifg': 'BlueGreen'},
+        'Character':            { 'link':  'Constant'    },
+        'Boolean':              { 'link':  'Constant'    },
+        'Number':               { 'link':  'Constant'    },
+        'Float':                { 'link':  'Constant'    },
 
         # ALE
-        'ALEError':          { 'link':  'ErrorMsg'    },
-        'ALEWarning':        { 'link':  'WarningMsg'  },
-        'ALEInfo':           { 'link':  'MoreMsg'     },
-        'ALEStyleError':     { 'link':  'ALEError'    },
-        'ALEStyleWarning':   { 'link':  'ALEWarning'  },
+        'ALEError':             { 'link':  'ErrorMsg'    },
+        'ALEWarning':           { 'link':  'WarningMsg'  },
+        'ALEInfo':              { 'link':  'MoreMsg'     },
+        'ALEStyleError':        { 'link':  'ALEError'    },
+        'ALEStyleWarning':      { 'link':  'ALEWarning'  },
 
         # Spelling
-        'SpellBad':          { 'link':  'ErrorMsg'    },
-        'SpellCap':          { 'link':  'WarningMsg'  },
-        'SpellRare':         { 'link':  'WarningMsg'  },
-        'SpellLocal':        { 'link':  'ErrorMsg'    },
+        'SpellBad':             { 'link':  'ErrorMsg'    },
+        'SpellCap':             { 'link':  'WarningMsg'  },
+        'SpellRare':            { 'link':  'WarningMsg'  },
+        'SpellLocal':           { 'link':  'ErrorMsg'    },
 
         # NERDTree
-        'NERDTreeDir':       { 'link':  'Keyword'     },
-        'NERDTreeDirSlash':  { 'link':  'NERDTreeDir' },
-        'NERDTreeOpenable':  { 'link':  'NERDTreeDir' },
-        'NERDTreeClosable':  { 'link':  'NERDTreeDir' },
-        'NERDTreeFile':      { 'link':  'Normal'      },
-        'NERDTreeExecFile':  { 'link':  'ErrorMsg '   },
-        'NERDTreeUp':        { 'link':  'NERDTreeDir' },
-        'NERDTreeCWD':       { 'link':  'NERDTreeDir' },
-        'NERDTreeHelp':      { 'link':  'Normal'      },
-        'NERDTreeToggleOn':  { 'link':  'Normal'      },
-        'NERDTreeToggleOff': { 'link':  'Normal'      },
+        'NERDTreeDir':          { 'link':  'Keyword'     },
+        'NERDTreeDirSlash':     { 'link':  'NERDTreeDir' },
+        'NERDTreeOpenable':     { 'link':  'NERDTreeDir' },
+        'NERDTreeClosable':     { 'link':  'NERDTreeDir' },
+        'NERDTreeFile':         { 'link':  'Normal'      },
+        'NERDTreeExecFile':     { 'link':  'ErrorMsg '   },
+        'NERDTreeUp':           { 'link':  'NERDTreeDir' },
+        'NERDTreeCWD':          { 'link':  'NERDTreeDir' },
+        'NERDTreeHelp':         { 'link':  'Normal'      },
+        'NERDTreeToggleOn':     { 'link':  'Normal'      },
+        'NERDTreeToggleOff':    { 'link':  'Normal'      },
+
+        # XML       
+        'xmlTag':               { 'link': 'Keyword' },
+        'xmlTagName':           { 'link': 'xmlTag'  },
+        'xmlProcessing':        { 'link': 'xmlTag'  },
+        'xmlProcessingDelim':   { 'link': 'xmlTag'  },
+        'xmlAttrib':            { 'link': 'xmlTag'  },
+        'xmlEqual':             { 'link': 'xmlTag'  },
+        'xmlString':            { 'link': 'Normal'  },
         }
 
 def create_color_mapping(group, props):
