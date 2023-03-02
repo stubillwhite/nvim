@@ -46,6 +46,7 @@ Plug 'w0rp/ale'                     " Asynchronous Lint Engine
 " Languages
 Plug 'ElmCast/elm-vim'              " Elm plugin for Vim
 Plug 'derekwyatt/vim-scala'         " Scala
+Plug 'udalov/kotlin-vim'            " Kotlin
 Plug 'davidhalter/jedi-vim'         " Smarter Python integration
 Plug 'vim-scripts/applescript.vim'  " Applescript syntax highlighting
 Plug 'tmux-plugins/vim-tmux'        " Syntax for tmux configuration
@@ -53,7 +54,7 @@ Plug 'othree/xml.vim'               " Helps editing XML files
 Plug 'pearofducks/ansible-vim'      " Ansible YAML files
 Plug 'jvirtanen/vim-hcl'            " HashiCorp Configuration Language syntax highlighting
 Plug 'aliou/bats.vim'               " BATS script testing language
-Plug 'hashivim/vim-terraform'       " Bbasic vim/terraform integration
+Plug 'hashivim/vim-terraform'       " Basic vim/terraform integration
 
 " Interface
 Plug 'Olical/vim-enmasse'           " Edit every line in a quickfix list at the same time
