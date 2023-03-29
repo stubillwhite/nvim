@@ -122,6 +122,7 @@ EOF
 
 let g:ale_set_loclist = 1
 let g:ale_set_quickfix = 0
+let g:ale_virtualtext_cursor = 0        " Do not display virtual text
 
 " junegunn/vim-easy-align           {{{2
 " ======================================
@@ -314,7 +315,8 @@ function s:FixSmartPunctuation()
     silent! %s/\%u0092/'/g
     silent! %s/\%u0093/"/g
     silent! %s/\%u0094/"/g
-    silent! %s/\%u2014/--/g
+    silent! %s/\%u2013/-/g
+    silent! %s/\%u2014/-/g
     silent! %s/\%u2018/'/g
     silent! %s/\%u2019/'/g
     silent! %s/\%u201C/"/g
