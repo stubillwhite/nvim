@@ -120,8 +120,8 @@ EOF
 " w0rp/ale                          {{{2
 " ======================================
 
-let g:ale_set_loclist = 1
-let g:ale_set_quickfix = 0
+let g:ale_set_loclist = 1               " Use loclist instead of quickfix list
+let g:ale_set_quickfix = 0              " Use loclist instead of quickfix list
 let g:ale_virtualtext_cursor = 0        " Do not display virtual text
 
 " junegunn/vim-easy-align           {{{2
