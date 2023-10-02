@@ -315,6 +315,7 @@ function s:FixSmartPunctuation()
     silent! %s/\%u0092/'/g
     silent! %s/\%u0093/"/g
     silent! %s/\%u0094/"/g
+    silent! %s/\%u200B//g
     silent! %s/\%u2013/-/g
     silent! %s/\%u2014/-/g
     silent! %s/\%u2018/'/g
