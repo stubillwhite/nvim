@@ -108,8 +108,8 @@ hi! link Question Normal
 call s:create_highlight('WarningMsg', s:PaletteYellow)
 
 " General UI highlights
-hi! link Directory Keyword
-hi! link Title     Keyword
+hi! link Directory  Keyword
+hi! link Title      Keyword
 hi! link SpecialKey Keyword
 
 " Menu
@@ -119,11 +119,14 @@ hi! link PmenuSel Selection
 "call s:create_highlight('PmenuThumb', s:none, s:bg4)
 
 " Status line and wild menu
-hi! link StatusLine   PMenu
-hi! link WildMenu PmenuSel
+hi! link StatusLine PMenu
+hi! link WildMenu   PmenuSel
 
 " Visual-Multi should use normal visual style for cursors
+let g:VM_Mono_hl   = 'Visual'
+let g:VM_Extend_hl = 'Visual'
 let g:VM_Cursor_hl = 'Visual'
+let g:VM_Insert_hl = 'Visual'
 
 "                 " Tab pages line filler
 "                 call s:HL('TabLineFill', s:bg4, s:bg1, s:invert_tabline)
