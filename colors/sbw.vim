@@ -122,6 +122,9 @@ hi! link PmenuSel Selection
 hi! link StatusLine   PMenu
 hi! link WildMenu PmenuSel
 
+" Visual-Multi should use normal visual style for cursors
+let g:VM_Cursor_hl = 'Visual'
+
 "                 " Tab pages line filler
 "                 call s:HL('TabLineFill', s:bg4, s:bg1, s:invert_tabline)
 "                 " Active tab page label
