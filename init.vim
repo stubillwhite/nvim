@@ -39,6 +39,7 @@ Plug 'itchyny/lightline.vim'        " A light and configurable statusline plugin
 Plug 'junegunn/seoul256.vim'
 
 Plug 'rebelot/kanagawa.nvim'        " TODO: Testing theme
+Plug 'EdenEast/nightfox.nvim'       " TODO: Testing theme
 
 " Syntax and static checking
 Plug 'w0rp/ale'                     " Asynchronous Lint Engine
@@ -235,6 +236,9 @@ vmap <A-DOWN> <Plug>(expand_region_shrink)
 nnoremap <silent> <Leader>g :Git<CR>:only<CR>
 nnoremap <silent> <Leader>1 :diffget //2<CR>
 nnoremap <silent> <Leader>3 :diffget //3<CR>
+
+" View commit history for the current file
+nnoremap <silent> <Leader>h :0Gclog<CR>             
 
 command -nargs=* Glogv Git!  logv <args>
 command -nargs=* Glogvv Git! logvv <args>
