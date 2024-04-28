@@ -27,6 +27,13 @@ Plug 'nvim-lua/plenary.nvim'        " Async library required by other plugins
 
 " Experimental
 Plug 'sindrets/diffview.nvim'
+" lua << EOF
+" local actions = require("diffview.actions")
+" require("diffview").setup({
+"   use_icons = false         -- No nvim-web-devicons
+" })
+" EOF
+
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -124,6 +131,9 @@ EOF
 let g:ale_set_loclist = 1               " Use loclist instead of quickfix list
 let g:ale_set_quickfix = 0              " Use loclist instead of quickfix list
 let g:ale_virtualtext_cursor = 0        " Do not display virtual text
+let g:ale_python_auto_poetry = 1        " Autoconfigure poetry projects
+let g:ale_python_ruff_auto_poetry = 1   " Autoconfigure ruff from poetry
+let g:ale_python_black_auto_poetry = 1  " Autoconfigure black from poetry
 
 " junegunn/vim-easy-align           {{{2
 " ======================================
