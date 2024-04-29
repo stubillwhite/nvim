@@ -137,13 +137,10 @@ MAPPINGS = {
         'NERDTreeToggleOn':     { 'link':  'Normal'      },
         'NERDTreeToggleOff':    { 'link':  'Normal'      },
 
+        ## Not working?
         # XML       
-        'xmlTag':               { 'link': 'Keyword' },
-        'xmlTagName':           { 'link': 'xmlTag'  },
-        'xmlProcessing':        { 'link': 'xmlTag'  },
-        'xmlProcessingDelim':   { 'link': 'xmlTag'  },
-        'xmlAttrib':            { 'link': 'xmlTag'  },
-        'xmlEqual':             { 'link': 'xmlTag'  },
+        '@tag.xml':             { 'link': 'Keyword' },
+        '@comment.xml':         { 'link': 'LightBlue' },
         'xmlString':            { 'link': 'Normal'  },
         }
 

@@ -1,5 +1,7 @@
 " vim:fdm=marker
-"
+
+" Use :Inspect to view syntax highlighting
+
 " Python module                                                             {{{1
 " ==============================================================================
 
@@ -36,13 +38,3 @@ if exists("syntax_on")
 endif
 
 call s:loadTheme()
-
-function! DisplaySynStack ()
-    for i1 in synstack(line("."), col("."))
-        let i2 = synIDtrans(i1)
-        let n1 = synIDattr(i1, "name")
-        let n2 = synIDattr(i2, "name")
-        echo n1 "->" n2
-    endfor
-endfunction
-map gm :call DisplaySynStack()<CR>
