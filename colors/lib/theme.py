@@ -107,6 +107,7 @@ MAPPINGS = {
         # Generic constant
         'Constant':             { 'guifg': 'BlueGreen'},
         'Character':            { 'link':  'Constant'    },
+        'String':               { 'link':  'Constant'    },
         'Boolean':              { 'link':  'Constant'    },
         'Number':               { 'link':  'Constant'    },
         'Float':                { 'link':  'Constant'    },
