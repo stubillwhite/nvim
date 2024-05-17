@@ -32,6 +32,7 @@ MAPPINGS = {
         'Visual':               { 'link':  'Selection'   },
         'VisualNOS':            { 'link':  'Visual'      },
         'Search':               { 'link':  'Selection'   },
+        'CurSearch':            { 'link':  'Search'      },
         'IncSearch':            { 'link':  'Search'      },
         'MatchParen':           { 'link':  'Search'      },
         'CursorLine':           { 'link':  'Search'      },
