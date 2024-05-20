@@ -50,6 +50,7 @@ Plug 'EdenEast/nightfox.nvim'       " TODO: Testing theme
 
 " Syntax and static checking
 Plug 'w0rp/ale'                     " Asynchronous Lint Engine
+Plug 'neovim/nvim-lspconfig'        " Quickstart configs for Nvim LSP
 
 " Languages
 Plug 'ElmCast/elm-vim'              " Elm plugin for Vim
@@ -128,12 +129,30 @@ EOF
 " w0rp/ale                          {{{2
 " ======================================
 
-let g:ale_set_loclist = 1               " Use loclist instead of quickfix list
-let g:ale_set_quickfix = 0              " Use loclist instead of quickfix list
-let g:ale_virtualtext_cursor = 0        " Do not display virtual text
-let g:ale_python_auto_poetry = 1        " Autoconfigure poetry projects
-let g:ale_python_ruff_auto_poetry = 1   " Autoconfigure ruff from poetry
-let g:ale_python_black_auto_poetry = 1  " Autoconfigure black from poetry
+let g:ale_python_auto_poetry = 1            " Autoconfigure poetry projects
+let g:ale_python_auto_virtualenv = 1        " Autoconfigure virtualenv projects
+let g:ale_python_black_auto_poetry = 1      " Autoconfigure black from poetry
+let g:ale_python_ruff_auto_poetry = 1       " Autoconfigure ruff from poetry
+let g:ale_python_ruff_change_directory = 1  " 
+let g:ale_python_ruff_executable = 'poetry' " Force ruff to use poetry
+let g:ale_set_loclist = 0                   " Use quickfix instead of loclist list
+let g:ale_set_quickfix = 1                  " Use quickfix instead of loclist list
+let g:ale_virtualtext_cursor = 0            " Do not display virtual text
+let g:ale_python_ruff_options = "--force-exclude"
+
+let g:ale_linters={
+\   'python': ['ruff'],
+\}
+
+lua <<EOF
+require('lspconfig').ruff_lsp.setup {
+    init_options = {
+        settings = {
+            args = { '--force-exclude' },
+        }
+        }
+    }
+EOF
 
 " junegunn/vim-easy-align           {{{2
 " ======================================
@@ -248,7 +267,7 @@ nnoremap <silent> <Leader>1 :diffget //2<CR>
 nnoremap <silent> <Leader>3 :diffget //3<CR>
 
 " View commit history for the current file
-nnoremap <silent> <Leader>h :0Gclog<CR>             
+nnoremap <silent> <Leader>h :0Gclog<CR>
 
 command -nargs=* Glogv Git!  logv <args>
 command -nargs=* Glogvv Git! logvv <args>
@@ -529,7 +548,7 @@ command -nargs=0 SearchImmediate call s:SearchImmediate(<f-args>)
 function DependencyTreeFoldLevel(lnum)
     let line=substitute(getline(a:lnum), "\\[info\\] ", "", "")
     let cleanLine=substitute(line, "\\(|\\|+\\|-\\)", " ", "g")
-    let index=match(cleanLine, "\\S") / 2 - 1 
+    let index=match(cleanLine, "\\S") / 2 - 1
     return (index == -1 ? 0 : index)
 endfunction
 
@@ -552,6 +571,7 @@ augroup VimrcFileTypeAutocommands
     au BufRead,BufNewFile *.jsw                         setlocal filetype=javascript
     au BufRead,BufNewFile Brewfile                      setlocal filetype=ruby
     au BufRead,BufNewFile *.yml                         setlocal filetype=yaml.ansible
+    au FileType           help                          setlocal conceallevel=0
 augroup END
 
 " Key mappings                                                              {{{1
@@ -642,7 +662,7 @@ let g:bufExplorerSortBy='name'      " Default sort by the name
 " Color scheme                                                              {{{1
 " ==============================================================================
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1 
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 colorscheme sbw-two
 "
