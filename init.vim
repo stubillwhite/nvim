@@ -133,8 +133,7 @@ let g:ale_python_auto_poetry = 1            " Autoconfigure poetry projects
 let g:ale_python_auto_virtualenv = 1        " Autoconfigure virtualenv projects
 let g:ale_python_black_auto_poetry = 1      " Autoconfigure black from poetry
 let g:ale_python_ruff_auto_poetry = 1       " Autoconfigure ruff from poetry
-let g:ale_python_ruff_change_directory = 1  " 
-let g:ale_python_ruff_executable = 'poetry' " Force ruff to use poetry
+let g:ale_python_ruff_change_directory = 1  " Run ruff from the project root
 let g:ale_set_loclist = 0                   " Use quickfix instead of loclist list
 let g:ale_set_quickfix = 1                  " Use quickfix instead of loclist list
 let g:ale_virtualtext_cursor = 0            " Do not display virtual text
@@ -150,8 +149,8 @@ require('lspconfig').ruff_lsp.setup {
         settings = {
             args = { '--force-exclude' },
         }
-        }
     }
+}
 EOF
 
 " junegunn/vim-easy-align           {{{2
