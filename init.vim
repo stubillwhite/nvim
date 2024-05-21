@@ -129,18 +129,31 @@ EOF
 " w0rp/ale                          {{{2
 " ======================================
 
-let g:ale_python_auto_poetry = 1            " Autoconfigure poetry projects
-let g:ale_python_auto_virtualenv = 1        " Autoconfigure virtualenv projects
-let g:ale_python_black_auto_poetry = 1      " Autoconfigure black from poetry
-let g:ale_python_ruff_auto_poetry = 1       " Autoconfigure ruff from poetry
+" Autoconfigure from poetry
+let g:ale_python_auto_poetry = 1
+let g:ale_python_auto_virtualenv = 1
+let g:ale_python_black_auto_poetry = 1
+let g:ale_python_flake8_auto_poetry = 1
+let g:ale_python_mypy_auto_poetry = 1
+let g:ale_python_ruff_auto_poetry = 1
+
 let g:ale_python_ruff_change_directory = 1  " Run ruff from the project root
-let g:ale_set_loclist = 0                   " Use quickfix instead of loclist list
-let g:ale_set_quickfix = 1                  " Use quickfix instead of loclist list
+let g:ale_set_loclist = 1                   " Use loclist instead of quickfix list
+let g:ale_set_quickfix = 0                  " Use loclist instead of quickfix list
 let g:ale_virtualtext_cursor = 0            " Do not display virtual text
+
 let g:ale_python_ruff_options = "--force-exclude"
 
-let g:ale_linters={
-\   'python': ['ruff'],
+let g:ale_fixers = {
+\   'python': [
+\       'ruff',
+\   ],
+\}
+
+let g:ale_linters = {
+\   'python': [
+\       'ruff',
+\   ],
 \}
 
 lua <<EOF
@@ -600,7 +613,7 @@ nnoremap k gk
 
 " Quick way to edit .vimrc and colors
 nmap <Leader>v :e ~/Dev/my-stuff/nvim/init.vim<CR><CR>
-nmap <Leader>c :e ~/Dev/my-stuff/nvim/colors/sbw.vim<CR><CR>
+nmap <Leader>c :e ~/Dev/my-stuff/nvim/colors/lib/theme.py<CR><CR>
 
 " Quick way to edit .zshrc
 nmap <Leader>z :e ~/.zshrc<CR><CR>
