@@ -34,6 +34,7 @@ MAPPINGS = {
         'Search':               { 'link':  'Selection'   },
         'CurSearch':            { 'link':  'Search'      },
         'IncSearch':            { 'link':  'Search'      },
+        'QuickFixLine':         { 'link':  'Search'      },
         'MatchParen':           { 'link':  'Search'      },
         'CursorLine':           { 'link':  'Search'      },
         'ColorColumn':          { 'link':  'Search'      },
