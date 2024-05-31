@@ -179,6 +179,12 @@ let g:easy_align_delimiters = {
 " ======================================
 let delimitMate_expand_cr = 1
 
+" scrooloose/nerdcommenter          {{{2
+" ======================================
+
+let NERDDefaultAlign='left'
+
+
 " scrooloose/nerdtree               {{{2
 " ======================================
 let NERDTreeQuitOnOpen=1
