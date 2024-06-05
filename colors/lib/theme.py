@@ -19,7 +19,7 @@ PALETTE = {
         'HighlighterPurple': '#383855',
         'DiffGreen':         "#2B3328",
         'DiffRed':           "#43242B",
-        'DiffBlue':          "#252535",
+        'DiffBlue':          "#282838",
         'DiffLightBlue':     "#353545",
         }
 
