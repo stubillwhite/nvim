@@ -581,14 +581,16 @@ command -nargs=0 FoldDependencyTree call s:FoldDependencyTree(<f-args>)
 " ==============================================================================
 
 augroup VimrcFileTypeAutocommands
-    au BufRead,BufNewFile *.md                          setlocal filetype=markdown
-    au BufRead,BufNewFile *.log                         setlocal filetype=log
     au BufRead,BufNewFile *.applescript                 setlocal filetype=applescript
     au BufRead,BufNewFile *.boot                        setlocal filetype=clojure
-    au BufRead,BufNewFile .bashrc                       setlocal filetype=sh
+    au BufRead,BufNewFile *.jsonld                      setlocal filetype=json
     au BufRead,BufNewFile *.jsw                         setlocal filetype=javascript
-    au BufRead,BufNewFile Brewfile                      setlocal filetype=ruby
+    au BufRead,BufNewFile *.log                         setlocal filetype=log
+    au BufRead,BufNewFile *.md                          setlocal filetype=markdown
+    au BufRead,BufNewFile *.pom                         setlocal filetype=xml
     au BufRead,BufNewFile *.yml                         setlocal filetype=yaml.ansible
+    au BufRead,BufNewFile .bashrc                       setlocal filetype=sh
+    au BufRead,BufNewFile Brewfile                      setlocal filetype=ruby
     au FileType           help                          setlocal conceallevel=0
 augroup END
 
@@ -743,3 +745,10 @@ function! s:add_mappings() abort
   11copen
   wincmd p
 endfunction
+
+function! s:sort_line()
+    silent execute ":s/,/\r/g"
+    silent execute ":'[,sort"
+    silent execute " :,']j"
+endfunction
+command! SortLine call s:sort_line()
