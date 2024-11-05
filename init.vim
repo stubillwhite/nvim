@@ -34,6 +34,9 @@ Plug 'sindrets/diffview.nvim'
 " })
 " EOF
 
+
+Plug 'neomake/neomake'
+
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -93,6 +96,9 @@ Plug 'godlygeek/tabular'            " Vim script for text filtering and alignmen
 call plug#end()
 
 map -a	:call SyntaxAttr()<CR>
+
+" 'neomake/neomake'
+"call neomake#configure#automake('nw', 1000) " Autobuild after 1s after writing
 
 " nvim-treesitter/nvim-treesitter   {{{2
 " ======================================
