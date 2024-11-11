@@ -9,6 +9,10 @@ let g:TmpDir='~/.config/nvim-tmp'
 let mapleader=","
 let g:mapleader=","
 
+" Python
+let g:python3_host_prog = '~/dev/my-stuff/nvim/python-nvim/.venv/bin/python'
+
+
 " Plugins                                                                   {{{1
 " ==============================================================================
 
@@ -440,7 +444,7 @@ set listchars=tab:>-,eol:$                  " Unprintable characters to display
 set laststatus=2                            " Always have a statusline
 set splitright                              " New vertical splits put the cursor on the right
 set splitbelow                              " New horizontal splits put the cursor on the bottom
-set shell=/usr/local/bin/zsh                " Use Zsh
+set shell=zsh                               " Use Zsh
 TabStop 4                                   " Default to 4 spaces per tabstop
 
 syntax on                                   " Syntax highlighting
