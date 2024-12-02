@@ -163,7 +163,7 @@ let g:ale_linters = {
 \}
 
 lua <<EOF
-require('lspconfig').ruff_lsp.setup {
+require('lspconfig').ruff.setup {
     init_options = {
         settings = {
             args = { '--force-exclude' },
@@ -189,7 +189,7 @@ let delimitMate_expand_cr = 1
 " ======================================
 
 let NERDDefaultAlign='left'
-
+let NERDSpaceDelims=1
 
 " scrooloose/nerdtree               {{{2
 " ======================================
