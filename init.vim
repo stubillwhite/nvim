@@ -80,7 +80,7 @@ Plug 'Valloric/YouCompleteMe'       " Smarter completion
 "Plug 'neoclide/coc.nvim', {'branch': 'release'} " TODO: CHECK THIS OUT
 Plug 'jaxbot/browserlink.vim'       " Live browser editing for Vim
 Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
-Plug 'mileszs/Peio ack.vim'              " Vim plugin for the Perl module / CLI script 'ack'
+Plug 'mileszs/ack.vim'              " Vim plugin for the Perl module / CLI script 'ack'
 Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting
 Plug 'scrooloose/nerdtree'          " Easy file browsing
 Plug 'simnalamburt/vim-mundo'       " Visualise the undo graph
