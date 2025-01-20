@@ -690,7 +690,7 @@ let g:bufExplorerSortBy='name'      " Default sort by the name
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-colorscheme sbw-two
+colorscheme sbw
 "
 " Visual-Multi should use normal visual style for cursors
 let g:VM_Mono_hl   = 'Visual'
