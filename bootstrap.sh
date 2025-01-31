@@ -28,3 +28,11 @@ PLUG_URL=https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 echo Downloading $PLUG_URL
 curl -fLo $INSTALLATION_DIR/autoload/plug.vim --create-dirs $PLUG_URL
+
+echo Creating Python environment
+mkdir -p python-nvim
+cd python-nvim
+python -m venv .venv
+source .venv/bin/activate
+pip install pynvim
+deactivate
