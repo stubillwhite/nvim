@@ -631,8 +631,8 @@ nnoremap j gj
 nnoremap k gk
 
 " Quick way to edit .vimrc and colors
-nmap <Leader>v :e ~/Dev/my-stuff/nvim/init.vim<CR><CR>
-nmap <Leader>c :e ~/Dev/my-stuff/nvim/colors/lib/theme.py<CR><CR>
+nmap <Leader>v :e ~/dev/my-stuff/nvim/init.vim<CR><CR>
+nmap <Leader>c :e ~/dev/my-stuff/nvim/colors/lib/theme.py<CR><CR>
 
 " Quick way to edit .zshrc
 nmap <Leader>z :e ~/.zshrc<CR><CR>
