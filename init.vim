@@ -48,7 +48,6 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " Appearance
 Plug 'romainl/Apprentice'           " A dark, low-contrast, Vim colorscheme
 Plug 'noah/vim256-color'            " A collection of 256-color colorschemes for Vim
-Plug 'godlygeek/csapprox'           " Use GUI color schemes in terminals
 Plug 'itchyny/lightline.vim'        " A light and configurable statusline plugin for Vim
 Plug 'junegunn/seoul256.vim'
 
