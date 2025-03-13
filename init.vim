@@ -98,6 +98,8 @@ Plug 'godlygeek/tabular'            " Vim script for text filtering and alignmen
 " Find where Homebrew has installed fzf and add it to the path
 execute 'set runtimepath+='.fnamemodify(systemlist('greadlink -f $(which fzf)')[0], ':h:h')
 
+Plug 'will133/vim-dirdiff'
+
 call plug#end()
 
 map -a	:call SyntaxAttr()<CR>
