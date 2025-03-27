@@ -462,7 +462,9 @@ set fileencodings=ucs-bom,utf8,prc
 set guifontwide=NSimsun:h10
 
 " Command / file completion
-set noshellslash                            " Backslashes for filenames for ZIP plugin
+if has("win32")
+    set noshellslash                        " Backslashes for filenames for ZIP plugin
+endif
 set wildmenu                                " Display options when tab completing
 set wildmode=list:full,full                 " List options but complete to full
 set wildignorecase                          " Be case insensitive
