@@ -3,12 +3,12 @@
 setopt EXTENDED_GLOB
 
 FILES=(
-    "init.vim"
+    "init.lua"
     "colors"
     "after"
 )
 
-INSTALLATION_DIR=$HOME/.config/nvim
+INSTALLATION_DIR=$HOME/.config/nvim-lua
 
 realpath() {
     [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
