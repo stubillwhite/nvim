@@ -1,8 +1,11 @@
 -- vim:fdm=marker
 
+-- https://neovim.io/doc/user/lua-guide.html
+
 -- References
 -- https://github.com/creativenull/nvim-config/tree/main
 -- https://www.reddit.com/r/neovim/comments/khk335/lua_configuration_global_vim_is_undefined/
+-- https://www.jonashietala.se/blog/2023/10/01/rewriting_my_neovim_config_in_lua/
 
 -- Prerequisites                                                            {{{1
 -- =============================================================================
@@ -17,6 +20,10 @@ vim.g.maplocalleader = ","
 
 -- Python
 vim.g.python3_host_prog = '~/dev/my-stuff/nvim/python-nvim/.venv/bin/python'
+
+-- TODO: VARS
+
+local keymap_opts = { noremap = true }
 
 -- Plugins                                                                  {{{1
 -- =============================================================================
@@ -54,8 +61,46 @@ Plug 'nvim-telescope/telescope.nvim'
 -- Appearance
 Plug 'itchyny/lightline.vim'        -- A light and configurable statusline plugin for Vim
 
--- Syntax and static checking
-Plug 'w0rp/ale'                     -- Asynchronous Lint Engine
+-- Syntax and static checking       {{{2
+-- =====================================
+
+-- Asynchronous Lint Engine
+-- =====================================
+
+-- TODO: The config should be elsewhere
+Plug('w0rp/ale', { ['do'] = function()
+    -- Autoconfigure from poetry
+    vim.g.ale_python_auto_poetry           = 1
+    vim.g.ale_python_auto_virtualenv       = 1
+    vim.g.ale_python_black_auto_poetry     = 1
+    vim.g.ale_python_flake8_auto_poetry    = 1
+    vim.g.ale_python_mypy_auto_poetry      = 1
+    vim.g.ale_python_ruff_auto_poetry      = 1
+
+    vim.g.ale_python_ruff_change_directory = 1 -- Run ruff from the project root
+    vim.g.ale_set_loclist                  = 1 -- Use loclist instead of quickfix list
+    vim.g.ale_set_quickfix                 = 0 -- Use loclist instead of quickfix list
+    vim.g.ale_virtualtext_cursor           = 0 -- Do not display virtual text
+
+    vim.gale_python_ruff_options           = "--force-exclude"
+
+    vim.g.ale_fixers = {
+        python = {'ruff' },
+    }
+
+    vim.g.ale_linters = {
+        python = { 'ruff', 'mypy' },
+    }
+
+    require('lspconfig').ruff.setup {
+        init_options = {
+            settings = {
+                args = { '--force-exclude' },
+            }
+        }
+    }
+end })
+
 Plug 'neovim/nvim-lspconfig'        -- Quickstart configs for Nvim LSP
 -- 
 -- " Languages
@@ -82,7 +127,11 @@ Plug 'neovim/nvim-lspconfig'        -- Quickstart configs for Nvim LSP
 -- Plug 'mileszs/ack.vim'              " Vim plugin for the Perl module / CLI script 'ack'
 -- Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting
 -- Plug 'scrooloose/nerdtree'          " Easy file browsing
--- Plug 'simnalamburt/vim-mundo'       " Visualise the undo graph
+
+-- Visualise the undo graph
+Plug 'simnalamburt/vim-mundo'
+vim.api.nvim_set_keymap('n', "<leader>u", "vim.cmd.MundoToggle", keymap_opts)
+
 -- Plug 'terryma/vim-expand-region'    " Incremental selection widening
 -- Plug 'tpope/vim-endwise'            " Smart closing of data strutures
 -- Plug 'tpope/vim-fugitive'           " Git integration
@@ -138,40 +187,6 @@ vim.call('plug#end')
 --   },
 -- }
 -- EOF
-
--- w0rp/ale                         {{{2
--- =====================================
-
--- Autoconfigure from poetry
-vim.g.ale_python_auto_poetry           = 1
-vim.g.ale_python_auto_virtualenv       = 1
-vim.g.ale_python_black_auto_poetry     = 1
-vim.g.ale_python_flake8_auto_poetry    = 1
-vim.g.ale_python_mypy_auto_poetry      = 1
-vim.g.ale_python_ruff_auto_poetry      = 1
-
-vim.g.ale_python_ruff_change_directory = 1 -- Run ruff from the project root
-vim.g.ale_set_loclist                  = 1 -- Use loclist instead of quickfix list
-vim.g.ale_set_quickfix                 = 0 -- Use loclist instead of quickfix list
-vim.g.ale_virtualtext_cursor           = 0 -- Do not display virtual text
-
-vim.gale_python_ruff_options           = "--force-exclude"
-
-vim.g.ale_fixers = {
-   python = {'ruff' },
-}
-
-vim.g.ale_linters = {
-   python = { 'ruff', 'mypy' },
-}
-
-require('lspconfig').ruff.setup {
-    init_options = {
-        settings = {
-            args = { '--force-exclude' },
-        }
-    }
-}
 
 -- " junegunn/vim-easy-align           {{{2
 -- " ======================================
@@ -261,10 +276,6 @@ require('lspconfig').ruff.setup {
 --   end
 -- endfunction
 -- 
--- " simnalamburt/vim-mundo            {{{2
--- " ======================================
--- nnoremap <Leader>u :MundoToggle<CR>
--- 
 -- " davidhalter/jedi-vim              {{{2
 -- " ======================================
 -- let g:jedi#force_py_version = 3
@@ -323,73 +334,69 @@ require('lspconfig').ruff.setup {
 --       call mkdir(a:path, 'p')
 --   endif
 -- endfunction
--- 
--- " Switch off diff mode for the current window
--- function s:NoDiffThis()
---     silent execute 'diffoff | set nowrap'
--- endfunction
--- command -nargs=0 NoDiffThis call s:NoDiffThis(<f-args>)
--- 
+
 -- " Switch off diff mode for all windows
--- function s:NoDiffAll()
---     silent execute 'windo NoDiffThis'
--- endfunction
--- command -nargs=0 NoDiffAll call s:NoDiffAll(<f-args>)
--- 
--- " Format JSON
--- function s:FormatJson()
---     silent execute '%! jq --indent 4 .'
--- endfunction
--- command -nargs=0 FormatJson call s:FormatJson(<f-args>)
--- 
--- function s:FormatJsonAndSort()
---     silent execute '%! jq --indent 4 -S .'
--- endfunction
--- command -nargs=0 FormatJsonAndSort call s:FormatJsonAndSort(<f-args>)
--- 
--- " Format XML
--- function! s:FormatXML()
---     silent execute '%! xmllint --format %'
--- endfunction
--- command -nargs=0 FormatXML call s:FormatXML(<f-args>)
--- 
--- function s:BrewfileAppendBrewDescription()
---     execute 'read! brew info '.expand('<cword>').' | grep Description --context=1 | tail -n 1'
--- endfunction
--- command -nargs=0 BrewfileAppendBrewDescription call s:BrewfileAppendBrewDescription(<f-args>)
--- 
--- function s:BrewfileAppendCaskDescription()
---     execute 'read! brew info --cask '.expand('<cword>').' | grep Description --context=1 | tail -n 1'
--- endfunction
--- command -nargs=0 BrewfileAppendCaskDescription call s:BrewfileAppendCaskDescription(<f-args>)
--- 
--- " Text functions                    {{{2
--- " ======================================
--- 
--- " Convert fancy punctuation back into ASCII
--- function s:FixSmartPunctuation()
---     silent! %s/\%u00B4/'/g
---     silent! %s/\%u0091/'/g
---     silent! %s/\%u0092/'/g
---     silent! %s/\%u0093/"/g
---     silent! %s/\%u0094/"/g
---     silent! %s/\%u200B//g
---     silent! %s/\%u2013/-/g
---     silent! %s/\%u2014/-/g
---     silent! %s/\%u2018/'/g
---     silent! %s/\%u2019/'/g
---     silent! %s/\%u201C/"/g
---     silent! %s/\%u201D/"/g
---     silent! %s/\%u2026/.../g
--- endfunction
--- command -nargs=0 FixSmartPunctuation call s:FixSmartPunctuation(<f-args>)
--- 
--- " Remove ANSI codes
--- function s:FixAnsiCodes()
---     silent! %s/\e\[[0-9;]\+[mK]//g
--- endfunction
--- command -nargs=0 FixAnsiCodes call s:FixAnsiCodes(<f-args>)
--- 
+vim.api.nvim_create_user_command('NoDiffAll',
+    function()
+        vim.cmd([[silent execute 'windo diffoff']])
+    end,
+    { nargs = 0 }
+)
+
+-- Format JSON
+vim.api.nvim_create_user_command('FormatJson',
+    function()
+        vim.cmd([[silent execute '%! jq --indent 4 .']])
+    end,
+    { nargs = 0 }
+)
+
+vim.api.nvim_create_user_command('FormatJsonAndSort',
+    function()
+        vim.cmd([[silent execute '%! jq --indent 4 -S .']])
+    end,
+    { nargs = 0 }
+)
+
+-- Format XML
+vim.api.nvim_create_user_command('FormatXML',
+    function()
+        vim.cmd([[silent execute '%! xmllint --format %']])
+    end,
+    { nargs = 0 }
+)
+
+-- Text functions                    {{{2
+-- ======================================
+
+-- Convert fancy punctuation back into ASCII
+vim.api.nvim_create_user_command('FixSmartPunctuation',
+    function()
+        vim.cmd([[silent! %s/\%u00B4/'/g]])
+        vim.cmd([[silent! %s/\%u0091/'/g]])
+        vim.cmd([[silent! %s/\%u0092/'/g]])
+        vim.cmd([[silent! %s/\%u0093/"/g]])
+        vim.cmd([[silent! %s/\%u0094/"/g]])
+        vim.cmd([[silent! %s/\%u200B//g]])
+        vim.cmd([[silent! %s/\%u2013/-/g]])
+        vim.cmd([[silent! %s/\%u2014/-/g]])
+        vim.cmd([[silent! %s/\%u2018/'/g]])
+        vim.cmd([[silent! %s/\%u2019/'/g]])
+        vim.cmd([[silent! %s/\%u201C/"/g]])
+        vim.cmd([[silent! %s/\%u201D/"/g]])
+        vim.cmd([[silent! %s/\%u2026/.../g]])
+    end,
+    { nargs = 0 }
+)
+
+-- Remove ANSI codes
+vim.api.nvim_create_user_command('FixAnsiCodes',
+    function()
+        vim.cmd([[silent! %s/\e\[[0-9;]\+[mK]//g]])
+    end,
+    { nargs = 0 }
+)
+
 -- " Strip trailing whitespace characters from the entire file or a range
 -- function s:StripTrailingWhitespace() range
 --     let l:save_search=@/
@@ -399,49 +406,43 @@ require('lspconfig').ruff.setup {
 --     silent call setpos('.', l:save_cursor)
 -- endfunction
 -- command -range=% StripTrailingWhitespace <line1>,<line2> call s:StripTrailingWhitespace()
--- 
--- " Wrap numbers which are at the end of a line with square brackets
--- function s:WrapTrailingDigits()
---     silent execute '%s/\(\d\+\)$/[\1]/g'
--- endfunction
--- command -nargs=0 WrapTrailingDigits call s:WrapTrailingDigits(<f-args>)
 
 -- Settings                                                                 {{{1
 -- =============================================================================
 
 -- General settings
 
-vim.o.backup     = true                         -- Use backup files
-vim.o.hidden     = true                         -- Keep buffers open when not displayed
-vim.o.ruler      = true                         -- Show the file position
-vim.o.copyindent = true                         -- Copy indentation characters
-vim.o.showcmd    = true                         -- Show incomplete commands
-vim.o.showmode   = false                        -- Don't show the active mode, mirrored in lightline
-vim.o.incsearch  = true                         -- Search incrementally
-vim.o.hlsearch   = true                         -- Search highlighting
-vim.o.history    = 1000                         -- Keep more history
-vim.o.visualbell = true                         -- No beep
-vim.o.expandtab  = true                         -- No tabs
-vim.o.wrap       = false                        -- No wrapping text
-vim.o.joinspaces = false                        -- Single-space when joining sentences
-vim.o.title      = true                         -- Set the title of the terminal
-vim.o.ignorecase = true                         -- Case insensitive by default...
-vim.o.smartcase  = true                         -- ...but case sensitive if term includes uppercase
-vim.o.scrolloff = 2                             -- Keep some context when scrolling vertically
-vim.o.sidescrolloff = 2                         -- Keep some context when scrolling horizontally
--- set nostartofline                           " Keep horizontal cursor position when scrolling
--- set formatoptions+=n                        " Format respects numbered/bulleted lists
--- set iskeyword+=-                            " Dash is part of a word for movement purposes
--- set virtualedit=                            " No virtual edit
-vim.o.timeoutlen = 500                          -- Timeout to press a key combination
--- set report=0                                " Always report changes
--- set undofile                                " Allow undo history to persist between sessions
+vim.o.backup        = true                  -- Use backup files
+vim.o.hidden        = true                  -- Keep buffers open when not displayed
+vim.o.ruler         = true                  -- Show the file position
+vim.o.copyindent    = true                  -- Copy indentation characters
+vim.o.showcmd       = true                  -- Show incomplete commands
+vim.o.showmode      = false                 -- Don't show the active mode, mirrored in lightline
+vim.o.incsearch     = true                  -- Search incrementally
+vim.o.hlsearch      = true                  -- Search highlighting
+vim.o.history       = 1000                  -- Keep more history
+vim.o.visualbell    = true                  -- No beep
+vim.o.expandtab     = true                  -- No tabs
+vim.o.wrap          = false                 -- No wrapping text
+vim.o.joinspaces    = false                 -- Single-space when joining sentences
+vim.o.title         = true                  -- Set the title of the terminal
+vim.o.ignorecase    = true                  -- Case insensitive by default...
+vim.o.smartcase     = true                  -- ...but case sensitive if term includes uppercase
+vim.o.scrolloff     = 2                     -- Keep some context when scrolling vertically
+vim.o.sidescrolloff = 2                     -- Keep some context when scrolling horizontally
+vim.o.startofline   = false                 -- Keep horizontal cursor position when scrolling
+vim.opt.formatoptions:append('n')           -- Format respects numbered/bulleted lists
+vim.opt.iskeyword:append('-')               -- Dash is part of a word for movement purposes
+vim.o.virtualedit = ''                      -- No virtual edit
+vim.o.timeoutlen = 500                      -- Timeout to press a key combination
+vim.o.report     = 0                        -- Always report changes
+vim.o.undofile   = true                     -- Allow undo history to persist between sessions
 -- set path=.,,.\dependencies\**               " Search path
--- set tags=.tags                              " Default tags files
+vim.o.tags = '.tags'                        -- Default tags files
 -- set listchars=tab:>-,eol:$                  " Unprintable characters to display
--- set laststatus=2                            " Always have a statusline
-vim.o.splitright = true                             -- New vertical splits put the cursor on the right
-vim.o.splitbelow = true                             -- New horizontal splits put the cursor on the bottom
+vim.o.laststatus = 2                              -- Always have a statusline
+vim.o.splitright = true                           -- New vertical splits put the cursor on the right
+vim.o.splitbelow = true                           -- New horizontal splits put the cursor on the bottom
 vim.o.shell = 'zsh'                               -- Use Zsh
 -- TabStop 4                                   " Default to 4 spaces per tabstop
 -- 
