@@ -67,39 +67,7 @@ Plug 'itchyny/lightline.vim'        -- A light and configurable statusline plugi
 -- Asynchronous Lint Engine
 -- =====================================
 
--- TODO: The config should be elsewhere
-Plug('w0rp/ale', { ['do'] = function()
-    -- Autoconfigure from poetry
-    vim.g.ale_python_auto_poetry           = 1
-    vim.g.ale_python_auto_virtualenv       = 1
-    vim.g.ale_python_black_auto_poetry     = 1
-    vim.g.ale_python_flake8_auto_poetry    = 1
-    vim.g.ale_python_mypy_auto_poetry      = 1
-    vim.g.ale_python_ruff_auto_poetry      = 1
-
-    vim.g.ale_python_ruff_change_directory = 1 -- Run ruff from the project root
-    vim.g.ale_set_loclist                  = 1 -- Use loclist instead of quickfix list
-    vim.g.ale_set_quickfix                 = 0 -- Use loclist instead of quickfix list
-    vim.g.ale_virtualtext_cursor           = 0 -- Do not display virtual text
-
-    vim.gale_python_ruff_options           = "--force-exclude"
-
-    vim.g.ale_fixers = {
-        python = {'ruff' },
-    }
-
-    vim.g.ale_linters = {
-        python = { 'ruff', 'mypy' },
-    }
-
-    require('lspconfig').ruff.setup {
-        init_options = {
-            settings = {
-                args = { '--force-exclude' },
-            }
-        }
-    }
-end })
+Plug('w0rp/ale')
 
 Plug 'neovim/nvim-lspconfig'        -- Quickstart configs for Nvim LSP
 -- 
@@ -242,7 +210,36 @@ vim.call('plug#end')
 -- \   'linter_errors': 'error'
 -- \ },
 -- \ }
--- 
+
+-- vim.g.lightline = {
+--         colorscheme = 'seoul256',
+--         active = {
+--                 left = [['mode', 'paste'], ['filename', 'modified']],
+--                 right = [['percent'], ['lineinfo'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
+--         },
+--         component_expand = {
+--                 linter_warnings = 'LightlineLinterWarnings',
+--                 linter_errors = 'LightlineLinterErrors',
+--                 linter_ok = 'LightlineLinterOK'
+--         },
+--         component_type = {
+--                 readonly = 'error',
+--                 linter_warnings = 'warning',
+--                 linter_errors = 'error'
+--         }
+-- }
+
+function LightlineLinterWarnings()
+    local counts = vim.g.ale.statusline.counts.bufnr[0]
+    local all_errors = counts.error + counts.style_error
+    local all_non_errors = counts.total - all_errors
+    if counts.total == 0 then
+        return ''
+    else
+        return string.format('%d ✱', all_non_errors)
+    end
+end
+
 -- function LightlineLinterWarnings()
 --   let l:counts = ale#statusline#Count(bufnr(''))
 --   let l:all_errors = l:counts.error + l:counts.style_error
@@ -275,7 +272,41 @@ vim.call('plug#end')
 --     call lightline#update()
 --   end
 -- endfunction
--- 
+
+-- " w0rp/ale                          {{{2
+-- " ======================================
+
+-- Autoconfigure from poetry
+vim.g.ale_python_auto_poetry           = 1
+vim.g.ale_python_auto_virtualenv       = 1
+vim.g.ale_python_black_auto_poetry     = 1
+vim.g.ale_python_flake8_auto_poetry    = 1
+vim.g.ale_python_mypy_auto_poetry      = 1
+vim.g.ale_python_ruff_auto_poetry      = 1
+
+vim.g.ale_python_ruff_change_directory = 1 -- Run ruff from the project root
+vim.g.ale_set_loclist                  = 1 -- Use loclist instead of quickfix list
+vim.g.ale_set_quickfix                 = 0 -- Use loclist instead of quickfix list
+vim.g.ale_virtualtext_cursor           = 0 -- Do not display virtual text
+
+vim.gale_python_ruff_options           = "--force-exclude"
+
+vim.g.ale_fixers = {
+    python = {'ruff' },
+}
+
+vim.g.ale_linters = {
+    python = { 'ruff', 'mypy' },
+}
+
+require('lspconfig').ruff.setup {
+    init_options = {
+        settings = {
+            args = { '--force-exclude' },
+        }
+    }
+}
+
 -- " davidhalter/jedi-vim              {{{2
 -- " ======================================
 -- let g:jedi#force_py_version = 3
@@ -320,14 +351,17 @@ vim.call('plug#end')
 -- General Vim functions            {{{2
 -- =====================================
 -- 
--- " Set all the relevant tab options to the specified level
--- function s:TabStop(n)
---     silent execute 'set tabstop='.a:n
---     silent execute 'set shiftwidth='.a:n
---     silent execute 'set softtabstop='.a:n
--- endfunction
--- command -nargs=1 TabStop call s:TabStop(<f-args>)
--- 
+-- Set all the relevant tab options to the specified level
+vim.api.nvim_create_user_command('TabStop',
+    function(opts)
+        local n = tonumber(opts.fargs[1])
+        vim.o.tabstop = n
+        vim.o.shiftwidth = n
+        vim.o.softtabstop = n
+    end,
+    { nargs = 1 }
+)
+
 -- " Create the specified directory if it doesn't exist
 -- function s:CreateDirectory(path)
 --    if !isdirectory(a:path)
@@ -441,11 +475,12 @@ vim.o.laststatus    = 2                         -- Always have a statusline
 vim.o.splitright    = true                      -- New vertical splits put the cursor on the right
 vim.o.splitbelow    = true                      -- New horizontal splits put the cursor on the bottom
 vim.o.shell         = 'zsh'                     -- Use Zsh
+
 vim.opt.formatoptions:append('n')               -- Format respects numbered/bulleted lists
 vim.opt.iskeyword:append('-')                   -- Dash is part of a word for movement purposes
 
--- TabStop 4                                   " Default to 4 spaces per tabstop
--- 
+vim.cmd("TabStop 4")                            -- Default to 4 spaces per tabstop
+
 -- syntax on                                   " Syntax highlighting
 -- 
 -- " Use the system clipboard for everything
