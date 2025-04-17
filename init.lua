@@ -412,38 +412,38 @@ vim.api.nvim_create_user_command('FixAnsiCodes',
 
 -- General settings
 
-vim.o.backup        = true                  -- Use backup files
-vim.o.hidden        = true                  -- Keep buffers open when not displayed
-vim.o.ruler         = true                  -- Show the file position
-vim.o.copyindent    = true                  -- Copy indentation characters
-vim.o.showcmd       = true                  -- Show incomplete commands
-vim.o.showmode      = false                 -- Don't show the active mode, mirrored in lightline
-vim.o.incsearch     = true                  -- Search incrementally
-vim.o.hlsearch      = true                  -- Search highlighting
-vim.o.history       = 1000                  -- Keep more history
-vim.o.visualbell    = true                  -- No beep
-vim.o.expandtab     = true                  -- No tabs
-vim.o.wrap          = false                 -- No wrapping text
-vim.o.joinspaces    = false                 -- Single-space when joining sentences
-vim.o.title         = true                  -- Set the title of the terminal
-vim.o.ignorecase    = true                  -- Case insensitive by default...
-vim.o.smartcase     = true                  -- ...but case sensitive if term includes uppercase
-vim.o.scrolloff     = 2                     -- Keep some context when scrolling vertically
-vim.o.sidescrolloff = 2                     -- Keep some context when scrolling horizontally
-vim.o.startofline   = false                 -- Keep horizontal cursor position when scrolling
-vim.opt.formatoptions:append('n')           -- Format respects numbered/bulleted lists
-vim.opt.iskeyword:append('-')               -- Dash is part of a word for movement purposes
-vim.o.virtualedit = ''                      -- No virtual edit
-vim.o.timeoutlen = 500                      -- Timeout to press a key combination
-vim.o.report     = 0                        -- Always report changes
-vim.o.undofile   = true                     -- Allow undo history to persist between sessions
--- set path=.,,.\dependencies\**               " Search path
-vim.o.tags = '.tags'                        -- Default tags files
--- set listchars=tab:>-,eol:$                  " Unprintable characters to display
-vim.o.laststatus = 2                              -- Always have a statusline
-vim.o.splitright = true                           -- New vertical splits put the cursor on the right
-vim.o.splitbelow = true                           -- New horizontal splits put the cursor on the bottom
-vim.o.shell = 'zsh'                               -- Use Zsh
+vim.o.backup        = true                      -- Use backup files
+vim.o.hidden        = true                      -- Keep buffers open when not displayed
+vim.o.ruler         = true                      -- Show the file position
+vim.o.copyindent    = true                      -- Copy indentation characters
+vim.o.showcmd       = true                      -- Show incomplete commands
+vim.o.showmode      = false                     -- Don't show the active mode, mirrored in lightline
+vim.o.incsearch     = true                      -- Search incrementally
+vim.o.hlsearch      = true                      -- Search highlighting
+vim.o.history       = 1000                      -- Keep more history
+vim.o.visualbell    = true                      -- No beep
+vim.o.expandtab     = true                      -- No tabs
+vim.o.wrap          = false                     -- No wrapping text
+vim.o.joinspaces    = false                     -- Single-space when joining sentences
+vim.o.title         = true                      -- Set the title of the terminal
+vim.o.ignorecase    = true                      -- Case insensitive by default...
+vim.o.smartcase     = true                      -- ...but case sensitive if term includes uppercase
+vim.o.scrolloff     = 2                         -- Keep some context when scrolling vertically
+vim.o.sidescrolloff = 2                         -- Keep some context when scrolling horizontally
+vim.o.startofline   = false                     -- Keep horizontal cursor position when scrolling
+vim.o.virtualedit   = ''                        -- No virtual edit
+vim.o.timeoutlen    = 500                       -- Timeout to press a key combination
+vim.o.report        = 0                         -- Always report changes
+vim.o.undofile      = true                      -- Allow undo history to persist between sessions
+vim.o.tags          = '.tags'                   -- Default tags files
+vim.o.listchars     = 'tab:>-,eol:$'            -- Unprintable characters to display
+vim.o.laststatus    = 2                         -- Always have a statusline
+vim.o.splitright    = true                      -- New vertical splits put the cursor on the right
+vim.o.splitbelow    = true                      -- New horizontal splits put the cursor on the bottom
+vim.o.shell         = 'zsh'                     -- Use Zsh
+vim.opt.formatoptions:append('n')               -- Format respects numbered/bulleted lists
+vim.opt.iskeyword:append('-')                   -- Dash is part of a word for movement purposes
+
 -- TabStop 4                                   " Default to 4 spaces per tabstop
 -- 
 -- syntax on                                   " Syntax highlighting
@@ -521,16 +521,6 @@ vim.o.shell = 'zsh'                               -- Use Zsh
 --       silent execute '!"'.$VIMRUNTIME.'/diff.exe" -r '.opt.v:fname_in.' '.v:fname_new.' > '.v:fname_out
 --     endfunction
 -- endif
--- 
--- " Special configuration for a diff window
--- function ConfigureGui()
---     if &diff
---         silent execute 'MaximiseWindow'
---         let cmd = 'set titlestring=Diff\ (' . expand("%:t") . ')'
---         silent execute cmd
---     endif
--- endfunction
--- autocmd GUIEnter * call ConfigureGui()
 -- 
 -- " Search                                                                    {{{1
 -- " ==============================================================================
@@ -629,14 +619,12 @@ vim.o.shell = 'zsh'                               -- Use Zsh
 -- " Navigate wrapped lines more easily
 -- nnoremap j gj
 -- nnoremap k gk
--- 
--- " Quick way to edit .vimrc and colors
--- nmap <Leader>v :e ~/dev/my-stuff/nvim/init.vim<CR><CR>
--- nmap <Leader>c :e ~/dev/my-stuff/nvim/colors/lib/theme.py<CR><CR>
--- 
--- " Quick way to edit .zshrc
--- nmap <Leader>z :e ~/.zshrc<CR><CR>
--- 
+
+-- Quick way to edit .vimrc, colors, and .zshrc
+vim.keymap.set('n', '<Leader>v', '<cmd>e ~/dev/my-stuff/nvim-lua/init.lua<cr>')
+vim.keymap.set('n', '<Leader>c', '<cmd>e ~/dev/my-stuff/nvim-lua/colors/lib/theme.py<cr>')
+vim.keymap.set('n', '<Leader>z', '<cmd>e ~/dev/my-stuff/dotfiles/zsh/.zshrc<cr>')
+
 -- " Copy-all to clipboard and paste-all from clipboard
 -- nnoremap <Leader>ac :%y+<CR>
 -- nnoremap <Leader>ap :%d_<CR>"+pk"_dd
