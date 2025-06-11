@@ -59,46 +59,44 @@ Plug 'nvim-telescope/telescope.nvim'
 
 
 -- Appearance
-Plug 'itchyny/lightline.vim'        -- A light and configurable statusline plugin for Vim
+-- Plug 'itchyny/lightline.vim'        -- A light and configurable statusline plugin for Vim
+Plug 'nvim-lualine/lualine.nvim'       -- A blazing fast and easy to configure Neovim statusline written in Lua.
 
 -- Syntax and static checking       {{{2
 -- =====================================
 
--- Asynchronous Lint Engine
--- =====================================
-
-Plug('w0rp/ale')
+Plug 'w0rp/ale'                     -- Asynchronous Lint Engine
 
 Plug 'neovim/nvim-lspconfig'        -- Quickstart configs for Nvim LSP
--- 
--- " Languages
+
+-- Languages
 -- Plug 'ElmCast/elm-vim'              " Elm plugin for Vim
 -- Plug 'derekwyatt/vim-scala'         " Scala
 -- Plug 'udalov/kotlin-vim'            " Kotlin
 -- Plug 'davidhalter/jedi-vim'         " Smarter Python integration
 -- Plug 'vim-scripts/applescript.vim'  " Applescript syntax highlighting
--- Plug 'tmux-plugins/vim-tmux'        " Syntax for tmux configuration
 -- Plug 'othree/xml.vim'               " Helps editing XML files
 -- Plug 'pearofducks/ansible-vim'      " Ansible YAML files
 -- Plug 'jvirtanen/vim-hcl'            " HashiCorp Configuration Language syntax highlighting
 -- Plug 'aliou/bats.vim'               " BATS script testing language
 -- Plug 'hashivim/vim-terraform'       " Basic vim/terraform integration
--- 
--- " Interface
+
+-- Interface                        {{{2
+-- =====================================
+
 -- Plug 'Olical/vim-enmasse'           " Edit every line in a quickfix list at the same time
 -- Plug 'mg979/vim-visual-multi'       " Multiple cursor mode
 -- Plug 'Raimondi/delimitMate'         " Automatically close quotes, brackets, etc
 -- Plug 'Valloric/YouCompleteMe'       " Smarter completion
 -- "Plug 'neoclide/coc.nvim', {'branch': 'release'} " TODO: CHECK THIS OUT
--- Plug 'jaxbot/browserlink.vim'       " Live browser editing for Vim
--- Plug 'jlanzarotta/bufexplorer'      " Easy buffer browsing
+Plug 'jlanzarotta/bufexplorer'      -- Easy buffer browsing
 -- Plug 'mileszs/ack.vim'              " Vim plugin for the Perl module / CLI script 'ack'
--- Plug 'scrooloose/nerdcommenter'     " Easy multi-language commenting
--- Plug 'scrooloose/nerdtree'          " Easy file browsing
+Plug 'scrooloose/nerdcommenter'     -- Easy multi-language commenting
+Plug 'scrooloose/nerdtree'          -- Easy file browsing
 
 -- Visualise the undo graph
 Plug 'simnalamburt/vim-mundo'
-vim.api.nvim_set_keymap('n', "<leader>u", "vim.cmd.MundoToggle", keymap_opts)
+vim.api.nvim_set_keymap('n', "<leader>u", ":MundoToggle<cr>", keymap_opts)
 
 -- Plug 'terryma/vim-expand-region'    " Incremental selection widening
 -- Plug 'tpope/vim-endwise'            " Smart closing of data strutures
@@ -117,7 +115,21 @@ vim.api.nvim_set_keymap('n', "<leader>u", "vim.cmd.MundoToggle", keymap_opts)
 -- 
 -- Plug 'will133/vim-dirdiff'
 
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'voldikss/vim-floaterm'
+
 vim.call('plug#end')
+
+vim.cmd([[
+nnoremap   <silent>   <F7>    :FloatermNew<CR>
+tnoremap   <silent>   <F7>    <C-\><C-n>:FloatermNew<CR>
+nnoremap   <silent>   <F8>    :FloatermPrev<CR>
+tnoremap   <silent>   <F8>    <C-\><C-n>:FloatermPrev<CR>
+nnoremap   <silent>   <F9>    :FloatermNext<CR>
+tnoremap   <silent>   <F9>    <C-\><C-n>:FloatermNext<CR>
+nnoremap   <silent>   <F12>   :FloatermToggle<CR>
+tnoremap   <silent>   <F12>   <C-\><C-n>:FloatermToggle<CR>
+]])
 
 -- map -a	:call SyntaxAttr()<CR>
 -- 
@@ -168,20 +180,24 @@ vim.call('plug#end')
 -- " Raimondi/delimitMate              {{{2
 -- " ======================================
 -- let delimitMate_expand_cr = 1
--- 
--- " scrooloose/nerdcommenter          {{{2
--- " ======================================
--- 
--- let NERDDefaultAlign='left'
--- let NERDSpaceDelims=1
--- 
--- " scrooloose/nerdtree               {{{2
--- " ======================================
--- let NERDTreeQuitOnOpen=1
--- let NERDTreeShowHidden=0
--- nmap <Leader>e :NERDTreeToggle<CR>
--- nmap <Leader>E :NERDTreeFind<CR>
--- 
+
+-- jlanzarotta/bufexplorer'            {{{2
+-- ========================================
+vim.api.nvim_set_keymap('n', "<leader>b", ":BufExplorer<cr>", keymap_opts)
+vim.g.bufExplorerSortBy = 'name'
+
+-- scrooloose/nerdcommenter            {{{2
+-- ========================================
+vim.g.NERDDefaultAlign = 'left'
+vim.g.NERDSpaceDelims = 1
+
+-- scrooloose/nerdtree                 {{{2
+-- ========================================
+vim.g.NERDTreeQuitOnOpen = 1
+vim.g.NERDTreeShowHidden = 0
+vim.api.nvim_set_keymap('n', "<leader>e", ":nerdtreetoggle<cr>", keymap_opts)
+vim.api.nvim_set_keymap('n', "<leader>E", ":NERDTreeFind<cr>", keymap_opts)
+
 -- " fzf                               {{{2
 -- " ======================================
 -- 
@@ -229,49 +245,124 @@ vim.call('plug#end')
 --         }
 -- }
 
-function LightlineLinterWarnings()
-    local counts = vim.g.ale.statusline.counts.bufnr[0]
-    local all_errors = counts.error + counts.style_error
-    local all_non_errors = counts.total - all_errors
-    if counts.total == 0 then
-        return ''
-    else
-        return string.format('%d ✱', all_non_errors)
-    end
-end
+-- https://github.com/nvim-lualine/lualine.nvim/blob/master/examples/evil_lualine.lua
+require('lualine').setup({
+    options = { theme  = 'seoul256' },
+    sections = {
+    lualine_a = {'mode', 'paste'},
+    lualine_b = {'filename'},
+    lualine_c = {},
+    lualine_x = { { 'diagnostics', symbols = { error = '✘ ', warn = '✱ ', info = '! ' } } },
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+})
+
+vim.g.lightline = {
+        colorscheme = 'seoul256',
+        active = {
+                left = {{'mode', 'paste'}, {'filename', 'modified'}},
+                right = {{'percent'}, {'lineinfo'}, {'readonly', 'linter_warnings', 'linter_errors', 'linter_ok'}}
+        },
+        component_expand = {
+                linter_warnings = 'LightlineLinterWarnings',
+                linter_errors = 'LightlineLinterErrors',
+                linter_ok = 'LightlineLinterOK'
+        },
+        component_type = {
+                readonly = 'error',
+                linter_warnings = 'warning',
+                linter_errors = 'error'
+        }
+}
 
 -- function LightlineLinterWarnings()
---   let l:counts = ale#statusline#Count(bufnr(''))
---   let l:all_errors = l:counts.error + l:counts.style_error
---   let l:all_non_errors = l:counts.total - l:all_errors
---   return l:counts.total == 0 ? '' : printf('%d ✱', all_non_errors)
--- endfunction
+--     -- local counts = vim.g.ale.statusline.counts.bufnr[0]
+--     -- local all_errors = counts.error + counts.style_error
+--     -- local all_non_errors = counts.total - all_errors
+--     -- if counts.total == 0 then
+--     --     return ''
+--     -- else
+--     --     return string.format('%d ✱', all_non_errors)
+--     -- end
+--     return 'x'
+-- end
 -- 
 -- function LightlineLinterErrors()
---   let l:counts = ale#statusline#Count(bufnr(''))
---   let l:all_errors = l:counts.error + l:counts.style_error
---   let l:all_non_errors = l:counts.total - l:all_errors
---   return l:counts.total == 0 ? '' : printf('%d ✘', all_errors)
--- endfunction
+--     -- local counts = vim.g.ale.statusline.counts.bufnr[0]
+--     -- local all_errors = counts.error + counts.style_error
+--     -- if counts.total == 0 then
+--     --     return ''
+--     -- else
+--     --     return string.format('%d ✘', all_errors)
+--     -- end
+--     return 'x'
+-- end
 -- 
 -- function LightlineLinterOK()
---   let l:counts = ale#statusline#Count(bufnr(''))
---   let l:all_errors = l:counts.error + l:counts.style_error
---   let l:all_non_errors = l:counts.total - l:all_errors
---   return l:counts.total == 0 ? '✔ ' : ''
--- endfunction
--- 
+--     -- local counts = vim.g.ale.statusline.counts.bufnr[0]
+--     -- if counts.total == 0 then
+--     --     return ''
+--     -- else
+--     --     return '✔ '
+--     -- end
+--     return 'x'
+-- end
+
+-- TODO: Seems to be some issue with Lightline calling Lua functions?
+vim.cmd([[
+    function LightlineLinterWarnings()
+      let l:counts = ale#statusline#Count(bufnr(''))
+      let l:all_errors = l:counts.error + l:counts.style_error
+      let l:all_non_errors = l:counts.total - l:all_errors
+      return l:counts.total == 0 ? '' : printf('%d ✱', all_non_errors)
+    endfunction
+
+    function LightlineLinterErrors()
+      let l:counts = ale#statusline#Count(bufnr(''))
+      let l:all_errors = l:counts.error + l:counts.style_error
+      return l:counts.total == 0 ? '' : printf('%d ✘', all_errors)
+    endfunction
+
+    function LightlineLinterOK()
+      let l:counts = ale#statusline#Count(bufnr(''))
+      return l:counts.total == 0 ? '✔ ' : ''
+    endfunction
+]])
+
+function MaybeUpdateLightline()
+  -- if vim.fn.exists('#lightline') == 1 then
+  --  vim.g.lightline.update()
+  -- end
+end
+
+vim.api.nvim_create_augroup('MyLightlineGroup', { clear = true })
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'ALELintPost',
+  callback = MaybeUpdateLightline,
+  group = 'MyLightlineGroup'
+})
+
 -- autocmd User ALELint call s:MaybeUpdateLightline()
--- 
--- " No vertical char
--- " set fillchars+=vert:\
--- 
+--
 -- " Update and show lightline but only if it's visible (e.g., not in Goyo)
 -- function! s:MaybeUpdateLightline()
 --   if exists('#lightline')
 --     call lightline#update()
 --   end
 -- endfunction
+-- 
+-- " No vertical char
+-- " set fillchars+=vert:\
+-- 
 
 -- " w0rp/ale                          {{{2
 -- " ======================================
@@ -556,7 +647,7 @@ vim.cmd("TabStop 4")                            -- Default to 4 spaces per tabst
 --       silent execute '!"'.$VIMRUNTIME.'/diff.exe" -r '.opt.v:fname_in.' '.v:fname_new.' > '.v:fname_out
 --     endfunction
 -- endif
--- 
+
 -- " Search                                                                    {{{1
 -- " ==============================================================================
 -- 
@@ -704,11 +795,7 @@ vim.keymap.set('n', '<Leader>z', '<cmd>e ~/dev/my-stuff/dotfiles/zsh/.zshrc<cr>'
 --   \gvy?<C-R><C-R>=substitute(
 --   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
 --   \gV:call setreg('"', old_reg, old_regtype)<CR>
--- 
--- " BufExplorer
--- nmap <Leader>b :BufExplorer<CR>
--- let g:bufExplorerSortBy='name'      " Default sort by the name
--- 
+
 -- " vmap <Leader>e ':!echo <C-R><C-W> | with-zsh epoch-to-date<CR>'
 -- 
 -- " Align commas in paragraph: gaip*,
