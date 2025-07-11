@@ -142,9 +142,10 @@ MAPPINGS = {
 
         ## Not working?
         # XML       
-        '@tag.xml':             { 'link': 'Keyword' },
-        '@comment.xml':         { 'link': 'LightBlue' },
-        'xmlString':            { 'link': 'Normal'  },
+        'xmlString':            { 'link': 'String'  },
+        'xmlTag':               { 'link': 'Identifier'  },
+        'xmlTagName':           { 'link': 'Identifier'  },
+        'xmlAttrib':            { 'link': 'Identifier'  },
         }
 
 def create_color_mapping(group, props):
