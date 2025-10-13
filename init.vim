@@ -761,12 +761,14 @@ function! s:add_mappings() abort
   wincmd p
 endfunction
 
-function! s:sort_line()
-    silent execute ":s/,/\r/g"
-    silent execute ":'[,sort"
-    silent execute " :,']j"
+function! s:sort_lines()
+    " silent execute ":s/,/\r/g"
+    " silent execute ":'[,sort"
+    " silent execute " :,']j"
+    
+    silent exec '%g/$/:.!tr " " "\n" | sort | tr "\n" " "'
 endfunction
-command! SortLine call s:sort_line()
+command! SortLines call s:sort_lines()
 
 function! SynGroup()
     let l:s = synID(line('.'), col('.'), 1)
