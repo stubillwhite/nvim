@@ -170,13 +170,15 @@ let g:ale_linters = {
 \}
 
 lua <<EOF
-require('lspconfig').ruff.setup {
+vim.lsp.config('ruff', {
     init_options = {
         settings = {
             args = { '--force-exclude' },
         }
     }
-}
+})
+
+vim.lsp.enable('ruff')
 EOF
 
 " junegunn/vim-easy-align           {{{2
