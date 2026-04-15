@@ -249,7 +249,7 @@ vim.g.NERDSpaceDelims = 1
 -- ========================================
 vim.g.NERDTreeQuitOnOpen = 1
 vim.g.NERDTreeShowHidden = 0
-vim.api.nvim_set_keymap('n', "<leader>e", ":nerdtreetoggle<cr>", keymap_opts)
+vim.api.nvim_set_keymap('n', "<leader>e", ":NERDTreeToggle<cr>", keymap_opts)
 vim.api.nvim_set_keymap('n', "<leader>E", ":NERDTreeFind<cr>", keymap_opts)
 
 -- fzf                               {{{2
