@@ -14,7 +14,7 @@ local vim = vim
 local config_file = debug.getinfo(1, 'S').source:sub(2)
 local config_root = vim.fn.fnamemodify(vim.loop.fs_realpath(config_file) or config_file, ':p:h')
 
-vim.g.TmpDir = '~/.config/nvim-tmp'
+vim.g.TmpDir = vim.fn.expand('~/.config/nvim-tmp')
 
 -- Set <Leader> to something easier to reach
 vim.g.mapleader = ","
