@@ -11,184 +11,92 @@
 -- =============================================================================
 
 local vim = vim
+
+-- Paths to this configuration
+
 local config_file = debug.getinfo(1, 'S').source:sub(2)
 local config_root = vim.fn.fnamemodify(vim.loop.fs_realpath(config_file) or config_file, ':p:h')
 
 vim.g.TmpDir = vim.fn.expand('~/.config/nvim-tmp')
 
+vim.g.python3_host_prog = config_root .. '/python-nvim/.venv/bin/python'
+
 -- Set <Leader> to something easier to reach
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
--- Python
-vim.g.python3_host_prog = config_root .. '/python-nvim/.venv/bin/python'
-
 local keymap_opts = { noremap = true }
 local silent_keymap_opts = { noremap = true, silent = true }
 
-local function create_directory(path)
-    if vim.fn.isdirectory(path) == 0 then
-        vim.fn.mkdir(path, 'p')
-    end
-end
-
-local function get_visual_selection()
-    local mode = vim.fn.mode()
-    local start_pos = mode == 'v' and vim.fn.getpos('v') or vim.fn.getpos("'<")
-    local end_pos = mode == 'v' and vim.fn.getpos('.') or vim.fn.getpos("'>")
-    local start_line, start_col = start_pos[2], start_pos[3]
-    local end_line, end_col = end_pos[2], end_pos[3]
-
-    if start_line > end_line or (start_line == end_line and start_col > end_col) then
-        start_line, end_line = end_line, start_line
-        start_col, end_col = end_col, start_col
-    end
-
-    local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
-    if #lines == 0 then
-        return ''
-    end
-
-    lines[1] = string.sub(lines[1], start_col, -1)
-    if #lines == 1 then
-        lines[1] = string.sub(lines[1], 1, end_col - start_col + 1)
-    else
-        lines[#lines] = string.sub(lines[#lines], 1, end_col)
-    end
-
-    return table.concat(lines, '\n')
-end
-
-local function get_search_term()
-    local mode = vim.fn.mode()
-
-    if mode == 'v' or mode == 'V' or mode == '\22' then
-        return get_visual_selection()
-    end
-
-    return vim.fn.expand('<cword>')
-end
-
-local function search_interactive()
-    local term = get_search_term()
-    if term == nil or term == '' then
-        return
-    end
-
-    local keys = vim.api.nvim_replace_termcodes(':Ack! ' .. term, true, false, true)
-    vim.api.nvim_feedkeys(keys, 'n', false)
-end
-
-local function search_immediate()
-    local term = get_search_term()
-    if term == nil or term == '' then
-        return
-    end
-
-    vim.cmd('Ack! ' .. vim.fn.escape(term, [[\ ]]))
-end
-
-local function get_visual_search_pattern()
-    local selection = get_visual_selection()
-    if selection == '' then
-        return nil
-    end
-
-    local pattern = vim.fn.escape(selection, '/\\.*$^~[')
-    return vim.fn.substitute(pattern, [[\_s\+]], [[\\_s\\+]], 'g')
-end
-
-local function search_visual_selection(backward)
-    local pattern = get_visual_search_pattern()
-    if not pattern then
-        return
-    end
-
-    vim.fn.setreg('/', pattern)
-    vim.cmd('normal! ' .. (backward and 'N' or 'n'))
-end
-
--- Plugins                                                                  {{{1
+-- Plugin list                                                              {{{1
 -- =============================================================================
 
 -- Built-in plugins                 {{{2
 -- =====================================
 
-vim.cmd("packadd cfilter")          -- Filter quickfix or location list
+vim.cmd("packadd cfilter")                  -- Filter quickfix or location list
 
 local Plug = vim.fn['plug#']
 
 vim.call('plug#begin', '~/.config/nvim-lua-plug')
 
 -- Libraries
-Plug 'nvim-lua/plenary.nvim'        -- Async library required by other plugins
+Plug 'nvim-lua/plenary.nvim'                -- Async library required by other plugins
 
--- Experimental
--- Plug 'sindrets/diffview.nvim'
--- lua << EOF
--- local actions = require("diffview.actions")
--- require("diffview").setup({
---   use_icons = false         -- No nvim-web-devicons
--- })
--- EOF
 
 -- TODO: Review
-Plug 'neomake/neomake'
 Plug 'nvim-telescope/telescope.nvim'
 
--- Appearance
-Plug 'nvim-lualine/lualine.nvim'       -- A blazing fast and easy to configure Neovim statusline written in Lua.
+-- Cosmetics                        {{{2
+-- =====================================
+
+Plug 'nvim-lualine/lualine.nvim'            -- A blazing fast and easy to configure Neovim statusline written in Lua.
 
 -- Syntax and static checking       {{{2
 -- =====================================
 
-Plug 'w0rp/ale'                     -- Asynchronous Lint Engine
-
-Plug 'neovim/nvim-lspconfig'        -- Quickstart configs for Nvim LSP
+Plug 'w0rp/ale'                             -- Asynchronous Lint Engine
+Plug 'neovim/nvim-lspconfig'                -- Quickstart configs for Nvim LSP
 
 -- Languages
-Plug 'davidhalter/jedi-vim'            -- Smarter Python integration
-Plug 'vim-scripts/applescript.vim'     -- Applescript syntax highlighting
-Plug 'othree/xml.vim'                  -- Helps editing XML files
-Plug 'aliou/bats.vim'                  -- BATS script testing language
-Plug 'hashivim/vim-terraform'          -- Basic vim/terraform integration
+Plug 'davidhalter/jedi-vim'                 -- Smarter Python integration
+Plug 'vim-scripts/applescript.vim'          -- Applescript syntax highlighting
+Plug 'othree/xml.vim'                       -- Helps editing XML files
+Plug 'aliou/bats.vim'                       -- BATS script testing language
+Plug 'hashivim/vim-terraform'               -- Basic vim/terraform integration
 
 -- Interface                        {{{2
 -- =====================================
 
-Plug('ycm-core/YouCompleteMe', { ['do'] = './install.py' }) -- Smarter completion
-Plug 'jlanzarotta/bufexplorer'      -- Easy buffer browsing
-Plug 'mileszs/ack.vim'              -- Vim plugin for the Perl module / CLI script 'ack'
-Plug 'scrooloose/nerdcommenter'     -- Easy multi-language commenting
-Plug 'scrooloose/nerdtree'          -- Easy file browsing
-Plug 'simnalamburt/vim-mundo'       -- Visualise the undo graph
-vim.api.nvim_set_keymap('n', "<leader>u", ":MundoToggle<cr>", keymap_opts)
+Plug('ycm-core/YouCompleteMe',              -- Smarter completion
+    { ['do'] = './install.py' }
+)
 
-Plug 'terryma/vim-expand-region'       -- Incremental selection widening
-Plug 'tpope/vim-endwise'               -- Smart closing of data strutures
-Plug 'tpope/vim-fugitive'              -- Git integration
-Plug 'tpope/vim-unimpaired'            -- Incredibly useful text navigation and manipulation shortcuts
-Plug 'JikkuJose/vim-visincr'           -- Increment lists of numbers
-Plug 'vim-scripts/taglist.vim'         -- Source code browser for Vim
+Plug 'jlanzarotta/bufexplorer'              -- Easy buffer browsing
+Plug 'mileszs/ack.vim'                      -- Vim plugin for the Perl module / CLI script 'ack'
+Plug 'scrooloose/nerdcommenter'             -- Easy multi-language commenting
+Plug 'scrooloose/nerdtree'                  -- Easy file browsing
+Plug 'simnalamburt/vim-mundo'               -- Visualise the undo graph
+Plug 'terryma/vim-expand-region'            -- Incremental selection widening
+Plug 'tpope/vim-endwise'                    -- Smart closing of data strutures
+Plug 'tpope/vim-fugitive'                   -- Git integration
+Plug 'lewis6991/gitsigns.nvim'              -- Git visual markers
+Plug 'tpope/vim-unimpaired'                 -- Incredibly useful text navigation and manipulation shortcuts
+Plug 'vim-scripts/taglist.vim'              -- Source code browser for Vim
+Plug 'neomake/neomake'                      -- Asynchronous make
 
-Plug 'junegunn/vim-easy-align'         -- A simple, easy-to-use Vim alignment plugin
-Plug 'godlygeek/tabular'               -- Vim script for text filtering and alignment
+Plug 'junegunn/vim-easy-align'              -- A simple, easy-to-use Vim alignment plugin
+Plug 'godlygeek/tabular'                    -- Vim script for text filtering and alignment
 
--- Find where Homebrew has installed fzf and add it to the path
-local fzf_path = vim.fn.exepath('fzf')
-if fzf_path ~= '' then
-    vim.opt.runtimepath:append(vim.fn.fnamemodify(vim.fn.resolve(fzf_path), ':h:h'))
-end
+-- Experimental                     {{{2
+-- =====================================
 
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'folke/trouble.nvim'
+-- Plug 'folke/trouble.nvim'
+Plug 'sindrets/diffview.nvim'
 
 vim.call('plug#end')
 
 -- map -a	:call SyntaxAttr()<CR>
-
--- 'neomake/neomake'
-vim.fn['neomake#configure#automake']('nw', 1000) -- Autobuild after 1s after writing
 
 -- nvim-treesitter/nvim-treesitter   {{{2
 -- ======================================
@@ -222,42 +130,15 @@ vim.fn['neomake#configure#automake']('nw', 1000) -- Autobuild after 1s after wri
 -- }
 -- EOF
 
--- junegunn/vim-easy-align           {{{2
--- ======================================
-vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)', {})
-vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)', {})
+-- Plugin configuration                                                     {{{1
+-- =============================================================================
 
-vim.g.easy_align_delimiters = {
-    t = { pattern = '\t' },
-}
+-- Cosmetics                        {{{2
+-- =====================================
 
--- Raimondi/delimitMate              {{{2
--- ======================================
--- let delimitMate_expand_cr = 1
+-- nvim-lualine/lualine.nvim        {{{3
+-- =====================================
 
--- jlanzarotta/bufexplorer'            {{{2
--- ========================================
-vim.api.nvim_set_keymap('n', "<leader>b", ":BufExplorer<cr>", keymap_opts)
-vim.g.bufExplorerSortBy = 'name'
-
--- scrooloose/nerdcommenter            {{{2
--- ========================================
-vim.g.NERDDefaultAlign = 'left'
-vim.g.NERDSpaceDelims = 1
-
--- scrooloose/nerdtree                 {{{2
--- ========================================
-vim.g.NERDTreeQuitOnOpen = 1
-vim.g.NERDTreeShowHidden = 0
-vim.api.nvim_set_keymap('n', "<leader>e", ":NERDTreeToggle<cr>", keymap_opts)
-vim.api.nvim_set_keymap('n', "<leader>E", ":NERDTreeFind<cr>", keymap_opts)
-
--- fzf                               {{{2
--- ======================================
-vim.keymap.set('n', '<C-P>', '<cmd>FZF<cr>', keymap_opts)
--- nmap <C-[> :call fzf#run({'source': 'fd --exclude={.git,.idea,.vscode,target,node_modules,build} --type f --hidden'})<CR>
---
--- https://github.com/nvim-lualine/lualine.nvim/blob/master/examples/evil_lualine.lua
 require('lualine').setup({
     options = { theme  = 'seoul256' },
     sections = {
@@ -278,12 +159,11 @@ require('lualine').setup({
   },
 })
 
--- No vertical char
--- set fillchars+=vert:\
---
+-- Syntax and static checking       {{{2
+-- =====================================
 
--- w0rp/ale                          {{{2
--- ======================================
+-- w0rp/ale                         {{{3
+-- =====================================
 
 -- Autoconfigure from poetry
 vim.g.ale_python_auto_poetry           = 1
@@ -293,10 +173,10 @@ vim.g.ale_python_flake8_auto_poetry    = 1
 vim.g.ale_python_mypy_auto_poetry      = 1
 vim.g.ale_python_ruff_auto_poetry      = 1
 
-vim.g.ale_python_ruff_change_directory = 1 -- Run ruff from the project root
-vim.g.ale_set_loclist                  = 1 -- Use loclist instead of quickfix list
-vim.g.ale_set_quickfix                 = 0 -- Use loclist instead of quickfix list
-vim.g.ale_virtualtext_cursor           = 0 -- Do not display virtual text
+vim.g.ale_python_ruff_change_directory = 1  -- Run ruff from the project root
+vim.g.ale_set_loclist                  = 1  -- Use loclist instead of quickfix list
+vim.g.ale_set_quickfix                 = 0  -- Use loclist instead of quickfix list
+vim.g.ale_virtualtext_cursor           = 0  -- Do not display virtual text
 
 vim.g.ale_python_ruff_options          = "--force-exclude"
 
@@ -307,6 +187,9 @@ vim.g.ale_fixers = {
 vim.g.ale_linters = {
     python = { 'ruff', 'mypy' },
 }
+
+-- neovim/nvim-lspconfig            {{{3
+-- =====================================
 
 local ruff_lsp_config = {
     init_options = {
@@ -323,18 +206,46 @@ else
     require('lspconfig').ruff.setup(ruff_lsp_config)
 end
 
--- davidhalter/jedi-vim              {{{2
--- ======================================
+-- davidhalter/jedi-vim             {{{3
+-- =====================================
 
 vim.g['jedi#force_py_version'] = 3
 
--- mileszs/ack.vim                  {{{2
+-- Interface                        {{{2
+-- =====================================
+
+-- jlanzarotta/bufexplorer'         {{{3
+-- =====================================
+
+vim.api.nvim_set_keymap('n', "<leader>b", ":BufExplorer<cr>", keymap_opts)
+vim.g.bufExplorerSortBy = 'name'
+
+-- mileszs/ack.vim                  {{{3
 -- =====================================
 
 vim.g.ackprg = 'rg --vimgrep --type-not sql --smart-case'
 
--- terryma/vim-expand-region         {{{2
--- ======================================
+-- scrooloose/nerdcommenter         {{{3
+-- =====================================
+
+vim.g.NERDDefaultAlign = 'left'
+vim.g.NERDSpaceDelims = 1
+
+-- scrooloose/nerdtree               {{3
+-- =====================================
+
+vim.g.NERDTreeQuitOnOpen = 1
+vim.g.NERDTreeShowHidden = 0
+vim.api.nvim_set_keymap('n', "<leader>e", ":NERDTreeToggle<cr>", keymap_opts)
+vim.api.nvim_set_keymap('n', "<leader>E", ":NERDTreeFind<cr>", keymap_opts)
+
+-- simnalamburt/vim-mundo           {{{3
+-- =====================================
+
+vim.api.nvim_set_keymap('n', "<leader>u", ":MundoToggle<cr>", keymap_opts)
+
+-- terryma/vim-expand-region        {{{3
+-- =====================================
 
 -- Alt up/down for expand and shrink
 vim.keymap.set('n', '<A-Up>', '<Plug>(expand_region_expand)', {})
@@ -342,8 +253,8 @@ vim.keymap.set('n', '<A-Down>', '<Plug>(expand_region_shrink)', {})
 vim.keymap.set('v', '<A-Up>', '<Plug>(expand_region_expand)', {})
 vim.keymap.set('v', '<A-Down>', '<Plug>(expand_region_shrink)', {})
 
--- tpope/vim-fugitive                {{{2
--- ======================================
+-- tpope/vim-fugitive               {{{3
+-- =====================================
 
 vim.keymap.set('n', '<Leader>g', '<cmd>Git<cr><cmd>only<cr>', silent_keymap_opts)
 vim.keymap.set('n', '<Leader>1', '<cmd>diffget //2<cr>', silent_keymap_opts)
@@ -366,16 +277,42 @@ vim.api.nvim_create_user_command('Glogvv',
     { nargs = '*' }
 )
 
--- vim-scripts/taglist.vim           {{{2
--- ======================================
+-- junegunn/vim-easy-align          {{{3
+-- =====================================
 
-vim.g.tlist_scala_settings = 'scala;t:trait;c:class;T:type;m:method;C:constant;l:local;p:package;o:object'
+vim.keymap.set('x', 'ga', '<Plug>(EasyAlign)', {})
+vim.keymap.set('n', 'ga', '<Plug>(EasyAlign)', {})
+
+vim.g.easy_align_delimiters = {
+    t = { pattern = '\t' },
+}
+
+-- Experimental                     {{{2
+-- =====================================
+
+-- sindrets/diffview.nvim           {{{3
+-- =====================================
+
+require('diffview').setup({
+    use_icons = false,                      -- No nvim-web-devicons
+})
+
+-- nmap <C-[> :call fzf#run({'source': 'fd --exclude={.git,.idea,.vscode,target,node_modules,build} --type f --hidden'})<CR>
+--
 
 -- Functions                                                                {{{1
 -- =============================================================================
 
 -- General Vim functions            {{{2
 -- =====================================
+
+-- Find where Homebrew has installed fzf and add it to the path
+local fzf_path = vim.fn.exepath('fzf')
+if fzf_path ~= '' then
+    vim.opt.runtimepath:append(vim.fn.fnamemodify(vim.fn.resolve(fzf_path), ':h:h'))
+end
+
+vim.keymap.set('n', '<C-P>', '<cmd>FZF<cr>', keymap_opts)
 
 -- Set all the relevant tab options to the specified level
 vim.api.nvim_create_user_command('TabStop',
@@ -463,6 +400,86 @@ vim.api.nvim_create_user_command('StripTrailingWhitespace',
     { nargs = 0, range = '%' }
 )
 
+-- Search                            {{{2
+-- ======================================
+
+local function get_visual_selection()
+    local mode = vim.fn.mode()
+    local start_pos = mode == 'v' and vim.fn.getpos('v') or vim.fn.getpos("'<")
+    local end_pos = mode == 'v' and vim.fn.getpos('.') or vim.fn.getpos("'>")
+    local start_line, start_col = start_pos[2], start_pos[3]
+    local end_line, end_col = end_pos[2], end_pos[3]
+
+    if start_line > end_line or (start_line == end_line and start_col > end_col) then
+        start_line, end_line = end_line, start_line
+        start_col, end_col = end_col, start_col
+    end
+
+    local lines = vim.api.nvim_buf_get_lines(0, start_line - 1, end_line, false)
+    if #lines == 0 then
+        return ''
+    end
+
+    lines[1] = string.sub(lines[1], start_col, -1)
+    if #lines == 1 then
+        lines[1] = string.sub(lines[1], 1, end_col - start_col + 1)
+    else
+        lines[#lines] = string.sub(lines[#lines], 1, end_col)
+    end
+
+    return table.concat(lines, '\n')
+end
+
+local function get_search_term()
+    local mode = vim.fn.mode()
+
+    if mode == 'v' or mode == 'V' or mode == '\22' then
+        return get_visual_selection()
+    end
+
+    return vim.fn.expand('<cword>')
+end
+
+local function search_interactive()
+    local term = get_search_term()
+    if term == nil or term == '' then
+        return
+    end
+
+    local keys = vim.api.nvim_replace_termcodes(':Ack! ' .. term, true, false, true)
+    vim.api.nvim_feedkeys(keys, 'n', false)
+end
+
+local function search_immediate()
+    local term = get_search_term()
+    if term == nil or term == '' then
+        return
+    end
+
+    vim.cmd('Ack! ' .. vim.fn.escape(term, [[\ ]]))
+end
+
+local function get_visual_search_pattern()
+    local selection = get_visual_selection()
+    if selection == '' then
+        return nil
+    end
+
+    local pattern = vim.fn.escape(selection, '/\\.*$^~[')
+    return vim.fn.substitute(pattern, [[\_s\+]], [[\\_s\\+]], 'g')
+end
+
+local function search_visual_selection(backward)
+    local pattern = get_visual_search_pattern()
+    if not pattern then
+        return
+    end
+
+    vim.fn.setreg('/', pattern)
+    vim.cmd('normal! ' .. (backward and 'N' or 'n'))
+end
+
+
 -- Settings                                                                 {{{1
 -- =============================================================================
 
@@ -527,6 +544,12 @@ vim.g.netrw_altv = 1                           -- Netrw vertical split puts curs
 vim.cmd("packadd matchit")
 
 -- Store Undo/Backup/Swap files in a temporary directory
+local function create_directory(path)
+    if vim.fn.isdirectory(path) == 0 then
+        vim.fn.mkdir(path, 'p')
+    end
+end
+
 vim.o.undodir = vim.g.TmpDir .. '/undo'
 vim.o.backupdir = vim.g.TmpDir .. '/backup'
 vim.o.directory = vim.g.TmpDir .. '/swap'
