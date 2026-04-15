@@ -479,7 +479,6 @@ local function search_visual_selection(backward)
     vim.cmd('normal! ' .. (backward and 'N' or 'n'))
 end
 
-
 -- Settings                                                                 {{{1
 -- =============================================================================
 
@@ -533,7 +532,8 @@ vim.cmd("TabStop 4")                            -- Default to 4 spaces per tabst
 --     set noshellslash                        " Backslashes for filenames for ZIP plugin
 -- endif
 vim.o.wildmenu       = true                    -- Display options when tab completing
-vim.o.wildmode       = 'list:full,full'        -- List options but complete to full
+vim.o.wildmode       = 'full'                  -- Complete on the first Tab press, like the old config
+vim.o.wildoptions    = 'tagfile'               -- Keep legacy wildmenu completion instead of the popup menu
 vim.o.wildignorecase = true                    -- Be case insensitive
 vim.opt.wildignore   = { '*.class', '*.obj', '*.pyc', '*/.hg/*', '*/.git/*', '*/.svn/*', '*/bld/*', '*/bin/*' }
 

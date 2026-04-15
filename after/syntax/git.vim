@@ -1,6 +1,8 @@
+" Syntax highlighting for Glogv command
+"
+"Example output:
 "--format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %aN%C(reset)%C(bold yellow)%d%C(reset)' 
 "| * 40d3991 - (4 years, 5 months ago) Setting version to 1.0.10-SNAPSHOT - Jenkins
-
 
 syn match gitLgLine       /^[_\*|\/\\ ]\+\(\<\x\{4,40\}\>.*\)\?$/
 syn match gitLgHead       /^[_\*|\/\\ ]\+\(\<\x\{4,40\}\> - ([^)]\+)\( ([^)]\+)\)\? \)\?/ contained containedin=gitLgLine
