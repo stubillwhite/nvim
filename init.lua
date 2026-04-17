@@ -265,15 +265,28 @@ vim.keymap.set('n', '<Leader>h', '<cmd>0Gclog<cr>', silent_keymap_opts)
 
 vim.api.nvim_create_user_command('Glogv',
     function(opts)
-        vim.cmd('Git! logv ' .. table.concat(opts.fargs, ' '))
-    end,
-    { nargs = '*' }
-)
+        vim.cmd('enew')
 
-vim.api.nvim_create_user_command('Glogvv',
-    function(opts)
-        vim.cmd('Git! logvv ' .. table.concat(opts.fargs, ' '))
-    end,
+        local args = table.concat(opts.fargs, ' ')
+        local cmd = 'git logv ' .. args
+
+        vim.cmd('0read !' .. cmd)
+        vim.cmd('silent 1delete')
+        vim.bo.filetype = 'git'
+        vim.bo.buftype = 'nofile'
+        vim.bo.bufhidden = 'wipe'
+        vim.bo.swapfile = false
+        vim.bo.modifiable = false
+        vim.bo.modified = false
+
+        vim.keymap.set('n', '<F12>',
+            function()
+                local word = vim.fn.expand('<cword>')
+                vim.cmd('DiffviewOpen ' .. word .. '^!')
+            end, 
+            { buffer = true, silent = true })
+
+    end, 
     { nargs = '*' }
 )
 
