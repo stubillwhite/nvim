@@ -283,10 +283,10 @@ vim.api.nvim_create_user_command('Glogv',
             function()
                 local word = vim.fn.expand('<cword>')
                 vim.cmd('DiffviewOpen ' .. word .. '^!')
-            end, 
+            end,
             { buffer = true, silent = true })
 
-    end, 
+    end,
     { nargs = '*' }
 )
 

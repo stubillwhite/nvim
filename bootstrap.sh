@@ -8,7 +8,7 @@ FILES=(
     "after"
 )
 
-INSTALLATION_DIR=$HOME/.config/nvim-lua
+INSTALLATION_DIR=$HOME/.config/nvim
 
 realpath() {
     [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
