@@ -488,8 +488,11 @@ local function search_visual_selection(backward)
         return
     end
 
-    vim.fn.setreg('/', pattern)
-    vim.cmd('normal! ' .. (backward and 'N' or 'n'))
+    vim.api.nvim_feedkeys(vim.keycode('<Esc>'), 'nx', false)
+    vim.schedule(function()
+        vim.fn.setreg('/', pattern)
+        vim.cmd('normal! ' .. (backward and 'N' or 'n'))
+    end)
 end
 
 -- Settings                                                                 {{{1
