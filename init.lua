@@ -206,6 +206,23 @@ else
     require('lspconfig').ruff.setup(ruff_lsp_config)
 end
 
+local lua_ls_config = {
+    settings = {
+        Lua = {
+            workspace = {
+                preloadFileSize = 1000,
+            },
+        },
+    }
+}
+
+if vim.lsp and vim.lsp.config then
+    vim.lsp.config('lua_ls', lua_ls_config)
+    vim.lsp.enable('lua_ls')
+else
+    require('lspconfig').lua_ls.setup(lua_ls_config)
+end
+
 -- davidhalter/jedi-vim             {{{3
 -- =====================================
 
