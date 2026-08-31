@@ -638,6 +638,7 @@ vim.api.nvim_create_autocmd('FileType', {
 
 -- File comparison options
 vim.opt.diffopt = { 'filler', 'iwhite' }
+vim.opt.fillchars:append({ diff = " " })
 
 if vim.fn.has('unix') == 0 then
     function _G.MyDiff()
