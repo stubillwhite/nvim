@@ -386,6 +386,29 @@ vim.api.nvim_create_user_command('FormatXML',
     { nargs = 0 }
 )
 
+-- Bind gq to format 
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'json',
+    callback = function()
+        vim.keymap.set('n', 'gq', '<cmd>FormatJson<cr>', {
+            buffer = true,
+            silent = true,
+        })
+    end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'xml',
+    callback = function()
+        vim.keymap.set('n', 'gq', '<cmd>FormatXML<cr>', {
+            buffer = true,
+            silent = true,
+        })
+    end,
+})
+
+
 -- Text functions                    {{{2
 -- ======================================
 
