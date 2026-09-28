@@ -718,6 +718,7 @@ vim.api.nvim_create_user_command('Xocs',
 vim.keymap.set('n', '<leader>ani', '<cmd>Xocs ANI<CR>', { desc = 'Open xocs-api ANI result for word under cursor' })
 vim.keymap.set('n', '<leader>apr', '<cmd>Xocs APR<CR>', { desc = 'Open xocs-api APR result for word under cursor' })
 vim.keymap.set('n', '<leader>ihr', '<cmd>Xocs IHR<CR>', { desc = 'Open xocs-api IHR result for word under cursor' })
+vim.keymap.set('n', '<leader>ipr', '<cmd>Xocs IPR<CR>', { desc = 'Open xocs-api IPR result for word under cursor' })
 
 -- File types                                                                {{{1
 -- ==============================================================================
