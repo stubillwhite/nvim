@@ -79,6 +79,7 @@ Plug 'scrooloose/nerdtree'                  -- Easy file browsing
 Plug 'simnalamburt/vim-mundo'               -- Visualise the undo graph
 Plug 'terryma/vim-expand-region'            -- Incremental selection widening
 Plug 'tpope/vim-endwise'                    -- Smart closing of data strutures
+Plug 'tpope/vim-surround'                   -- Delete/change/add parentheses/quotes/XML-tags/much more with ease
 Plug 'tpope/vim-fugitive'                   -- Git integration
 Plug 'lewis6991/gitsigns.nvim'              -- Git visual markers
 Plug 'tpope/vim-unimpaired'                 -- Incredibly useful text navigation and manipulation shortcuts
@@ -87,6 +88,8 @@ Plug 'neomake/neomake'                      -- Asynchronous make
 
 Plug 'junegunn/vim-easy-align'              -- A simple, easy-to-use Vim alignment plugin
 Plug 'godlygeek/tabular'                    -- Vim script for text filtering and alignment
+
+Plug 'qpkorr/vim-renamer'                   -- Rename files in Vim buffers
 
 -- Experimental                     {{{2
 -- =====================================
@@ -690,6 +693,31 @@ end
 
 vim.api.nvim_create_user_command('SearchInteractive', search_interactive, { nargs = 0 })
 vim.api.nvim_create_user_command('SearchImmediate', search_immediate, { nargs = 0 })
+
+-- XOCS helpers                                                              {{{1
+-- ==============================================================================
+
+vim.api.nvim_create_user_command('Xocs',
+    function(opts)
+
+        local data_product = opts.fargs[1]
+        local id = vim.fn.expand('<cword>')
+        local cmd = string.format('zsh -ic "xocs-api %s %s" 2>/dev/null', data_product, id)
+        print(cmd)
+        local output = vim.fn.system(cmd)
+
+        if vim.v.shell_error ~= 0 then
+            vim.notify('xocs-api failed: ' .. output, vim.log.levels.ERROR)
+            return
+        end
+
+        vim.cmd('edit ' .. output)
+    end,
+    { nargs = '*' }
+)
+vim.keymap.set('n', '<leader>ani', '<cmd>Xocs ANI<CR>', { desc = 'Open xocs-api ANI result for word under cursor' })
+vim.keymap.set('n', '<leader>apr', '<cmd>Xocs APR<CR>', { desc = 'Open xocs-api APR result for word under cursor' })
+vim.keymap.set('n', '<leader>ihr', '<cmd>Xocs IHR<CR>', { desc = 'Open xocs-api IHR result for word under cursor' })
 
 -- File types                                                                {{{1
 -- ==============================================================================
