@@ -273,6 +273,8 @@ vim.keymap.set('n', '<A-Down>', '<Plug>(expand_region_shrink)', {})
 vim.keymap.set('v', '<A-Up>', '<Plug>(expand_region_expand)', {})
 vim.keymap.set('v', '<A-Down>', '<Plug>(expand_region_shrink)', {})
 
+vim.fn['expand_region#custom_text_objects']('xml', { at = 1 })
+
 -- tpope/vim-fugitive               {{{3
 -- =====================================
 
