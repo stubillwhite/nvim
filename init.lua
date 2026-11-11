@@ -788,6 +788,7 @@ vim.keymap.set('n', 'k', 'gk', keymap_opts)
 vim.keymap.set('n', '<Leader>v', '<cmd>e ' .. vim.fn.fnameescape(config_root .. '/init.lua') .. '<cr>')
 vim.keymap.set('n', '<Leader>c', '<cmd>e ' .. vim.fn.fnameescape(config_root .. '/colors/lib/theme.py') .. '<cr>')
 vim.keymap.set('n', '<Leader>z', '<cmd>e ~/dev/my-stuff/dotfiles/zsh/.zshrc<cr>')
+vim.keymap.set('n', '<Leader>Z', '<cmd>e ~/dev/my-stuff/dotfiles/zsh/.zshrc.$COMPUTER_NAME<cr>')
 
 -- Copy-all to clipboard and paste-all from clipboard
 vim.keymap.set('n', '<Leader>ac', '<cmd>%y+<cr>', silent_keymap_opts)
