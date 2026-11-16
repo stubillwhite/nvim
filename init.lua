@@ -722,6 +722,25 @@ vim.keymap.set('n', '<leader>apr', '<cmd>Xocs APR<CR>', { desc = 'Open xocs-api 
 vim.keymap.set('n', '<leader>ihr', '<cmd>Xocs IHR<CR>', { desc = 'Open xocs-api IHR result for word under cursor' })
 vim.keymap.set('n', '<leader>ipr', '<cmd>Xocs IPR<CR>', { desc = 'Open xocs-api IPR result for word under cursor' })
 
+vim.api.nvim_create_user_command('OpsBank',
+    function(opts)
+
+        local id = vim.fn.expand('<cword>')
+        local cmd = string.format('zsh -ic "obii-car %s" 2>/dev/null', id)
+        print(cmd)
+        local output = vim.fn.system(cmd)
+
+        if vim.v.shell_error ~= 0 then
+            vim.notify('obii-car failed: ' .. output, vim.log.levels.ERROR)
+            return
+        end
+
+        vim.cmd('edit ' .. output)
+    end,
+    { nargs = '*' }
+)
+vim.keymap.set('n', '<leader>car', '<cmd>OpsBank<CR>', { desc = 'Open obii-car result for word under cursor' })
+
 -- File types                                                                {{{1
 -- ==============================================================================
 
